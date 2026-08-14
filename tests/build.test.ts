@@ -1,5 +1,10 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { buildSite, parseIndex, readDist } from './helpers/build';
+
+const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 describe('built homepage SEO', () => {
   beforeAll(() => {
@@ -97,4 +102,134 @@ describe('crawl files', () => {
     expect(locs).toEqual(['https://anibalribeiro.cz/']);
   });
 });
+
+describe('header', () => {
+  it('exposes Work, CV, and Contact jump links', () => {
+    const { document } = parseIndex();
+    const header = document.querySelector('header');
+    expect(header).toBeTruthy();
+    expect(header?.querySelector('nav')).toBeTruthy();
+    expect(header?.querySelector('a[href="#work"]')?.textContent).toBe('Work');
+    expect(header?.querySelector('a[href="#cv"]')?.textContent).toBe('CV');
+    expect(header?.querySelector('a[href="#contact"]')?.textContent).toBe(
+      'Contact',
+    );
+    expect(header?.querySelector('a[href="#top"]')?.textContent).toBe('AR');
+  });
+});
+
+describe('hero', () => {
+  it('shows the role as a badge, not a second h1, plus the bio', () => {
+    const { document } = parseIndex();
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    expect(document.body.textContent).toContain('Software Engineering Manager');
+    expect(document.body.textContent).toContain('small utility apps');
+  });
+
+  it('renders the headshot with the agreed alt text', () => {
+    const { document } = parseIndex();
+    const img = document.querySelector('img');
+    expect(img?.getAttribute('alt')).toBe('Portrait of Aníbal Ribeiro');
+    expect(img?.getAttribute('width')).toBeTruthy();
+    expect(img?.getAttribute('height')).toBeTruthy();
+  });
+
+  it('preloads the hero image', () => {
+    const { document } = parseIndex();
+    const preload = document.querySelector('link[rel="preload"][as="image"]');
+    expect(preload).toBeTruthy();
+    expect(preload?.getAttribute('href')).toBeTruthy();
+  });
+});
+
+describe('work', () => {
+  it('renders both projects as h3s under #work', () => {
+    const { document } = parseIndex();
+    const work = document.querySelector('#work');
+    expect(work).toBeTruthy();
+    expect(work?.querySelector('h2')?.textContent).toBe('Work');
+    const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice']);
+  });
+
+  it('uses named external links with noopener', () => {
+    const { document } = parseIndex();
+    const store = document.querySelector(
+      'a[href="https://chromewebstore.google.com/detail/ibgigmlamcafnomafjpeogpipkdhjjgb"]',
+    );
+    expect(store?.textContent).toBe('Chrome Web Store');
+    expect(store?.getAttribute('target')).toBe('_blank');
+    expect(store?.getAttribute('rel')).toContain('noopener');
+
+    const github = document.querySelector(
+      'a[href="https://github.com/anibalribeiro/WinMice"]',
+    );
+    expect(github?.textContent).toBe('GitHub');
+
+    const product = document.querySelector(
+      'a[href="https://anibalribeiro.github.io/WinMice/"]',
+    );
+    expect(product?.textContent).toBe('Product site');
+  });
+});
+
+describe('cv', () => {
+  it('shows coming soon and does not link to a missing PDF', () => {
+    const { document, html } = parseIndex();
+    const cv = document.querySelector('#cv');
+    expect(cv?.querySelector('h2')?.textContent).toBe('CV');
+    expect(cv?.textContent).toContain('CV coming soon.');
+    expect(cv?.querySelector('a[href="/cv.pdf"]')).toBeNull();
+    expect(html).not.toContain('href="/cv.pdf"');
+    const download = cv?.querySelector('button, a, [aria-disabled]');
+    expect(download?.textContent).toContain('Download PDF');
+    const disabled =
+      download?.hasAttribute('disabled') ||
+      download?.getAttribute('aria-disabled') === 'true';
+    expect(disabled).toBe(true);
+  });
+});
+
+describe('contact and footer', () => {
+  it('exposes mailto, GitHub, and LinkedIn', () => {
+    const { document } = parseIndex();
+    const contact = document.querySelector('#contact');
+    expect(contact?.querySelector('h2')?.textContent).toBe('Contact');
+    const mail = contact?.querySelector('a[href="mailto:email@anibalribeiro.cz"]');
+    expect(mail?.textContent).toBe('email@anibalribeiro.cz');
+    const gh = contact?.querySelector('a[href="https://github.com/anibalribeiro"]');
+    expect(gh?.textContent).toBe('GitHub');
+    expect(gh?.getAttribute('rel')).toContain('noopener');
+    const li = contact?.querySelector(
+      'a[href="https://www.linkedin.com/in/anibal-ribeiro/"]',
+    );
+    expect(li?.textContent).toBe('LinkedIn');
+  });
+
+  it('has a footer with the name and year', () => {
+    const { document } = parseIndex();
+    const footer = document.querySelector('footer');
+    expect(footer?.textContent).toContain('Aníbal Ribeiro');
+    expect(footer?.textContent).toContain(String(new Date().getFullYear()));
+  });
+});
+
+describe('performance constraints', () => {
+  it('does not ship client module scripts or webfont stylesheets', () => {
+    const { document, html } = parseIndex();
+    expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
+    expect(html).not.toMatch(/fonts\.googleapis\.com/);
+    expect(html).not.toMatch(/fonts\.gstatic\.com/);
+  });
+});
+
+describe('brand assets', () => {
+  it('ships og.png, favicon.svg, and apple-touch-icon.png', () => {
+    expect(existsSync(path.join(root, 'dist/og.png'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/favicon.svg'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/apple-touch-icon.png'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/photo.jpg'))).toBe(true);
+  });
+});
+
 

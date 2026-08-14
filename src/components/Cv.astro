@@ -1,0 +1,19 @@
+---
+import { site } from '../data/site';
+---
+
+<section id="cv" aria-labelledby="cv-heading">
+  <h2 id="cv-heading">CV</h2>
+  {
+    site.cvAvailable ? (
+      <a class="download" href="/cv.pdf">Download PDF</a>
+    ) : (
+      <>
+        <p>CV coming soon.</p>
+        <button class="download" type="button" disabled>
+          Download PDF
+        </button>
+      </>
+    )
+  }
+</section>

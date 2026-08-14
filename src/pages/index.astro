@@ -1,7 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { site } from '../data/site';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Work from '../components/Work.astro';
+import Cv from '../components/Cv.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 ---
 <Layout>
-  <h1>{site.name}</h1>
+  <Header slot="header" />
+  <Hero />
+  <Work />
+  <Cv />
+  <Contact />
+  <Footer slot="footer" />
 </Layout>

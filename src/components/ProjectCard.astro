@@ -1,0 +1,26 @@
+---
+import type { Project } from '../data/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+<article>
+  <h3>{project.title}</h3>
+  <p class="tags">{project.tags.join(' · ')}</p>
+  <p>{project.description}</p>
+  <p class="links">
+    <a href={project.primary.href} target="_blank" rel="noopener noreferrer">
+      {project.primary.label}
+    </a>
+    {
+      project.secondary && (
+        <a href={project.secondary.href} target="_blank" rel="noopener noreferrer">
+          {project.secondary.label}
+        </a>
+      )
+    }
+  </p>
+</article>

@@ -1,9 +1,17 @@
 ---
+import { getImage } from 'astro:assets';
+import photo from '../assets/photo.jpg';
 import { origin, site } from '../data/site';
 import { canonicalUrl, jsonLdGraph } from '../lib/seo';
 import '../styles/global.css';
 
 const jsonLd = JSON.stringify(jsonLdGraph());
+const heroImage = await getImage({
+  src: photo,
+  width: 160,
+  height: 160,
+  format: 'webp',
+});
 ---
 <!doctype html>
 <html lang="en">
@@ -15,6 +23,7 @@ const jsonLd = JSON.stringify(jsonLdGraph());
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#f4f6f8" />
     <link rel="canonical" href={canonicalUrl()} />
+    <link rel="preload" as="image" href={heroImage.src} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />

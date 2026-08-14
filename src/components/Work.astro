@@ -1,0 +1,10 @@
+---
+import { site } from '../data/site';
+import ProjectCard from './ProjectCard.astro';
+---
+<section id="work" aria-labelledby="work-heading">
+  <h2 id="work-heading">Work</h2>
+  <div class="project-grid">
+    {site.projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</section>
