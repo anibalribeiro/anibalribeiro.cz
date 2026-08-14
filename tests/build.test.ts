@@ -128,6 +128,13 @@ describe('hero', () => {
     expect(img?.getAttribute('width')).toBeTruthy();
     expect(img?.getAttribute('height')).toBeTruthy();
   });
+
+  it('preloads the hero image', () => {
+    const { document } = parseIndex();
+    const preload = document.querySelector('link[rel="preload"][as="image"]');
+    expect(preload).toBeTruthy();
+    expect(preload?.getAttribute('href')).toBeTruthy();
+  });
 });
 
 
