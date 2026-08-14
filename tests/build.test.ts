@@ -185,4 +185,28 @@ describe('cv', () => {
   });
 });
 
+describe('contact and footer', () => {
+  it('exposes mailto, GitHub, and LinkedIn', () => {
+    const { document } = parseIndex();
+    const contact = document.querySelector('#contact');
+    expect(contact?.querySelector('h2')?.textContent).toBe('Contact');
+    const mail = contact?.querySelector('a[href="mailto:email@anibalribeiro.cz"]');
+    expect(mail?.textContent).toBe('email@anibalribeiro.cz');
+    const gh = contact?.querySelector('a[href="https://github.com/anibalribeiro"]');
+    expect(gh?.textContent).toBe('GitHub');
+    expect(gh?.getAttribute('rel')).toContain('noopener');
+    const li = contact?.querySelector(
+      'a[href="https://www.linkedin.com/in/anibal-ribeiro/"]',
+    );
+    expect(li?.textContent).toBe('LinkedIn');
+  });
+
+  it('has a footer with the name and year', () => {
+    const { document } = parseIndex();
+    const footer = document.querySelector('footer');
+    expect(footer?.textContent).toContain('Aníbal Ribeiro');
+    expect(footer?.textContent).toContain(String(new Date().getFullYear()));
+  });
+});
+
 
