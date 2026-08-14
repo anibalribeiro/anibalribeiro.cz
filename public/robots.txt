@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anibalribeiro.cz/sitemap-index.xml
