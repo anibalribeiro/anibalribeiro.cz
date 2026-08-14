@@ -1,6 +1,5 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import path from 'node:path';
 
 function writePpm(file, width, height, r, g, b) {
   const pixels = Buffer.alloc(width * height * 3, 0);
@@ -17,3 +16,9 @@ mkdirSync('public', { recursive: true });
 writePpm('/tmp/photo.ppm', 400, 400, 197, 208, 220);
 execFileSync('sips', ['-s', 'format', 'jpeg', '/tmp/photo.ppm', '--out', 'src/assets/photo.jpg']);
 execFileSync('cp', ['src/assets/photo.jpg', 'public/photo.jpg']);
+
+// #1e3a5f — solid navy OG + apple-touch (ImageMagick unavailable for text overlay)
+writePpm('/tmp/og.ppm', 1200, 630, 0x1e, 0x3a, 0x5f);
+execFileSync('sips', ['-s', 'format', 'png', '/tmp/og.ppm', '--out', 'public/og.png']);
+writePpm('/tmp/icon.ppm', 180, 180, 0x1e, 0x3a, 0x5f);
+execFileSync('sips', ['-s', 'format', 'png', '/tmp/icon.ppm', '--out', 'public/apple-touch-icon.png']);

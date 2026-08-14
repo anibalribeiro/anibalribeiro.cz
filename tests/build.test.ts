@@ -1,5 +1,10 @@
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { buildSite, parseIndex, readDist } from './helpers/build';
+
+const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 describe('built homepage SEO', () => {
   beforeAll(() => {
@@ -215,6 +220,15 @@ describe('performance constraints', () => {
     expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
     expect(html).not.toMatch(/fonts\.googleapis\.com/);
     expect(html).not.toMatch(/fonts\.gstatic\.com/);
+  });
+});
+
+describe('brand assets', () => {
+  it('ships og.png, favicon.svg, and apple-touch-icon.png', () => {
+    expect(existsSync(path.join(root, 'dist/og.png'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/favicon.svg'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/apple-touch-icon.png'))).toBe(true);
+    expect(existsSync(path.join(root, 'dist/photo.jpg'))).toBe(true);
   });
 });
 
