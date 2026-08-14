@@ -93,7 +93,8 @@ describe('crawl files', () => {
       indexXml.match(/https:\/\/anibalribeiro\.cz\/(sitemap-0\.xml)/)?.[1] ??
       'sitemap-0.xml';
     const child = readDist(childName);
-    expect(child).toContain('https://anibalribeiro.cz/');
+    const locs = [...child.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+    expect(locs).toEqual(['https://anibalribeiro.cz/']);
   });
 });
 
