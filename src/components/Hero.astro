@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import photo from '../assets/photo.jpg';
+import { site } from '../data/site';
+---
+<section class="hero" aria-labelledby="name">
+  <Image
+    src={photo}
+    alt={site.photoAlt}
+    width={160}
+    height={160}
+    densities={[1, 2]}
+    format="webp"
+    priority
+  />
+  <div>
+    <h1 id="name">{site.name}</h1>
+    <p class="badge">{site.jobTitle}</p>
+    <p class="bio">{site.bio}</p>
+  </div>
+</section>

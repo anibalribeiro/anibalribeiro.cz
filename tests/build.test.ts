@@ -113,4 +113,21 @@ describe('header', () => {
   });
 });
 
+describe('hero', () => {
+  it('shows the role as a badge, not a second h1, plus the bio', () => {
+    const { document } = parseIndex();
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    expect(document.body.textContent).toContain('Software Engineering Manager');
+    expect(document.body.textContent).toContain('small utility apps');
+  });
+
+  it('renders the headshot with the agreed alt text', () => {
+    const { document } = parseIndex();
+    const img = document.querySelector('img');
+    expect(img?.getAttribute('alt')).toBe('Portrait of Aníbal Ribeiro');
+    expect(img?.getAttribute('width')).toBeTruthy();
+    expect(img?.getAttribute('height')).toBeTruthy();
+  });
+});
+
 
