@@ -1,9 +1,5 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { buildSite, parseIndex, readDist } from './helpers/build';
-
-const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
 describe('built homepage SEO', () => {
   beforeAll(() => {
@@ -81,3 +77,23 @@ describe('built homepage SEO', () => {
     expect(document.querySelector('h1')?.textContent).toBe('Aníbal Ribeiro');
   });
 });
+
+describe('crawl files', () => {
+  it('ships robots.txt that allows indexing and points at the sitemap', () => {
+    const robots = readDist('robots.txt');
+    expect(robots).toMatch(/User-agent:\s*\*/i);
+    expect(robots).toMatch(/Allow:\s*\//i);
+    expect(robots).toContain('Sitemap: https://anibalribeiro.cz/sitemap-index.xml');
+  });
+
+  it('includes the homepage in the generated sitemap', () => {
+    const indexXml = readDist('sitemap-index.xml');
+    expect(indexXml).toContain('sitemap');
+    const childName =
+      indexXml.match(/https:\/\/anibalribeiro\.cz\/(sitemap-0\.xml)/)?.[1] ??
+      'sitemap-0.xml';
+    const child = readDist(childName);
+    expect(child).toContain('https://anibalribeiro.cz/');
+  });
+});
+
