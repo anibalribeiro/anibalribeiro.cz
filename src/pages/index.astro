@@ -1,11 +1,7 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Aníbal Ribeiro</title>
-  </head>
-  <body>
-    <p>Aníbal Ribeiro</p>
-  </body>
-</html>
+<Layout>
+  <h1>{site.name}</h1>
+</Layout>
