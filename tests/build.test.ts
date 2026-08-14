@@ -98,3 +98,19 @@ describe('crawl files', () => {
   });
 });
 
+describe('header', () => {
+  it('exposes Work, CV, and Contact jump links', () => {
+    const { document } = parseIndex();
+    const header = document.querySelector('header');
+    expect(header).toBeTruthy();
+    expect(header?.querySelector('nav')).toBeTruthy();
+    expect(header?.querySelector('a[href="#work"]')?.textContent).toBe('Work');
+    expect(header?.querySelector('a[href="#cv"]')?.textContent).toBe('CV');
+    expect(header?.querySelector('a[href="#contact"]')?.textContent).toBe(
+      'Contact',
+    );
+    expect(header?.querySelector('a[href="#top"]')?.textContent).toBe('AR');
+  });
+});
+
+
