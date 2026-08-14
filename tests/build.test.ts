@@ -137,4 +137,35 @@ describe('hero', () => {
   });
 });
 
+describe('work', () => {
+  it('renders both projects as h3s under #work', () => {
+    const { document } = parseIndex();
+    const work = document.querySelector('#work');
+    expect(work).toBeTruthy();
+    expect(work?.querySelector('h2')?.textContent).toBe('Work');
+    const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice']);
+  });
+
+  it('uses named external links with noopener', () => {
+    const { document } = parseIndex();
+    const store = document.querySelector(
+      'a[href="https://chromewebstore.google.com/detail/ibgigmlamcafnomafjpeogpipkdhjjgb"]',
+    );
+    expect(store?.textContent).toBe('Chrome Web Store');
+    expect(store?.getAttribute('target')).toBe('_blank');
+    expect(store?.getAttribute('rel')).toContain('noopener');
+
+    const github = document.querySelector(
+      'a[href="https://github.com/anibalribeiro/WinMice"]',
+    );
+    expect(github?.textContent).toBe('GitHub');
+
+    const product = document.querySelector(
+      'a[href="https://anibalribeiro.github.io/WinMice/"]',
+    );
+    expect(product?.textContent).toBe('Product site');
+  });
+});
+
 
