@@ -209,4 +209,13 @@ describe('contact and footer', () => {
   });
 });
 
+describe('performance constraints', () => {
+  it('does not ship client module scripts or webfont stylesheets', () => {
+    const { document, html } = parseIndex();
+    expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
+    expect(html).not.toMatch(/fonts\.googleapis\.com/);
+    expect(html).not.toMatch(/fonts\.gstatic\.com/);
+  });
+});
+
 
