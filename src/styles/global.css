@@ -14,6 +14,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
 }
 
 body {
@@ -173,12 +174,24 @@ h2 {
   padding: 0.4rem 0.8rem;
   border: 0;
   border-radius: 8px;
-  background: var(--line);
-  color: var(--muted);
   font: inherit;
+  text-decoration: none;
 }
 
-.download[disabled] {
+a.download {
+  background: var(--accent);
+  color: var(--card);
+  cursor: pointer;
+}
+
+a.download:hover,
+a.download:focus {
+  filter: brightness(1.12);
+}
+
+button.download[disabled] {
+  background: var(--line);
+  color: var(--muted);
   cursor: not-allowed;
 }
 
