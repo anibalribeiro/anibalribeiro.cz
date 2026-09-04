@@ -24,9 +24,15 @@ copy and sizes, and the `v1.1.0` GitHub release notes for what changed.
 
 ### Source material
 
-Five 1x captures of the Settings window, 636×681 px, PNG with an alpha shadow
-ring (`⌘⇧4` + space window capture): Scrolling, Back & Forward, General,
-Permissions, About.
+Five 1x captures of the Settings window, 636×681 px PNG: Scrolling, Back &
+Forward, General, Permissions, About.
+
+They carry an alpha channel but it is fully opaque — these are region captures,
+not window captures, so instead of a transparent shadow ring they include a
+strip of desktop wallpaper. Measured from the blue cast of the wallpaper, the
+window sits flush to the top and left, with 6 px of wallpaper down the right
+edge and 11 px along the bottom. All five are geometrically identical, so one
+crop box serves all of them: `left 0, top 0, 630×670`.
 
 ### Density approach
 
@@ -123,11 +129,13 @@ extra megabytes buy is more credible than a stale smaller number.
 ### FAQ
 
 Keep the four existing entries, updating the install answer to mention the
-Permissions pane. Add three from the README:
+Permissions pane. Add four more, for eight in total:
 
 - Does macOS have Windows-style autoscroll built in? (No.)
 - Do back/forward buttons work on a Mac without extra software? (Only in apps
   that handle buttons 4 and 5 themselves.)
+- Does WinMice update itself? (Yes, opt-in — the headline v1.1.0 change, so it
+  earns a direct answer rather than only a prose mention.)
 - Is it a Windows program? (No — disambiguates from WinMICE, the imputation
   statistics tool. This exists to keep the name from being confused in search.)
 
@@ -140,10 +148,17 @@ button conflict.
 `public/winmice-og.jpg` shows the old three-pane UI and is referenced both as
 `og:image` and as JSON-LD `screenshot`.
 
-Rebuild at 1200×630 (the standard OG ratio; it is currently 1000×666) by
-compositing the new Scrolling capture scaled to 560 px tall — a downscale from
-681 px, so it stays sharp — centered on a `#f4f6f8` background, the site's
-`--bg`. The site is light-only, so no dark variant is needed.
+Rebuild at 1200×630, the standard OG ratio; it is currently 1000×666.
+
+Simply centring the capture leaves dead space either side, because the window
+is portrait and the canvas is landscape. Instead, split the card: app icon,
+"WinMice" wordmark, the two-line tagline, and the `anibalribeiro.cz/Winmice`
+URL on the left; the Scrolling capture scaled to 570 px tall on the right,
+inset 48 px from the edge. Background is `#f4f6f8`, the site's `--bg`, and the
+type uses the site's `--text`, `--muted`, and `--accent`. The site is
+light-only, so no dark variant is needed.
+
+Scaling 670 px down to 570 px keeps the UI text sharp.
 `ogImageWidth` / `ogImageHeight` in `index.astro` update to match.
 
 ## Testing
