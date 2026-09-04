@@ -1,10 +1,23 @@
 ---
+const home = Astro.url.pathname === '/' || Astro.url.pathname === '';
 ---
 <header id="top">
-  <a class="mark" href="#top">AR</a>
+  <a class="mark" href={home ? '#top' : '/'}>AR</a>
   <nav aria-label="Page">
-    <a href="#work">Work</a>
-    <a href="#cv">CV</a>
-    <a href="#contact">Contact</a>
+    {
+      home ? (
+        <>
+          <a href="#work">Work</a>
+          <a href="#cv">CV</a>
+          <a href="#contact">Contact</a>
+        </>
+      ) : (
+        <>
+          <a href="/#work">Work</a>
+          <a href="/Winmice/">WinMice</a>
+          <a href="/#contact">Contact</a>
+        </>
+      )
+    }
   </nav>
 </header>

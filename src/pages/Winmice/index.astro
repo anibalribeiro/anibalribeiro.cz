@@ -1,0 +1,171 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/projects/winmice.png';
+import settingsBackForward from '../../assets/winmice/settings-back-forward.png';
+import settingsGeneral from '../../assets/winmice/settings-general.png';
+import settingsPermissions from '../../assets/winmice/settings-permissions.png';
+import settingsScrolling from '../../assets/winmice/settings-scrolling.png';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { winmice } from '../../data/winmice';
+import Layout from '../../layouts/Layout.astro';
+import { origin } from '../../data/site';
+import { canonicalUrl, winmiceJsonLd } from '../../lib/seo';
+import '../../styles/product.css';
+
+const canonical = canonicalUrl('/Winmice');
+---
+<Layout
+  title={winmice.seo.title}
+  description={winmice.seo.description}
+  canonical={canonical}
+  jsonLd={JSON.stringify(winmiceJsonLd())}
+  ogImage={`${origin}/winmice-og.jpg`}
+  ogImageWidth="1200"
+  ogImageHeight="630"
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="WinMice icon" width={96} height={96} class="product-icon" />
+        <p class="badge">macOS utility</p>
+      </div>
+      <h1>{winmice.tagline}</h1>
+      <p class="lede">{winmice.lede}</p>
+      <p class="cta-row">
+        <a class="download" href={winmice.downloadUrl}>Download for Mac</a>
+        <a class="download" href="#install">Homebrew</a>
+      </p>
+    </header>
+
+    <section aria-labelledby="what-heading">
+      <h2 id="what-heading">What WinMice does</h2>
+      <div class="feature-grid">
+        <article>
+          <h3>Middle-click vector scrolling</h3>
+          <details class="shot">
+            <summary>
+              <Image src={settingsScrolling} alt="" width={280} densities={[1, 2]} loading="lazy" />
+              <span class="hint-expand">Scrolling pane — click to enlarge</span>
+              <span class="hint-collapse">Scrolling pane — click to collapse</span>
+            </summary>
+            <Image
+              src={settingsScrolling}
+              alt="WinMice Settings, Scrolling pane"
+              width={640}
+              height={680}
+              densities={[1, 2]}
+              loading="lazy"
+            />
+          </details>
+        </article>
+        <article>
+          <h3>Back and forward mouse buttons</h3>
+          <details class="shot">
+            <summary>
+              <Image src={settingsBackForward} alt="" width={280} densities={[1, 2]} loading="lazy" />
+              <span class="hint-expand">Back &amp; Forward pane — click to enlarge</span>
+              <span class="hint-collapse">Back &amp; Forward pane — click to collapse</span>
+            </summary>
+            <Image
+              src={settingsBackForward}
+              alt="WinMice Settings, Back & Forward pane"
+              width={640}
+              height={680}
+              densities={[1, 2]}
+              loading="lazy"
+            />
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="inside-heading">
+      <h2 id="inside-heading">Inside the app</h2>
+      <p class="section-lede">
+        Everything lives in one menu-bar window.
+      </p>
+      <div class="feature-grid">
+        <article>
+          <h3>General</h3>
+          <details class="shot">
+            <summary>
+              <Image src={settingsGeneral} alt="" width={280} densities={[1, 2]} loading="lazy" />
+              <span class="hint-expand">General pane — click to enlarge</span>
+              <span class="hint-collapse">General pane — click to collapse</span>
+            </summary>
+            <Image
+              src={settingsGeneral}
+              alt="WinMice Settings, General pane"
+              width={640}
+              height={680}
+              densities={[1, 2]}
+              loading="lazy"
+            />
+          </details>
+        </article>
+        <article>
+          <h3>Permissions</h3>
+          <details class="shot">
+            <summary>
+              <Image src={settingsPermissions} alt="" width={280} densities={[1, 2]} loading="lazy" />
+              <span class="hint-expand">Permissions pane — click to enlarge</span>
+              <span class="hint-collapse">Permissions pane — click to collapse</span>
+            </summary>
+            <Image
+              src={settingsPermissions}
+              alt="WinMice Settings, Permissions pane"
+              width={640}
+              height={680}
+              densities={[1, 2]}
+              loading="lazy"
+            />
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="tiny-heading">
+      <h2 id="tiny-heading">Native, not Electron</h2>
+      <p>
+        Swift and AppKit, in one lightweight menu-bar process: a 1.7 MB download, no
+        bundled JavaScript runtime, negligible CPU and memory while idle. Signed and
+        notarized by Apple.
+      </p>
+    </section>
+
+    <section id="install" aria-labelledby="get-heading">
+      <h2 id="get-heading">Install WinMice</h2>
+      <h3>Download</h3>
+      <p>
+        <a class="download" href={winmice.downloadUrl}>Download latest release</a>
+      </p>
+      <p>
+        Open the DMG, drag <code>WinMice.app</code> to <code>/Applications</code>,
+        then open it. Grant <strong>Accessibility</strong> when asked.
+      </p>
+      <h3>Homebrew</h3>
+      <pre><code>{winmice.brew}</code></pre>
+    </section>
+
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">WinMice FAQ</h2>
+      {
+        winmice.faqs.map((faq) => (
+          <details>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))
+      }
+    </section>
+  </article>
+  <p class="product-links">
+    <a href={winmice.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href={winmice.releasesUrl} target="_blank" rel="noopener noreferrer">Releases</a>
+    <a href={winmice.supportUrl} target="_blank" rel="noopener noreferrer">Support</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

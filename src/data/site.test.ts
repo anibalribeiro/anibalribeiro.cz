@@ -37,6 +37,7 @@ describe('site data', () => {
 
     const translate = site.projects[0];
     expect(translate.title).toBe('Translate Pro for Brave');
+    expect(translate.icon).toBe('translate-pro');
     expect(translate.tags).toEqual(['Extension', 'Brave']);
     expect(translate.description).toBe(
       'Faster, customizable in-page translation for Brave.',
@@ -49,6 +50,7 @@ describe('site data', () => {
 
     const winmice = site.projects[1];
     expect(winmice.title).toBe('WinMice');
+    expect(winmice.icon).toBe('winmice');
     expect(winmice.tags).toEqual(['macOS', 'Swift']);
     expect(winmice.description).toBe(
       'Windows-style mouse scrolling and side buttons on Mac.',
@@ -59,7 +61,7 @@ describe('site data', () => {
     });
     expect(winmice.secondary).toEqual({
       label: 'Product site',
-      href: 'https://anibalribeiro.github.io/WinMice/',
+      href: '/Winmice/',
     });
   });
 });

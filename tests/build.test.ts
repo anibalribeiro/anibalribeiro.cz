@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { buildSite, parseIndex, readDist } from './helpers/build';
+import { buildSite, parseIndex, parsePage, readDist } from './helpers/build';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
@@ -99,7 +99,13 @@ describe('crawl files', () => {
       'sitemap-0.xml';
     const child = readDist(childName);
     const locs = [...child.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
-    expect(locs).toEqual(['https://anibalribeiro.cz/']);
+    expect(locs).toEqual(
+      expect.arrayContaining([
+        'https://anibalribeiro.cz/',
+        'https://anibalribeiro.cz/Winmice/',
+      ]),
+    );
+    expect(locs).toHaveLength(2);
   });
 });
 
@@ -167,9 +173,25 @@ describe('work', () => {
     expect(github?.textContent).toBe('GitHub');
 
     const product = document.querySelector(
-      'a[href="https://anibalribeiro.github.io/WinMice/"]',
+      'a[href="/Winmice/"]',
     );
     expect(product?.textContent).toBe('Product site');
+  });
+
+  it('shows a 48px official icon on each project card', () => {
+    const { document } = parseIndex();
+    const articles = [...document.querySelectorAll('#work article')];
+    expect(articles).toHaveLength(2);
+
+    const alts = articles.map((article) => article.querySelector('img')?.getAttribute('alt'));
+    expect(alts).toEqual(['Translate Pro for Brave icon', 'WinMice icon']);
+
+    for (const article of articles) {
+      const img = article.querySelector('img');
+      expect(img?.getAttribute('width')).toBe('48');
+      expect(img?.getAttribute('height')).toBe('48');
+      expect(img?.getAttribute('src')).toMatch(/\.(png|webp|jpg|svg)/i);
+    }
   });
 });
 
@@ -229,6 +251,238 @@ describe('brand assets', () => {
     expect(existsSync(path.join(root, 'dist/favicon.svg'))).toBe(true);
     expect(existsSync(path.join(root, 'dist/apple-touch-icon.png'))).toBe(true);
     expect(existsSync(path.join(root, 'dist/photo.jpg'))).toBe(true);
+  });
+});
+
+describe('Winmice product page', () => {
+  it('is emitted at /Winmice/ with product SEO', () => {
+    const { document } = parsePage('Winmice/index.html');
+    expect(document.documentElement.getAttribute('lang')).toBe('en');
+    expect(document.querySelector('title')?.textContent).toBe(
+      'WinMice for Mac — Windows-style autoscroll and mouse side buttons',
+    );
+    expect(
+      document.querySelector('meta[name="description"]')?.getAttribute('content'),
+    ).toContain('middle-click');
+    expect(
+      document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+    ).toBe('https://anibalribeiro.cz/Winmice/');
+    expect(
+      document.querySelector('meta[property="og:title"]')?.getAttribute('content'),
+    ).toContain('WinMice');
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    expect(document.querySelector('h1')?.textContent).toContain(
+      'Windows-style mouse on Mac',
+    );
+  });
+
+  it('embeds SoftwareApplication and FAQ JSON-LD', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const raw = document.querySelector(
+      'script[type="application/ld+json"]',
+    )?.textContent;
+    expect(raw).toBeTruthy();
+    const data = JSON.parse(raw!);
+    const nodes = data['@graph'] ?? [data];
+    const app = nodes.find(
+      (node: { '@type': string }) => node['@type'] === 'SoftwareApplication',
+    );
+    expect(app).toMatchObject({
+      name: 'WinMice',
+      operatingSystem: 'macOS',
+      applicationCategory: 'UtilitiesApplication',
+    });
+    expect(app.downloadUrl).toContain('github.com/anibalribeiro/WinMice');
+    const faq = nodes.find(
+      (node: { '@type': string }) => node['@type'] === 'FAQPage',
+    );
+    expect(faq?.mainEntity?.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('has download, Homebrew, and screenshot content', () => {
+    const { document, html } = parsePage('Winmice/index.html');
+    expect(
+      document.querySelector(
+        'a[href="https://github.com/anibalribeiro/WinMice/releases/latest"]',
+      ),
+    ).toBeTruthy();
+    expect(html).toContain('brew install --cask winmice');
+    expect(html).toContain('Accessibility');
+    const screenshots = [...document.querySelectorAll('img')].filter((img) =>
+      (img.getAttribute('alt') ?? '').toLowerCase().includes('settings'),
+    );
+    expect(screenshots.length).toBeGreaterThanOrEqual(2);
+    expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
+  });
+
+  it('keeps the product icon and macOS utility badge in one aligned row', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const brand = document.querySelector('.product-hero .product-brand');
+    expect(brand).toBeTruthy();
+    expect(brand?.querySelector('img[alt="WinMice icon"]')).toBeTruthy();
+    expect(brand?.textContent).toContain('macOS utility');
+  });
+
+  it('styles the hero Homebrew control as a download button', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const homebrew = [...document.querySelectorAll('.cta-row a')].find(
+      (el) => el.textContent?.trim() === 'Homebrew',
+    );
+    expect(homebrew?.classList.contains('download')).toBe(true);
+    expect(homebrew?.getAttribute('href')).toBe('#install');
+  });
+
+  it('states the v1.1.0 download size instead of the stale 600 KB claim', () => {
+    const { html } = parsePage('Winmice/index.html');
+    expect(html).not.toContain('600 KB');
+    expect(html).toContain('1.7 MB');
+  });
+
+  it('pairs each feature-grid behavior with its own Settings pane', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const alts = [...document.querySelectorAll('.feature-grid img')].map((img) =>
+      img.getAttribute('alt'),
+    );
+    expect(alts).toContain('WinMice Settings, Scrolling pane');
+    expect(alts).toContain('WinMice Settings, Back & Forward pane');
+  });
+
+  it('publishes the General and Permissions panes but not About', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const alts = [...document.querySelectorAll('img')].map((img) =>
+      img.getAttribute('alt'),
+    );
+    expect(alts).toContain('WinMice Settings, General pane');
+    expect(alts).toContain('WinMice Settings, Permissions pane');
+    expect(alts).not.toContain('WinMice Settings, About pane');
+  });
+
+  it('collapses every screenshot behind a click-to-expand thumbnail', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const shots = [...document.querySelectorAll('.feature-grid details.shot')];
+    expect(shots).toHaveLength(4);
+
+    for (const shot of shots) {
+      const summary = shot.querySelector('summary');
+      expect(summary).toBeTruthy();
+      expect(summary!.querySelector('img')?.getAttribute('width')).toBe('280');
+      expect(summary!.textContent).toMatch(/enlarge/i);
+
+      // The hint has to stop saying "enlarge" once the pane is already open.
+      expect(summary!.querySelector('.hint-expand')).toBeTruthy();
+      expect(summary!.querySelector('.hint-collapse')?.textContent).toMatch(
+        /collapse/i,
+      );
+
+      // The full image sits outside the summary, so it is only fetched on open.
+      const full = [...shot.querySelectorAll('img')].filter(
+        (img) => !summary!.contains(img),
+      );
+      expect(full).toHaveLength(1);
+      expect(full[0].getAttribute('width')).toBe('640');
+    }
+
+    // Expanding must stay a pure HTML/CSS affordance.
+    expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
+  });
+
+  it('serves screenshots at native window size with a 2x Retina candidate', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const shots = [...document.querySelectorAll('img')].filter((img) =>
+      (img.getAttribute('alt') ?? '').includes('Settings,'),
+    );
+    expect(shots).toHaveLength(4);
+    for (const shot of shots) {
+      expect(Number(shot.getAttribute('width'))).toBe(640);
+      expect(Number(shot.getAttribute('height'))).toBe(680);
+      expect(shot.getAttribute('srcset')).toMatch(/\s2x(,|$)/);
+    }
+  });
+
+  it('documents in-app updates from v1.1.0', () => {
+    const { html } = parsePage('Winmice/index.html');
+    expect(html).toContain('brew upgrade --cask winmice');
+    expect(html).toMatch(/checks? (for updates )?once a day/i);
+  });
+
+  it('reduces feature cards to a title and a screenshot', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const cards = [...document.querySelectorAll('.feature-grid article')];
+    expect(cards).toHaveLength(4);
+    for (const card of cards) {
+      expect(card.querySelector('h3')?.textContent?.trim()).toBeTruthy();
+      expect(card.querySelector('details.shot')).not.toBeNull();
+      // Only the expand/collapse hints remain as text outside the heading.
+      expect(card.querySelectorAll('p')).toHaveLength(0);
+    }
+  });
+
+  it('drops the No Electron claim from the lede', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const lede = document.querySelector('.lede')?.textContent ?? '';
+    expect(lede).not.toMatch(/No Electron/i);
+    expect(lede).toContain('1.7 MB');
+  });
+
+  it('points Open Graph at the regenerated 1200x630 card', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const prop = (p: string) =>
+      document.querySelector(`meta[property="${p}"]`)?.getAttribute('content');
+    expect(prop('og:image')).toBe('https://anibalribeiro.cz/winmice-og.jpg');
+    expect(prop('og:image:width')).toBe('1200');
+    expect(prop('og:image:height')).toBe('630');
+  });
+
+  it('keeps a space where prose runs into inline emphasis or code', () => {
+    const { html } = parsePage('Winmice/index.html');
+    // Astro collapses a newline-plus-indent before an inline element to
+    // nothing, silently gluing words together ("orReverse horizontal").
+    const glued = html.match(
+      /[a-zA-Z,)]<(?:em|strong|code)[ >]|<\/(?:em|strong|code)>[a-zA-Z(]/g,
+    );
+    expect(glued).toBeNull();
+  });
+
+  it('carries the expanded FAQ set into JSON-LD', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const raw = document.querySelector(
+      'script[type="application/ld+json"]',
+    )?.textContent;
+    const nodes = JSON.parse(raw!)['@graph'];
+    const faq = nodes.find(
+      (node: { '@type': string }) => node['@type'] === 'FAQPage',
+    );
+    const questions = faq.mainEntity.map((entry: { name: string }) => entry.name);
+    expect(questions).toHaveLength(5);
+    expect(questions).toContain(
+      'Does macOS support Windows-style autoscroll or mouse side buttons natively?',
+    );
+    expect(questions).toContain('Does WinMice update itself?');
+    expect(questions).toContain(
+      'Is WinMice an AutoScroll or Sensible Side Buttons alternative?',
+    );
+  });
+
+  it('states the update policy once instead of in prose and the FAQ both', () => {
+    const { html } = parsePage('Winmice/index.html');
+    // The JSON-LD copy of the answer is intentional, so only count rendered prose.
+    const prose = html.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, '');
+    expect(prose.match(/once a day/g)).toHaveLength(1);
+  });
+
+  it('keeps the visible copy tight', () => {
+    const { html } = parsePage('Winmice/index.html');
+    const article = html
+      .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, '')
+      .match(/<article class="product">([\s\S]*?)<p class="product-links"/)![1]
+      // Collapsed panels are not part of the on-load reading load.
+      .replace(/<details[\s\S]*?<\/details>/g, '');
+    const words = article
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z]+;/g, ' ')
+      .split(/\s+/)
+      .filter((w) => /[a-z0-9]/i.test(w));
+    expect(words.length).toBeLessThan(220);
   });
 });
 

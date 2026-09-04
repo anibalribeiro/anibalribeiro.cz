@@ -9,6 +9,7 @@ const css = readFileSync(path.join(root, 'src/styles/global.css'), 'utf8');
 describe('sticky header scroll offset', () => {
   it('sets scroll-padding-top on html so in-page jumps clear the sticky header', () => {
     expect(css).toMatch(/html\s*\{[^}]*scroll-padding-top\s*:/s);
+    expect(css).toMatch(/body\s*>\s*header\s*\{[^}]*position\s*:\s*sticky/s);
   });
 });
 

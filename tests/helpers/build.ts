@@ -24,3 +24,9 @@ export function parseIndex() {
   const { document } = parseHTML(html);
   return { html, document };
 }
+
+export function parsePage(rel: string) {
+  const html = readDist(rel);
+  const { document } = parseHTML(html);
+  return { html, document };
+}

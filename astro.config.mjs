@@ -3,5 +3,6 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://anibalribeiro.cz',
+  trailingSlash: 'always',
   integrations: [sitemap()],
 });
