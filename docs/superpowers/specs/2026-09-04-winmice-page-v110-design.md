@@ -24,51 +24,46 @@ copy and sizes, and the `v1.1.0` GitHub release notes for what changed.
 
 ### Source material
 
-Five 1x captures of the Settings window, 636×681 px PNG: Scrolling, Back &
-Forward, General, Permissions, About.
+Five Retina window captures of the Settings window, 1504×1584 px PNG at 144
+dpi: Scrolling, Back & Forward, General, Permissions, About.
 
-They carry an alpha channel but it is fully opaque — these are region captures,
-not window captures, so instead of a transparent shadow ring they include a
-strip of desktop wallpaper. Measured from the blue cast of the wallpaper, the
-window sits flush to the top and left, with 6 px of wallpaper down the right
-edge and 11 px along the bottom. All five are geometrically identical, so one
-crop box serves all of them: `left 0, top 0, 630×670`.
+Each frame is the window plus its semi-transparent drop shadow. The opaque
+window body measures 1280×1360 px — that is 640×680 logical points at 2x. All
+five are geometrically identical, so one crop box serves all of them:
+`left 112, top 76, 1280×1360`.
 
-### Density approach
+An earlier round used 1x captures (636×681, region grabs including desktop
+wallpaper). Those are superseded: a 1x source cannot be both legible and sharp,
+for the reason set out below.
 
-The captures are non-Retina. Upscaling them adds no detail — it produces a
-larger, softer file. Instead, keep native pixels and constrain the rendered
-size so each image displays at roughly half its pixel width.
+### Sizing approach
 
-`.feature-grid` currently declares `display: grid` with a gap but **no**
-`grid-template-columns`, so it is single-column at every viewport and its
-images render about 766 CSS px wide. At that size a 636 px capture would be
-*upscaled by the browser* — visibly soft. Fixing the grid is therefore part of
-fixing the screenshots, not a cosmetic aside.
+A screenshot of a UI has two independent requirements, and they pull in
+opposite directions on a 1x source:
 
-Adopt the pattern `.project-grid` already uses in `global.css`:
+- **Legibility** depends on *rendered* size. The window's text is drawn at a
+  fixed point size, so rendering the image below 1:1 shrinks that text.
+- **Sharpness** depends on pixels per rendered CSS pixel.
 
-```
-grid-template-columns: 1fr 1fr;   /* collapsing to 1fr at max-width: 700px */
-```
+With a 1x source you can only buy sharpness by rendering smaller, which
+destroys legibility. An earlier attempt capped these images at 360 px for
+~1.8x density and rendered the capture at 57%, shrinking macOS's ~13 px labels
+to roughly 7 px: sharp per pixel, and unreadable. That is the whole reason the
+captures were redone at 2x.
 
-The resulting arithmetic, with `main` at `52rem` and `1.25rem` padding:
+With a 2x source both requirements are satisfied at once. Render at the
+window's true 640 pt width and serve a 1280 px file to Retina clients:
 
-| Quantity | Value |
-|---|---|
-| `main` content width | 832 − 40 = 792 px |
-| Column width (2 cols, 20 px gap) | 386 px |
-| Image width (article padding 1rem × 2) | 354 px |
-| Effective density at 636 px intrinsic | ~1.8x |
+- `.feature-grid img` gets `max-width: 640px`, so the UI text appears at
+  exactly the size macOS drew it.
+- `<Image densities={[1, 2]} width={640} height={680} />` emits a `srcset`
+  with a 640 px candidate at `1x` and a 1280 px candidate at `2x`, so 1x
+  clients fetch ~22 KB and Retina clients ~50 KB.
 
-`.feature-grid img` also gets `max-width: 360px` with auto margins as a safety
-net. On desktop this is a near no-op, since the column already yields 354 px;
-it only binds in the ~620–700 px viewport band where the grid has collapsed but
-the viewport is still wide. Below that, narrow Retina phones land near 2x on
-their own (a 390 px viewport gives a 318 px image).
-
-Constraining rendered width is the only mechanism that makes a 1x capture look
-sharp on a Retina display, and it costs nothing in bytes.
+`.feature-grid` stays single-column: `main` is `52rem` with `1.25rem` padding,
+giving 792 px of content, so a 640 px image fits with room to spare. A
+two-column layout would cap each column near 354 px and reintroduce the
+legibility problem.
 
 ### Processing
 
@@ -158,8 +153,12 @@ inset 48 px from the edge. Background is `#f4f6f8`, the site's `--bg`, and the
 type uses the site's `--text`, `--muted`, and `--accent`. The site is
 light-only, so no dark variant is needed.
 
-Scaling 670 px down to 570 px keeps the UI text sharp.
+Scaling the 1360 px capture down to 570 px keeps the UI text sharp.
 `ogImageWidth` / `ogImageHeight` in `index.astro` update to match.
+
+Note the filename does not change between rounds, so social platforms will
+serve their cached copy until the URL is re-scraped through their post
+inspector tools.
 
 ## Testing
 

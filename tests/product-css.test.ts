@@ -15,11 +15,11 @@ describe('WinMice product hero layout', () => {
 });
 
 describe('WinMice screenshot legibility', () => {
-  // The captures come from a 1x display, so the UI text inside them is only
-  // legible at 1:1. Rendering them smaller shrinks that text below readability.
-  it('never renders a screenshot below its 630px native width', () => {
+  // The Settings window is 640pt wide. Rendering it at that width keeps its UI
+  // text at the size macOS drew it, while the 2x source keeps it sharp.
+  it('renders a screenshot at the 640pt width of the window it shows', () => {
     const img = css.match(/\.feature-grid img\s*\{([^}]*)\}/s);
-    expect(img?.[1]).toMatch(/max-width\s*:\s*630px/);
+    expect(img?.[1]).toMatch(/max-width\s*:\s*640px/);
   });
 
   it('stacks the feature grid so screenshots have room for native width', () => {

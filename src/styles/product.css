@@ -68,12 +68,11 @@
   color: var(--text);
 }
 
-/* The captures come from a 1x display, so 630px is all the detail there is.
-   Rendering them 1:1 keeps their UI text at the size macOS drew it; anything
-   smaller shrinks that text below readability, and anything larger just blurs. */
+/* The Settings window these show is 640pt wide. Rendering at that width keeps
+   its UI text the size macOS drew it, and the 2x sources keep it sharp. */
 .feature-grid img {
   width: 100%;
-  max-width: 630px;
+  max-width: 640px;
   height: auto;
   border-radius: 8px;
   margin: 0.75rem auto 0;

@@ -357,15 +357,16 @@ describe('Winmice product page', () => {
     expect(alts).not.toContain('WinMice Settings, About pane');
   });
 
-  it('renders screenshots below their intrinsic width to stay sharp on Retina', () => {
+  it('serves screenshots at native window size with a 2x Retina candidate', () => {
     const { document } = parsePage('Winmice/index.html');
     const shots = [...document.querySelectorAll('img')].filter((img) =>
       (img.getAttribute('alt') ?? '').includes('Settings,'),
     );
     expect(shots).toHaveLength(4);
     for (const shot of shots) {
-      expect(Number(shot.getAttribute('width'))).toBe(630);
-      expect(Number(shot.getAttribute('height'))).toBe(670);
+      expect(Number(shot.getAttribute('width'))).toBe(640);
+      expect(Number(shot.getAttribute('height'))).toBe(680);
+      expect(shot.getAttribute('srcset')).toMatch(/\s2x(,|$)/);
     }
   });
 
