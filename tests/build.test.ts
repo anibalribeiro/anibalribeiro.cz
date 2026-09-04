@@ -357,6 +357,35 @@ describe('Winmice product page', () => {
     expect(alts).not.toContain('WinMice Settings, About pane');
   });
 
+  it('collapses every screenshot behind a click-to-expand thumbnail', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const shots = [...document.querySelectorAll('.feature-grid details.shot')];
+    expect(shots).toHaveLength(4);
+
+    for (const shot of shots) {
+      const summary = shot.querySelector('summary');
+      expect(summary).toBeTruthy();
+      expect(summary!.querySelector('img')?.getAttribute('width')).toBe('280');
+      expect(summary!.textContent).toMatch(/enlarge/i);
+
+      // The hint has to stop saying "enlarge" once the pane is already open.
+      expect(summary!.querySelector('.hint-expand')).toBeTruthy();
+      expect(summary!.querySelector('.hint-collapse')?.textContent).toMatch(
+        /collapse/i,
+      );
+
+      // The full image sits outside the summary, so it is only fetched on open.
+      const full = [...shot.querySelectorAll('img')].filter(
+        (img) => !summary!.contains(img),
+      );
+      expect(full).toHaveLength(1);
+      expect(full[0].getAttribute('width')).toBe('640');
+    }
+
+    // Expanding must stay a pure HTML/CSS affordance.
+    expect(document.querySelectorAll('script[type="module"]')).toHaveLength(0);
+  });
+
   it('serves screenshots at native window size with a 2x Retina candidate', () => {
     const { document } = parsePage('Winmice/index.html');
     const shots = [...document.querySelectorAll('img')].filter((img) =>

@@ -17,13 +17,37 @@ describe('WinMice product hero layout', () => {
 describe('WinMice screenshot legibility', () => {
   // The Settings window is 640pt wide. Rendering it at that width keeps its UI
   // text at the size macOS drew it, while the 2x source keeps it sharp.
-  it('renders a screenshot at the 640pt width of the window it shows', () => {
+  it('renders an expanded screenshot at the 640pt width of the window it shows', () => {
     const img = css.match(/\.feature-grid img\s*\{([^}]*)\}/s);
     expect(img?.[1]).toMatch(/max-width\s*:\s*640px/);
   });
 
-  it('stacks the feature grid so screenshots have room for native width', () => {
+  it('shows the collapsed screenshot as a 280px thumbnail', () => {
+    // Must outrank `.feature-grid img`, hence the three-part selector.
+    const thumb = css.match(/\.feature-grid summary img\s*\{([^}]*)\}/s);
+    expect(thumb?.[1]).toMatch(/max-width\s*:\s*280px/);
+  });
+});
+
+describe('WinMice screenshot gallery layout', () => {
+  it('pairs the thumbnails two to a row', () => {
     const grid = css.match(/\.feature-grid\s*\{([^}]*)\}/s);
-    expect(grid?.[1]).not.toMatch(/1fr 1fr/);
+    expect(grid?.[1]).toMatch(/grid-template-columns\s*:\s*1fr 1fr/);
+  });
+
+  it('widens a card to the whole row once its screenshot is expanded', () => {
+    // A 640px image cannot fit a 386px column, so the open card takes the row.
+    expect(css).toMatch(/:has\(details\[open\]\)[^{]*\{[^}]*grid-column\s*:\s*1\s*\/\s*-1/);
+  });
+
+  it('shows exactly one of the two summary hints per open state', () => {
+    expect(css).toMatch(/\.hint-collapse\s*\{[^}]*display\s*:\s*none/);
+    expect(css).toMatch(/\.shot\[open\][^{]*\.hint-expand\s*\{[^}]*display\s*:\s*none/);
+    expect(css).toMatch(/\.shot\[open\][^{]*\.hint-collapse\s*\{[^}]*display\s*:\s*(inline|block)/);
+  });
+
+  it('drops to a single column on narrow viewports', () => {
+    const query = css.match(/@media \(max-width: 700px\)\s*\{([\s\S]*)\}/);
+    expect(query?.[1]).toMatch(/grid-template-columns\s*:\s*1fr/);
   });
 });

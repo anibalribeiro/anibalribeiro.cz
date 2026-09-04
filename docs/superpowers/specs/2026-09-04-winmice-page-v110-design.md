@@ -60,10 +60,40 @@ window's true 640 pt width and serve a 1280 px file to Retina clients:
   with a 640 px candidate at `1x` and a 1280 px candidate at `2x`, so 1x
   clients fetch ~22 KB and Retina clients ~50 KB.
 
-`.feature-grid` stays single-column: `main` is `52rem` with `1.25rem` padding,
-giving 792 px of content, so a 640 px image fits with room to spare. A
-two-column layout would cap each column near 354 px and reintroduce the
-legibility problem.
+### Compact gallery
+
+Four screenshots at 640×680 made the page about 5,600 px tall. Each one is now
+collapsed behind a 280 px thumbnail in a `<details>`/`<summary>`, expanding to
+the full 640 px image on click. That brings the page to roughly 3,400 px, a 39%
+reduction, and 5,900 px only if a reader opens all four.
+
+`<details>` is the right mechanism here for three reasons: the spec allows
+client JavaScript only where HTML and CSS cannot do the job, and this can;
+the FAQ on the same page already uses `<details>`, so the interaction is
+consistent; and it degrades to a working disclosure widget with no styling at
+all.
+
+Layout details:
+
+- `.feature-grid` returns to `1fr 1fr` (collapsing to `1fr` at 700 px), so
+  thumbnails pair two to a row.
+- A 640 px image cannot fit a 386 px column, so
+  `.feature-grid article:has(details[open])` takes `grid-column: 1 / -1` and an
+  expanded card claims the whole row.
+- The thumbnail rule must be `.feature-grid summary img` rather than
+  `.shot summary img`: the latter ties on specificity with `.feature-grid img`
+  and would depend on rule order.
+- The full image lives in the `<details>` body, not the summary, so browsers
+  defer fetching it until the pane opens.
+- The summary carries two hints, `.hint-expand` and `.hint-collapse`, swapped
+  by `.shot[open]`. A single "click to enlarge" label would still say
+  "enlarge" while the pane was already open.
+- The thumbnail is hidden when open (`.shot[open] summary img`), since the full
+  image has replaced it.
+
+Thumbnail `alt` is empty by design: the adjacent hint text names the pane, so
+duplicating it would make screen readers announce the same thing twice. The
+full image keeps the descriptive `alt`.
 
 ### Processing
 
