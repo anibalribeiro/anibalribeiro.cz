@@ -50,7 +50,6 @@
 
 .feature-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 }
 
@@ -69,11 +68,12 @@
   color: var(--text);
 }
 
-/* The captures are 630px wide at 1x. Holding the rendered width to 360px keeps
-   them above 1.75x density, so the UI text stays sharp on a Retina display. */
+/* The captures come from a 1x display, so 630px is all the detail there is.
+   Rendering them 1:1 keeps their UI text at the size macOS drew it; anything
+   smaller shrinks that text below readability, and anything larger just blurs. */
 .feature-grid img {
   width: 100%;
-  max-width: 360px;
+  max-width: 630px;
   height: auto;
   border-radius: 8px;
   margin: 0.75rem auto 0;
@@ -136,10 +136,4 @@
 .product-links a {
   color: var(--accent);
   font-weight: 600;
-}
-
-@media (max-width: 700px) {
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
 }

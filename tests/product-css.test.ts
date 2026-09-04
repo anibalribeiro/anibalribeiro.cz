@@ -14,19 +14,16 @@ describe('WinMice product hero layout', () => {
   });
 });
 
-describe('WinMice screenshot density', () => {
-  it('lays the feature grid out in two columns', () => {
-    const grid = css.match(/\.feature-grid\s*\{([^}]*)\}/s);
-    expect(grid?.[1]).toMatch(/grid-template-columns\s*:\s*1fr 1fr/);
-  });
-
-  it('caps screenshot width so a 630px capture renders under half size', () => {
+describe('WinMice screenshot legibility', () => {
+  // The captures come from a 1x display, so the UI text inside them is only
+  // legible at 1:1. Rendering them smaller shrinks that text below readability.
+  it('never renders a screenshot below its 630px native width', () => {
     const img = css.match(/\.feature-grid img\s*\{([^}]*)\}/s);
-    expect(img?.[1]).toMatch(/max-width\s*:\s*360px/);
+    expect(img?.[1]).toMatch(/max-width\s*:\s*630px/);
   });
 
-  it('collapses the feature grid to one column on narrow viewports', () => {
-    const query = css.match(/@media \(max-width: 700px\)\s*\{([\s\S]*)\}/);
-    expect(query?.[1]).toMatch(/\.feature-grid\s*\{[^}]*grid-template-columns\s*:\s*1fr/);
+  it('stacks the feature grid so screenshots have room for native width', () => {
+    const grid = css.match(/\.feature-grid\s*\{([^}]*)\}/s);
+    expect(grid?.[1]).not.toMatch(/1fr 1fr/);
   });
 });
