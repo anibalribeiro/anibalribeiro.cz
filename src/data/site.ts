@@ -7,6 +7,7 @@ export type ProjectLink = {
 
 export type Project = {
   title: string;
+  icon: 'translate-pro' | 'winmice';
   tags: readonly string[];
   description: string;
   primary: ProjectLink;
@@ -32,6 +33,7 @@ export const site = {
   projects: [
     {
       title: 'Translate Pro for Brave',
+      icon: 'translate-pro',
       tags: ['Extension', 'Brave'],
       description: 'Faster, customizable in-page translation for Brave.',
       primary: {
@@ -41,6 +43,7 @@ export const site = {
     },
     {
       title: 'WinMice',
+      icon: 'winmice',
       tags: ['macOS', 'Swift'],
       description: 'Windows-style mouse scrolling and side buttons on Mac.',
       primary: {
@@ -49,7 +52,7 @@ export const site = {
       },
       secondary: {
         label: 'Product site',
-        href: 'https://anibalribeiro.github.io/WinMice/',
+        href: '/Winmice/',
       },
     },
   ] satisfies readonly Project[],

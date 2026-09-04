@@ -39,7 +39,7 @@ body {
   z-index: 20;
 }
 
-header {
+body > header {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -58,18 +58,18 @@ header {
   letter-spacing: -0.03em;
 }
 
-header nav {
+body > header nav {
   display: flex;
   gap: 1.1rem;
 }
 
-header nav a {
+body > header nav a {
   color: var(--muted);
   text-decoration: none;
 }
 
-header nav a:hover,
-header nav a:focus {
+body > header nav a:hover,
+body > header nav a:focus {
   color: var(--text);
 }
 
@@ -141,10 +141,21 @@ h2 {
 }
 
 .project-grid article {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 1rem;
+}
+
+.project-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .project-grid h3 {

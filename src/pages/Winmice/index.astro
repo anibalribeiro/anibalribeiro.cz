@@ -1,0 +1,182 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/projects/winmice.png';
+import settingsBackForward from '../../assets/winmice/settings-back-forward.png';
+import settingsGeneral from '../../assets/winmice/settings-general.png';
+import settingsPermissions from '../../assets/winmice/settings-permissions.png';
+import settingsScrolling from '../../assets/winmice/settings-scrolling.png';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { winmice } from '../../data/winmice';
+import Layout from '../../layouts/Layout.astro';
+import { origin } from '../../data/site';
+import { canonicalUrl, winmiceJsonLd } from '../../lib/seo';
+import '../../styles/product.css';
+
+const canonical = canonicalUrl('/Winmice');
+---
+<Layout
+  title={winmice.seo.title}
+  description={winmice.seo.description}
+  canonical={canonical}
+  jsonLd={JSON.stringify(winmiceJsonLd())}
+  ogImage={`${origin}/winmice-og.jpg`}
+  ogImageWidth="1200"
+  ogImageHeight="630"
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="WinMice icon" width={96} height={96} class="product-icon" />
+        <p class="badge">macOS utility</p>
+      </div>
+      <h1>{winmice.tagline}</h1>
+      <p class="lede">{winmice.lede}</p>
+      <p class="cta-row">
+        <a class="download" href={winmice.downloadUrl}>Download for Mac</a>
+        <a class="download" href="#install">Homebrew</a>
+      </p>
+    </header>
+
+    <section aria-labelledby="what-heading">
+      <h2 id="what-heading">What WinMice does</h2>
+      <p class="section-lede">
+        Two mouse behaviors Mac never quite matched: Windows-style autoscroll and
+        system-wide side-button navigation.
+      </p>
+      <div class="feature-grid">
+        <article>
+          <h3>Middle-click vector scrolling</h3>
+          <p>
+            Click the middle mouse button, move away from the anchor, and scroll by
+            direction and distance — Hold to Scroll or Hold to Start. A native
+            AutoScroll-style experience for macOS, without a browser extension.
+            Speed runs from 25% to 300%, and <em>Reverse vertical</em> or <em
+            >Reverse horizontal</em> flips either axis.
+          </p>
+          <Image
+            src={settingsScrolling}
+            alt="WinMice Settings, Scrolling pane"
+            width={630}
+            height={670}
+            loading="lazy"
+          />
+        </article>
+        <article>
+          <h3>Back and forward mouse buttons</h3>
+          <p>
+            Map any button your mouse reports to system-wide swipe or ⌘[ / ⌘]
+            navigation, on press or release. Buttons 4 and 5 are the defaults, and
+            mapping one direction onto the other's button swaps the two. A Sensible
+            Side Buttons-style workflow in the same tiny app.
+          </p>
+          <Image
+            src={settingsBackForward}
+            alt="WinMice Settings, Back & Forward pane"
+            width={630}
+            height={670}
+            loading="lazy"
+          />
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="inside-heading">
+      <h2 id="inside-heading">Inside the app</h2>
+      <p class="section-lede">
+        Everything is configured from one menu-bar window. Accessibility is the only
+        permission WinMice ever asks for.
+      </p>
+      <div class="feature-grid">
+        <article>
+          <h3>General</h3>
+          <p>
+            Launch at login, hide the menu bar icon, and put every setting back the
+            way it shipped with Restore Defaults.
+          </p>
+          <Image
+            src={settingsGeneral}
+            alt="WinMice Settings, General pane"
+            width={630}
+            height={670}
+            loading="lazy"
+          />
+        </article>
+        <article>
+          <h3>Permissions</h3>
+          <p>
+            One clear status row for Accessibility, with a shortcut into System
+            Settings if you ever need to revoke it.
+          </p>
+          <Image
+            src={settingsPermissions}
+            alt="WinMice Settings, Permissions pane"
+            width={630}
+            height={670}
+            loading="lazy"
+          />
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="tiny-heading">
+      <h2 id="tiny-heading">Native, not Electron</h2>
+      <p>
+        Built with Swift and AppKit. One lightweight menu-bar process, a 1.7 MB
+        download and about 4 MB installed — the app's own binary is under 1 MB, and
+        the rest is the Sparkle framework that delivers updates. No bundled
+        JavaScript runtime, and negligible CPU and memory while idle. Release builds
+        are Developer ID signed and notarized by Apple.
+      </p>
+    </section>
+
+    <section id="install" aria-labelledby="get-heading">
+      <h2 id="get-heading">Install WinMice</h2>
+      <h3>Download</h3>
+      <p>
+        <a class="download" href={winmice.downloadUrl}>Download latest release</a>
+      </p>
+      <p>
+        Open the DMG, drag <code>WinMice.app</code> to <code>/Applications</code>,
+        then open it. Grant <strong>Accessibility</strong> when asked.
+      </p>
+      <h3>Homebrew</h3>
+      <pre><code>{winmice.brew}</code></pre>
+    </section>
+
+    <section aria-labelledby="updates-heading">
+      <h2 id="updates-heading">Staying up to date</h2>
+      <p>
+        Shortly after you first run it, WinMice asks whether it may check for
+        updates. Say yes and it checks once a day, shows you what changed, and
+        installs only when you agree. You can change your mind any time in <strong
+        >Settings → General → Updates</strong>, or check on demand from the menu
+        bar.
+      </p>
+      <p>
+        If you installed with Homebrew, <code>brew upgrade --cask winmice</code
+        > keeps working just as well.
+      </p>
+    </section>
+
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">WinMice FAQ</h2>
+      {
+        winmice.faqs.map((faq) => (
+          <details>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))
+      }
+    </section>
+  </article>
+  <p class="product-links">
+    <a href={winmice.githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href={winmice.releasesUrl} target="_blank" rel="noopener noreferrer">Releases</a>
+    <a href={winmice.supportUrl} target="_blank" rel="noopener noreferrer">Support</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

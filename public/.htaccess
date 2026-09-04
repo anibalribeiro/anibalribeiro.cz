@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Consolidate WinMice URL casing to /Winmice/
+RewriteCond %{REQUEST_URI} !^/Winmice
+RewriteRule ^[Ww]in[Mm]ice/?$ /Winmice/ [R=301,L]

@@ -1,0 +1,145 @@
+.product-hero {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.product-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.product-hero .product-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  display: block;
+}
+
+.product-hero .badge {
+  margin: 0;
+}
+
+.product-hero h1 {
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.03em;
+  font-size: 2rem;
+}
+
+.lede,
+.section-lede {
+  color: var(--muted);
+  max-width: 40rem;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.1rem 0 0;
+}
+
+.cta-row .download {
+  margin-top: 0;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.feature-grid article {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.feature-grid h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--text);
+}
+
+/* The captures are 630px wide at 1x. Holding the rendered width to 360px keeps
+   them above 1.75x density, so the UI text stays sharp on a Retina display. */
+.feature-grid img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 8px;
+  margin: 0.75rem auto 0;
+  display: block;
+  border: 1px solid var(--line);
+}
+
+.product section {
+  margin-top: 2.5rem;
+}
+
+.product h2 {
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--text);
+}
+
+.product h3 {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.product pre {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+.product details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.product summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.product details p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+}
+
+.product-links {
+  display: flex;
+  gap: 1rem;
+  margin: 2.5rem 0 0;
+}
+
+.product-links a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}

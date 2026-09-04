@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { canonicalUrl, jsonLdGraph } from './seo';
+import { canonicalUrl, jsonLdGraph, winmiceJsonLd } from './seo';
 
 describe('seo helpers', () => {
   it('canonicalizes to the apex origin with a trailing slash', () => {
@@ -27,6 +27,21 @@ describe('seo helpers', () => {
         'https://github.com/anibalribeiro',
         'https://www.linkedin.com/in/anibal-ribeiro/',
       ],
+    });
+  });
+
+  it('canonicalizes nested product paths with a trailing slash', () => {
+    expect(canonicalUrl('/Winmice')).toBe('https://anibalribeiro.cz/Winmice/');
+    expect(canonicalUrl('/Winmice/')).toBe('https://anibalribeiro.cz/Winmice/');
+  });
+
+  it('builds WinMice SoftwareApplication JSON-LD', () => {
+    const graph = winmiceJsonLd();
+    const app = graph['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
+    expect(app).toMatchObject({
+      name: 'WinMice',
+      operatingSystem: 'macOS',
+      url: 'https://anibalribeiro.cz/Winmice/',
     });
   });
 });
