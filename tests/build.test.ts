@@ -436,11 +436,36 @@ describe('Winmice product page', () => {
       (node: { '@type': string }) => node['@type'] === 'FAQPage',
     );
     const questions = faq.mainEntity.map((entry: { name: string }) => entry.name);
-    expect(questions).toHaveLength(8);
+    expect(questions).toHaveLength(5);
     expect(questions).toContain(
-      'Does macOS have Windows-style autoscroll built in?',
+      'Does macOS support Windows-style autoscroll or mouse side buttons natively?',
     );
-    expect(questions).toContain('Is WinMice a Windows program?');
+    expect(questions).toContain('Does WinMice update itself?');
+    expect(questions).toContain(
+      'Is WinMice an AutoScroll or Sensible Side Buttons alternative?',
+    );
+  });
+
+  it('states the update policy once instead of in prose and the FAQ both', () => {
+    const { html } = parsePage('Winmice/index.html');
+    // The JSON-LD copy of the answer is intentional, so only count rendered prose.
+    const prose = html.replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, '');
+    expect(prose.match(/once a day/g)).toHaveLength(1);
+  });
+
+  it('keeps the visible copy tight', () => {
+    const { html } = parsePage('Winmice/index.html');
+    const article = html
+      .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, '')
+      .match(/<article class="product">([\s\S]*?)<p class="product-links"/)![1]
+      // Collapsed panels are not part of the on-load reading load.
+      .replace(/<details[\s\S]*?<\/details>/g, '');
+    const words = article
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z]+;/g, ' ')
+      .split(/\s+/)
+      .filter((w) => /[a-z0-9]/i.test(w));
+    expect(words.length).toBeLessThan(220);
   });
 });
 

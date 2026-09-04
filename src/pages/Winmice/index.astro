@@ -42,19 +42,13 @@ const canonical = canonicalUrl('/Winmice');
 
     <section aria-labelledby="what-heading">
       <h2 id="what-heading">What WinMice does</h2>
-      <p class="section-lede">
-        Two mouse behaviors Mac never quite matched: Windows-style autoscroll and
-        system-wide side-button navigation.
-      </p>
       <div class="feature-grid">
         <article>
           <h3>Middle-click vector scrolling</h3>
           <p>
-            Click the middle mouse button, move away from the anchor, and scroll by
-            direction and distance — Hold to Scroll or Hold to Start. A native
-            AutoScroll-style experience for macOS, without a browser extension.
-            Speed runs from 25% to 300%, and <em>Reverse vertical</em> or <em
-            >Reverse horizontal</em> flips either axis.
+            Middle-click, then move away from the anchor to scroll by direction and
+            distance — Hold to Scroll or Hold to Start. Speed runs 25% to 300%, and <em
+            >Reverse vertical</em> or <em>Reverse horizontal</em> flips either axis.
           </p>
           <details class="shot">
             <summary>
@@ -76,9 +70,7 @@ const canonical = canonicalUrl('/Winmice');
           <h3>Back and forward mouse buttons</h3>
           <p>
             Map any button your mouse reports to system-wide swipe or ⌘[ / ⌘]
-            navigation, on press or release. Buttons 4 and 5 are the defaults, and
-            mapping one direction onto the other's button swaps the two. A Sensible
-            Side Buttons-style workflow in the same tiny app.
+            navigation, on press or release. Buttons 4 and 5 are the defaults.
           </p>
           <details class="shot">
             <summary>
@@ -102,15 +94,13 @@ const canonical = canonicalUrl('/Winmice');
     <section aria-labelledby="inside-heading">
       <h2 id="inside-heading">Inside the app</h2>
       <p class="section-lede">
-        Everything is configured from one menu-bar window. Accessibility is the only
-        permission WinMice ever asks for.
+        Everything lives in one menu-bar window.
       </p>
       <div class="feature-grid">
         <article>
           <h3>General</h3>
           <p>
-            Launch at login, hide the menu bar icon, and put every setting back the
-            way it shipped with Restore Defaults.
+            Launch at login, hide the menu bar icon, and Restore Defaults.
           </p>
           <details class="shot">
             <summary>
@@ -131,8 +121,7 @@ const canonical = canonicalUrl('/Winmice');
         <article>
           <h3>Permissions</h3>
           <p>
-            One clear status row for Accessibility, with a shortcut into System
-            Settings if you ever need to revoke it.
+            Accessibility status at a glance, with a shortcut into System Settings.
           </p>
           <details class="shot">
             <summary>
@@ -156,11 +145,9 @@ const canonical = canonicalUrl('/Winmice');
     <section aria-labelledby="tiny-heading">
       <h2 id="tiny-heading">Native, not Electron</h2>
       <p>
-        Built with Swift and AppKit. One lightweight menu-bar process, a 1.7 MB
-        download and about 4 MB installed — the app's own binary is under 1 MB, and
-        the rest is the Sparkle framework that delivers updates. No bundled
-        JavaScript runtime, and negligible CPU and memory while idle. Release builds
-        are Developer ID signed and notarized by Apple.
+        Swift and AppKit, in one lightweight menu-bar process: a 1.7 MB download, no
+        bundled JavaScript runtime, negligible CPU and memory while idle. Signed and
+        notarized by Apple.
       </p>
     </section>
 
@@ -176,21 +163,6 @@ const canonical = canonicalUrl('/Winmice');
       </p>
       <h3>Homebrew</h3>
       <pre><code>{winmice.brew}</code></pre>
-    </section>
-
-    <section aria-labelledby="updates-heading">
-      <h2 id="updates-heading">Staying up to date</h2>
-      <p>
-        Shortly after you first run it, WinMice asks whether it may check for
-        updates. Say yes and it checks once a day, shows you what changed, and
-        installs only when you agree. You can change your mind any time in <strong
-        >Settings → General → Updates</strong>, or check on demand from the menu
-        bar.
-      </p>
-      <p>
-        If you installed with Homebrew, <code>brew upgrade --cask winmice</code
-        > keeps working just as well.
-      </p>
     </section>
 
     <section aria-labelledby="faq-heading">
