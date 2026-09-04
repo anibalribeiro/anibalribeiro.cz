@@ -399,12 +399,29 @@ describe('Winmice product page', () => {
     }
   });
 
-  it('documents reverse scrolling and in-app updates from v1.1.0', () => {
+  it('documents in-app updates from v1.1.0', () => {
     const { html } = parsePage('Winmice/index.html');
-    expect(html).toContain('Reverse vertical');
-    expect(html).toContain('Reverse horizontal');
     expect(html).toContain('brew upgrade --cask winmice');
     expect(html).toMatch(/checks? (for updates )?once a day/i);
+  });
+
+  it('reduces feature cards to a title and a screenshot', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const cards = [...document.querySelectorAll('.feature-grid article')];
+    expect(cards).toHaveLength(4);
+    for (const card of cards) {
+      expect(card.querySelector('h3')?.textContent?.trim()).toBeTruthy();
+      expect(card.querySelector('details.shot')).not.toBeNull();
+      // Only the expand/collapse hints remain as text outside the heading.
+      expect(card.querySelectorAll('p')).toHaveLength(0);
+    }
+  });
+
+  it('drops the No Electron claim from the lede', () => {
+    const { document } = parsePage('Winmice/index.html');
+    const lede = document.querySelector('.lede')?.textContent ?? '';
+    expect(lede).not.toMatch(/No Electron/i);
+    expect(lede).toContain('1.7 MB');
   });
 
   it('points Open Graph at the regenerated 1200x630 card', () => {

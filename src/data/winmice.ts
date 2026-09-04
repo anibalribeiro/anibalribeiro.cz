@@ -6,7 +6,7 @@ export const winmice = {
     description:
       'WinMice is a tiny native macOS menu-bar app for Windows-style middle-click vector scrolling (autoscroll) and configurable back/forward mouse side buttons. Swift and AppKit, a 1.7 MB download, no Electron. Developer ID signed and notarized.',
   },
-  lede: 'A tiny native menu-bar utility for middle-click vector scrolling and configurable back/forward side buttons. A 1.7 MB download. No Electron.',
+  lede: 'A tiny native menu-bar utility for middle-click vector scrolling and configurable back/forward side buttons. A 1.7 MB download.',
   downloadUrl: 'https://github.com/anibalribeiro/WinMice/releases/latest',
   githubUrl: 'https://github.com/anibalribeiro/WinMice',
   releasesUrl: 'https://github.com/anibalribeiro/WinMice/releases',
