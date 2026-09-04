@@ -10,7 +10,8 @@
     "build": "astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy": "astro build && node scripts/deploy.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^26.2.0",
+    "basic-ftp": "^6.2.1",
     "linkedom": "^0.18.13",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"
