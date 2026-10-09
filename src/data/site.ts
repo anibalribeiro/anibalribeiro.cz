@@ -19,7 +19,7 @@ export const site = {
   jobTitle: 'Software Engineering Manager',
   email: 'email@anibalribeiro.cz',
   bio: 'I’m a software engineering manager. Outside work I build small utility apps — the kind of tools I actually want to use. Recent ones: Translate Pro for Brave, a faster in-page translator for the browser, and WinMice, a native macOS menu-bar app that brings Windows-style mouse scrolling and side buttons to Mac.',
-  cvAvailable: false,
+  cvAvailable: true,
   photoAlt: 'Portrait of Aníbal Ribeiro',
   socials: {
     github: 'https://github.com/anibalribeiro',
