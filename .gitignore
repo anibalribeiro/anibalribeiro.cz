@@ -1,6 +1,37 @@
+# Dependencies
 node_modules/
+
+# Production build output
 dist/
+
+# Astro cache
 .astro/
+
+# Planning, specs & assistant artifacts
 .superpowers/
-.DS_Store
+docs/superpowers/
+docs/
+
+# Environment credentials & local secrets
 .env
+.env.local
+.env.*.local
+
+# OS metadata
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Editor directories & files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
