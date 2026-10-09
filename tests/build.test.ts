@@ -196,19 +196,14 @@ describe('work', () => {
 });
 
 describe('cv', () => {
-  it('shows coming soon and does not link to a missing PDF', () => {
+  it('exposes the CV link when available', () => {
     const { document, html } = parseIndex();
     const cv = document.querySelector('#cv');
     expect(cv?.querySelector('h2')?.textContent).toBe('CV');
-    expect(cv?.textContent).toContain('CV coming soon.');
-    expect(cv?.querySelector('a[href="/cv.pdf"]')).toBeNull();
-    expect(html).not.toContain('href="/cv.pdf"');
-    const download = cv?.querySelector('button, a, [aria-disabled]');
-    expect(download?.textContent).toContain('Download PDF');
-    const disabled =
-      download?.hasAttribute('disabled') ||
-      download?.getAttribute('aria-disabled') === 'true';
-    expect(disabled).toBe(true);
+    expect(cv?.querySelector('a[href="/cv/"]')).not.toBeNull();
+    expect(html).toContain('href="/cv/"');
+    const viewLink = cv?.querySelector('a[href="/cv/"]');
+    expect(viewLink?.textContent).toContain('View CV');
   });
 });
 

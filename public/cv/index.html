@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aníbal Ribeiro · Software Engineering Manager CV</title>
+  <style>
+    :root {
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --accent-border: #bfdbfe;
+      --border: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      background-color: #f8fafc;
+      line-height: 1.48;
+      font-size: 13.5px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Toolbar (Screen Only) */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      max-width: 860px;
+      margin: 0 auto;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .toolbar-title {
+      margin-right: auto;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toolbar-title svg {
+      width: 15px;
+      height: 15px;
+      color: var(--accent);
+    }
+
+    .print-btn {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.15s ease, transform 0.1s ease;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    }
+
+    .print-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .print-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* CV Document Container */
+    .page-wrapper {
+      max-width: 860px;
+      margin: 24px auto 60px;
+      background: #ffffff;
+      padding: 44px 52px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      border: 1px solid #eef2f6;
+    }
+
+    /* Header */
+    .cv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .header-info h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: 7px 22px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .contact-item svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .contact-item a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .contact-item a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 720px) {
+      .contact-grid {
+        grid-template-columns: repeat(2, auto);
+        gap: 8px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
+    .profile-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12), 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-icon {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2.2;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .summary-text {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.58;
+      text-align: justify;
+    }
+
+    /* Skills */
+    .skills-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 12.5px;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: baseline;
+      line-height: 1.45;
+    }
+
+    .skill-label-wrapper {
+      width: 200px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .skill-pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .skill-content {
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    /* Experience */
+    .experience-item {
+      margin-bottom: 18px;
+      page-break-inside: avoid;
+    }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .exp-title-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .exp-company-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      background: #f8fafc;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .exp-company-badge svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .exp-role {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .exp-meta {
+      font-size: 12px;
+      color: var(--text-light);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-tag svg {
+      width: 12px;
+      height: 12px;
+      stroke-width: 2;
+      color: var(--accent);
+    }
+
+    .exp-role-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      margin-bottom: 6px;
+      line-height: 1.48;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .bullet-list {
+      list-style-type: disc;
+      padding-left: 18px;
+      margin-top: 4px;
+    }
+
+    .bullet-list li {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 5.5px;
+      line-height: 1.46;
+    }
+
+    .bullet-list li strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Independent Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      page-break-inside: avoid;
+    }
+
+    .project-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .project-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .project-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--accent-border);
+    }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11.5px;
+      margin-top: auto;
+    }
+
+    .project-links a {
+      color: var(--accent);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .project-links a:hover {
+      text-decoration: underline;
+    }
+
+    .project-links svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    @media (max-width: 640px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Education & Languages */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      page-break-inside: avoid;
+    }
+
+    .edu-item h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .edu-item p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Print Specifics */
+    @media print {
+      body {
+        background: #ffffff;
+        font-size: 10.5pt;
+        color: #0f172a;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .page-wrapper {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+      }
+
+      .cv-header {
+        border-bottom: 1.5pt solid #cbd5e1;
+        margin-bottom: 7pt;
+        padding-bottom: 7pt;
+      }
+
+      .header-info h1 {
+        font-size: 19pt;
+        margin-bottom: 1pt;
+      }
+
+      .header-title {
+        font-size: 11pt;
+        margin-bottom: 3pt;
+      }
+
+      .contact-grid {
+        grid-template-columns: repeat(3, auto);
+        gap: 2pt 14pt;
+        font-size: 8pt;
+        margin-top: 2pt;
+      }
+
+      .contact-item svg {
+        width: 10px;
+        height: 10px;
+      }
+
+      .profile-photo {
+        width: 70px;
+        height: 70px;
+        border: 1.5pt solid #ffffff;
+        box-shadow: 0 1pt 3pt rgba(0,0,0,0.15);
+      }
+
+      .section {
+        margin-bottom: 8pt;
+      }
+
+      .section-title {
+        font-size: 9pt;
+        border-bottom: 0.75pt solid #cbd5e1;
+        margin-bottom: 3.5pt;
+        padding-bottom: 1.5pt;
+      }
+
+      .section-icon {
+        width: 12px;
+        height: 12px;
+      }
+
+      .summary-text {
+        font-size: 8.5pt;
+        line-height: 1.34;
+        text-align: left;
+      }
+
+      .skills-grid {
+        gap: 2.5pt;
+        font-size: 8.2pt;
+      }
+
+      .skill-row {
+        line-height: 1.32;
+      }
+
+      .skill-label-wrapper {
+        width: 145pt;
+        font-size: 8.2pt;
+        gap: 4px;
+      }
+
+      .skill-pip {
+        width: 4px;
+        height: 4px;
+      }
+
+      .skill-content {
+        font-size: 8.2pt;
+      }
+
+      .experience-item {
+        margin-bottom: 8pt;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .exp-header {
+        margin-bottom: 2pt;
+      }
+
+      .exp-role {
+        font-size: 9.5pt;
+      }
+
+      .exp-company-badge {
+        font-size: 8pt;
+        padding: 1pt 4pt;
+        border: 0.5pt solid var(--accent-border);
+      }
+
+      .exp-company-badge svg {
+        width: 11px;
+        height: 11px;
+      }
+
+      .exp-meta {
+        font-size: 8pt;
+      }
+
+      .exp-role-sub {
+        padding: 3pt 6pt;
+        font-size: 8.2pt;
+        line-height: 1.32;
+        margin-top: 2pt;
+        margin-bottom: 3pt;
+      }
+
+      .bullet-list {
+        margin-top: 2pt;
+        padding-left: 14pt;
+      }
+
+      .bullet-list li {
+        font-size: 8.2pt;
+        line-height: 1.3;
+        margin-bottom: 2.2pt;
+      }
+
+      .bullet-list li strong {
+        color: #0f172a;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6pt;
+      }
+
+      .project-card {
+        padding: 4.5pt 6pt;
+        border: 0.5pt solid #cbd5e1;
+      }
+
+      .project-header {
+        margin-bottom: 3pt;
+      }
+
+      .project-title {
+        font-size: 9pt;
+      }
+
+      .project-badge {
+        font-size: 7.2pt;
+        padding: 0.5pt 3.5pt;
+      }
+
+      .project-desc {
+        font-size: 8pt;
+        line-height: 1.28;
+        margin-bottom: 3pt;
+      }
+
+      .project-links {
+        font-size: 7.5pt;
+        gap: 8pt;
+      }
+
+      .project-links svg {
+        width: 8px;
+        height: 8px;
+      }
+
+      .two-col-grid {
+        gap: 16pt;
+      }
+
+      .edu-item h4 {
+        font-size: 9pt;
+      }
+
+      .edu-item p {
+        font-size: 8pt;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      @page {
+        size: A4;
+        margin: 8mm 11mm 8mm 11mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar (Screen Only) -->
+  <div class="toolbar no-print">
+    <a href="/" class="toolbar-title" style="text-decoration: none; color: var(--text-muted); gap: 6px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      anibalribeiro.cz
+    </a>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      Print / Save to PDF
+    </button>
+  </div>
+
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="cv-header">
+      <div class="header-info">
+        <h1>Aníbal Ribeiro</h1>
+        <div class="header-title">Software Engineering Manager</div>
+        <div class="contact-grid">
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Prague, Czech Republic
+          </span>
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <a href="https://anibalribeiro.cz" target="_blank">anibalribeiro.cz</a>
+          </span>
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <a href="mailto:email@anibalribeiro.cz">email@anibalribeiro.cz</a>
+          </span>
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            <a href="https://linkedin.com/in/anibal-ribeiro" target="_blank">linkedin.com/in/anibal-ribeiro</a>
+          </span>
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            <a href="https://github.com/anibalribeiro" target="_blank">github.com/anibalribeiro</a>
+          </span>
+          <span class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            +420 774 288 307
+          </span>
+        </div>
+      </div>
+      <img src="photo.jpg" alt="Aníbal Ribeiro" class="profile-photo" />
+    </header>
+
+    <!-- Professional Summary -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Professional Summary
+      </div>
+      <p class="summary-text">
+        Software Engineering Manager with 10+ years in software engineering and 4+ years leading distributed engineering teams. Currently manage 10+ backend engineers across Prague and Dublin, while leading delivery for a 15-person cross-functional scrum team powering Workday’s People Analytics platform. Focused on partnering closely with Product to turn product roadmaps into reliable high-scale backend services, mentoring engineers toward promotions, and using practical AI tools to cut engineering toil. Outside of work, I actively build and ship small utility apps.
+      </p>
+    </div>
+
+    <!-- Core Competencies -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        Core Competencies & Technical Skills
+      </div>
+      <div class="skills-grid">
+        <div class="skill-row">
+          <div class="skill-label-wrapper">
+            <span class="skill-pip"></span>
+            <span>People & Leadership:</span>
+          </div>
+          <span class="skill-content">Direct line management (10+ backend engineers), hiring & onboarding, mentoring toward promotions, cross-functional team leadership (Prague, Dublin, India), performance reviews.</span>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-wrapper">
+            <span class="skill-pip"></span>
+            <span>Delivery & Management:</span>
+          </div>
+          <span class="skill-content">Agile/Scrum planning, technical debt prioritization, capacity planning, SLA/SLO tracking, cross-team dependency management.</span>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-wrapper">
+            <span class="skill-pip"></span>
+            <span>Platform Architecture:</span>
+          </div>
+          <span class="skill-content">Distributed backend architectures, microservices orchestration, event-driven pipelines, API design, high-availability service design, incident reviews & RCAs.</span>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-wrapper">
+            <span class="skill-pip"></span>
+            <span>AI & Developer Tooling:</span>
+          </div>
+          <span class="skill-content">Practical AI workflows, LLM coding assistants (Claude, Cursor), prompt techniques, automated triage workflows, developer productivity tooling.</span>
+        </div>
+        <div class="skill-row">
+          <div class="skill-label-wrapper">
+            <span class="skill-pip"></span>
+            <span>Tech Stack & Cloud:</span>
+          </div>
+          <span class="skill-content">Kotlin, Java 21, Spring Boot, MySQL, Liquibase, Kafka, ZooKeeper, Docker, Kubernetes, AWS, GCP, Apache Spark, ANTLR, CI/CD, Snyk/CVE remediation.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional Experience -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        Professional Experience
+      </div>
+
+      <!-- Workday EM -->
+      <div class="experience-item">
+        <div class="exp-header">
+          <div class="exp-title-group">
+            <span class="exp-role">Software Engineering Manager — People Analytics</span>
+            <span class="exp-company-badge">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#1565c0"/><path fill="#ffa726" d="M33.0166,18.5a1.5,1.5,0,0,1-1.423-1.027,8.004,8.004,0,0,0-15.187,0,1.5,1.5,0,1,1-2.847-.946,11.004,11.004,0,0,1,20.88,0,1.5,1.5,0,0,1-1.423,1.973Z"/><path fill="#fff" d="M13.194,22.814a.659.659,0,0,1,.515-.305c.656-.006,1.314-.021,1.97.01a.681.681,0,0,1,.611.612c.645,2.623,1.279,5.25,1.921,7.874.188.81.418,1.612.541,2.437.127.74.152,1.492.272,2.234a28.172,28.172,0,0,1,.6-3.159q1.26-4.698,2.52-9.394a.772.772,0,0,1,.758-.611c.73-.018,1.462-.006,2.193-.006a.87.87,0,0,1,.905.612q.941,3.425,1.872,6.855a41.468,41.468,0,0,1,1.09,4.453c.059.418.117.837.203,1.253a62.653,62.653,0,0,1,1.354-7.043c.417-1.859.824-3.719,1.246-5.578a.753.753,0,0,1,.805-.551c.591-.003,1.182-.02,1.772.01a.513.513,0,0,1,.428.71Q32.992,29.787,31.218,36.349a.766.766,0,0,1-.727.63c-.915.03-1.833.007-2.748.012a.663.663,0,0,1-.733-.501c-.819-3.007-1.623-6.02-2.434-9.029a20.413,20.413,0,0,1-.536-3.209,26.77,26.77,0,0,1-.481,2.875q-1.247,4.648-2.5,9.298c-.094.502-.668.602-1.095.569-.851-.015-1.703.02-2.553-.015a.616.616,0,0,1-.591-.521q-1.792-6.533-3.581-13.068a3.452,3.452,0,0,1-.045-.576h0"/></svg>
+              Workday
+            </span>
+          </div>
+          <div class="exp-meta">
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Prague, Czech Republic
+            </span>
+            <span>·</span>
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Jan 2023 – Present
+            </span>
+          </div>
+        </div>
+        <div class="exp-role-sub">
+          Lead backend platform engineering for Workday People Analytics, delivering automated workforce insights for hundreds of enterprise tenants handling up to 11M+ worker records each. Promoted from Senior Software Engineer to Engineering Manager after leading core platform epics, architecture modernization, and developer tooling.
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Team Leadership:</strong> Manage 10+ backend engineers across Prague and Dublin, and act as delivery lead for a 15-person cross-functional scrum team (Backend, UI, SDET, Data across Prague, Dublin, and India). Hired and onboarded new team members, wrote onboarding guides, and coached several engineers through successful promotions.</li>
+          <li><strong>Delivery Leadership:</strong> Partner with Product, Data Team, UI, Security, and Legal to ship core platform features, from real-time workforce metric calculations and automated reporting to privacy-safe peer benchmarking.</li>
+          <li><strong>AI Knowledge Sharing:</strong> Run regular engineering roundtables to share practical AI developments, demo tools, and encourage experimentation. Host sessions on coding assistants, prompt techniques, and automation ideas that help teams streamline daily engineering tasks.</li>
+          <li><strong>Security & Vulnerability Triage:</strong> Set up continuous vulnerability remediation using AI-assisted workflows to triage incoming Snyk and CVE alerts, evaluate breaking-change risks, and automate dependency patch PRs.</li>
+          <li><strong>Platform Reliability & Operations:</strong> Keep weekly automated data refresh pipelines running smoothly across hundreds of enterprise tenants (handling up to 11M+ worker records per tenant). Built an on-call rotation with a 24-hour triage SLA, lead weekly operational reviews, and conduct blameless post-mortems (RCAs) to prevent repeat issues.</li>
+          <li><strong>Zero-Downtime Releases:</strong> Improved platform resilience with rolling zero-downtime upgrades, graceful service restarts, and automated retry mechanisms, keeping weekly release cycles uninterrupted.</li>
+          <li><strong>Office Culture:</strong> Help keep the Prague engineering community active and connected by organizing the office football group, hosting internal tech demos, and participating in site leadership activities.</li>
+        </ul>
+      </div>
+
+      <!-- Workday Sr SWE -->
+      <div class="experience-item">
+        <div class="exp-header">
+          <div class="exp-title-group">
+            <span class="exp-role">Senior Software Engineer — People Analytics</span>
+            <span class="exp-company-badge">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#1565c0"/><path fill="#ffa726" d="M33.0166,18.5a1.5,1.5,0,0,1-1.423-1.027,8.004,8.004,0,0,0-15.187,0,1.5,1.5,0,1,1-2.847-.946,11.004,11.004,0,0,1,20.88,0,1.5,1.5,0,0,1-1.423,1.973Z"/><path fill="#fff" d="M13.194,22.814a.659.659,0,0,1,.515-.305c.656-.006,1.314-.021,1.97.01a.681.681,0,0,1,.611.612c.645,2.623,1.279,5.25,1.921,7.874.188.81.418,1.612.541,2.437.127.74.152,1.492.272,2.234a28.172,28.172,0,0,1,.6-3.159q1.26-4.698,2.52-9.394a.772.772,0,0,1,.758-.611c.73-.018,1.462-.006,2.193-.006a.87.87,0,0,1,.905.612q.941,3.425,1.872,6.855a41.468,41.468,0,0,1,1.09,4.453c.059.418.117.837.203,1.253a62.653,62.653,0,0,1,1.354-7.043c.417-1.859.824-3.719,1.246-5.578a.753.753,0,0,1,.805-.551c.591-.003,1.182-.02,1.772.01a.513.513,0,0,1,.428.71Q32.992,29.787,31.218,36.349a.766.766,0,0,1-.727.63c-.915.03-1.833.007-2.748.012a.663.663,0,0,1-.733-.501c-.819-3.007-1.623-6.02-2.434-9.029a20.413,20.413,0,0,1-.536-3.209,26.77,26.77,0,0,1-.481,2.875q-1.247,4.648-2.5,9.298c-.094.502-.668.602-1.095.569-.851-.015-1.703.02-2.553-.015a.616.616,0,0,1-.591-.521q-1.792-6.533-3.581-13.068a3.452,3.452,0,0,1-.045-.576h0"/></svg>
+              Workday
+            </span>
+          </div>
+          <div class="exp-meta">
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Prague, Czech Republic
+            </span>
+            <span>·</span>
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2021 – Jan 2023
+            </span>
+          </div>
+        </div>
+        <div class="exp-role-sub">
+          Worked as backend tech lead on core data orchestration services, driving key architectural projects that led to my promotion into engineering management.
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Analytics Query Language (AQL):</strong> Co-created AQL using ANTLR, a declarative, SQL-like query language that moved data pipeline definitions into version-controlled, testable code in Git (with client libraries in TypeScript, Java, and Python). AQL still powers all People Analytics data pipelines today.</li>
+          <li><strong>AQL Workbench:</strong> Built an in-product web IDE from scratch, giving analysts and engineers a browser-based editor with syntax highlighting, auto-completion, query validation, and interactive test execution.</li>
+          <li><strong>Mentorship & Best Practices:</strong> Mentored junior and mid-level engineers in Kotlin, Spring Boot, and distributed systems, establishing team habits around thorough testing, clean code reviews, and documentation.</li>
+        </ul>
+      </div>
+
+      <!-- Kendaxa -->
+      <div class="experience-item">
+        <div class="exp-header">
+          <div class="exp-title-group">
+            <span class="exp-role">Software Engineer</span>
+            <span class="exp-company-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              Kendaxa
+            </span>
+          </div>
+          <div class="exp-meta">
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Prague, Czech Republic
+            </span>
+            <span>·</span>
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2017 – 2020
+            </span>
+          </div>
+        </div>
+        <div class="exp-role-sub">
+          Built microservices for enterprise CRM and document management.
+        </div>
+        <ul class="bullet-list">
+          <li>Built backend microservices and asynchronous processing pipelines for enterprise CRM and document management using Java, Spring Boot, Apache Kafka, and MongoDB.</li>
+          <li>Implemented event-driven document processing workflows and integrated frontend components using Angular and Docker.</li>
+          <li>Collaborated in an agile scrum team to deliver reliable customer relationship features on time.</li>
+        </ul>
+      </div>
+
+      <!-- Procter & Gamble -->
+      <div class="experience-item">
+        <div class="exp-header">
+          <div class="exp-title-group">
+            <span class="exp-role">Software Engineering Intern</span>
+            <span class="exp-company-badge">
+              <svg viewBox="0 0 720 720"><circle cx="360" cy="360" r="360" fill="#003da6"/><path fill="rgba(255,255,255,0.2)" d="M95.6 359.9C95.6 195 199.7 54.4 345.8.3 153.6 7.8 0 165.9 0 360c0 194.3 153.9 352.6 346.4 359.7C200.1 665.7 95.6 525 95.6 359.9z"/><g fill="#ffffff"><path d="M353.9 325.7c23.9-58.9-20.8-74.9-49.9-74.9h-96.4c8 5.5 6.7 12.8 5.1 17.3l-56.2 179.5c-2.2 7.1-10.6 14.6-15.1 15.7h78c-4.3-.8-10.4-6.9-8.2-15.2l20.4-64.9c.1 0 93.9 12.7 122.3-57.5zm-75.8-58.4c10.2 0 38.5 1.4 20.2 54.9-19.1 56.2-61.5 44.6-61.5 44.6l31.2-99.5h10.1z"/><path d="M416.3 463.4h52.5c-16.8-5.4-41.6-21.3-51.5-32.6 8-8.7 17.9-19.7 19.7-42h-27.2s5.2 3 5.2 9.4c0 5.9-2.4 14.1-7 19.8-8-11.8-16.5-25.3-19.5-45.1 10.7-5.3 25.7-11.1 37.6-21.5 11.3-9.9 13.9-19.3 14.1-25.4v-.8c0-6.4-2.5-12.4-7.1-16.9-7.9-7.8-20.3-11-33.4-8.6-10.5 2-19.4 7.6-23.9 11.7-15.8 14.9-17.8 39.4-17.8 50.5 0 2.7.1 4.7.2 5.9-.9.4-2.5 1-2.5 1-11.6 4.3-42.5 12.5-53.5 37.9-1.4 3.2-3.4 10.2-3.4 18.3 0 7 1.5 14.8 6 21.9 7.8 12.2 21 19.9 42.2 19.5 23-.4 45.7-16.1 49.7-19 3.9 3.7 14.2 13.4 19.6 16zm0-142c-2.7 17.1-24.9 34.4-30.3 36.7-1-9.6-.5-24.8 7.5-37.2 5.3-8.2 12.4-11.8 18.1-9.8 4.6 1.6 5.1 5.8 4.7 10.3zm-30.8 114.4c-3.1 1.9-15.3 8.1-26.7 9.2-10.6 1-28.2-3.1-28.1-24.3 0-18.1 19.7-31.4 30.4-36 4.3 17.5 14 37.3 24.4 51.1z"/><path d="M575.8 267.5c31.2-7.5 56.9 16.9 59.2 18.6l8.9-28.3c-12.3-3.7-101.8-34-165.1 38.2-38.9 44.4-48.4 135.4.9 159.8 52.8 26.1 111.1-4 115.4-6.1l24.1-76.8c2.6-9.3 8.5-15.3 18.9-19.2h-83.8c12.2 5.1 11.3 14.3 10.4 18.1l-24.1 76.8c-3.2.6-70.6 17.4-32.9-100.5 8.3-25.3 31-71.7 68.1-80.6z"/></g></svg>
+              Procter & Gamble
+            </span>
+          </div>
+          <div class="exp-meta">
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Rakovnik, Czech Republic
+            </span>
+            <span>·</span>
+            <span class="meta-tag">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              2016 – 2017
+            </span>
+          </div>
+        </div>
+        <div class="exp-role-sub">
+          Supply Chain Loss Elimination internal tool.
+        </div>
+        <ul class="bullet-list">
+          <li>Built an internal web application to track and reduce operational waste across P&G manufacturing plants, replacing paper-based tracking with a centralized system (PHP, Yii Framework, PostgreSQL, Bootstrap).</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Independent Projects & Applications -->
+    <div class="section">
+      <div class="section-title">
+        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+        Independent Projects & Applications
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">WinMice</span>
+            <span class="project-badge">Native macOS · Swift</span>
+          </div>
+          <p class="project-desc">
+            An open-source macOS menu bar app that brings Windows-style stepped mouse scrolling and side-button navigation to Mac.
+          </p>
+          <div class="project-links">
+            <a href="https://github.com/anibalribeiro/WinMice" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              GitHub
+            </a>
+            <a href="https://anibalribeiro.cz/Winmice/" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              Product Page
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Translate Pro for Brave</span>
+            <span class="project-badge">Browser Extension · TypeScript</span>
+          </div>
+          <p class="project-desc">
+            A browser extension published on the Chrome Web Store that brings faster, one-click in-page translation to the Brave browser.
+          </p>
+          <div class="project-links">
+            <a href="https://chromewebstore.google.com/detail/ibgigmlamcafnomafjpeogpipkdhjjgb" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+              Chrome Web Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education & Languages -->
+    <div class="two-col-grid section">
+      <div>
+        <div class="section-title">
+          <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+          Education
+        </div>
+        <div class="edu-item">
+          <h4>Federal University of Lavras (UFLA)</h4>
+          <p><strong>Bachelor of Science in Information Systems</strong> · Brazil (2012 – 2017)</p>
+          <p style="font-size: 11.5px; color: var(--text-light); margin-top: 2px;">Coursework: Distributed Systems, Algorithms & Data Structures, Compilers, Database Systems.</p>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">
+          <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          Languages
+        </div>
+        <div class="skills-grid" style="margin-top: 4px;">
+          <div class="skill-row">
+            <div class="skill-label-wrapper" style="width: 100px;">
+              <span class="skill-pip"></span>
+              <span>English:</span>
+            </div>
+            <span class="skill-content">Full Professional Fluency</span>
+          </div>
+          <div class="skill-row">
+            <div class="skill-label-wrapper" style="width: 100px;">
+              <span class="skill-pip"></span>
+              <span>Portuguese:</span>
+            </div>
+            <span class="skill-content">Native</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

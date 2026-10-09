@@ -26,7 +26,7 @@ const DIST = join(root, 'dist');
  * keeps unrelated files next to the site, so pruning is deliberately confined
  * to this list.
  */
-const PRUNABLE = ['_astro', 'Winmice'];
+const PRUNABLE = ['_astro', 'Winmice', 'cv'];
 
 const IGNORED = new Set(['.DS_Store']);
 

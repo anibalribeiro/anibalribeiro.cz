@@ -10,7 +10,7 @@ describe('site data', () => {
     expect(site.name).toBe('Aníbal Ribeiro');
     expect(site.jobTitle).toBe('Software Engineering Manager');
     expect(site.email).toBe('email@anibalribeiro.cz');
-    expect(site.cvAvailable).toBe(false);
+    expect(site.cvAvailable).toBe(true);
     expect(site.photoAlt).toBe('Portrait of Aníbal Ribeiro');
   });
 
