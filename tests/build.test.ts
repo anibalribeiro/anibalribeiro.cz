@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
@@ -20,7 +20,7 @@ describe('built homepage SEO', () => {
     expect(
       document.querySelector('meta[name="description"]')?.getAttribute('content'),
     ).toBe(
-      'Software engineering manager. Side projects: Translate Pro for Brave, a customizable in-page translator, and WinMice, a native macOS mouse utility.',
+      'Software engineering manager. Side projects: Translate Pro for Brave, a customizable in-page translator; WinMice, a native macOS mouse utility; and Fenix Runner, a customizable watch face for Garmin watches.',
     );
     expect(
       document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
@@ -103,19 +103,23 @@ describe('crawl files', () => {
       expect.arrayContaining([
         'https://anibalribeiro.cz/',
         'https://anibalribeiro.cz/Winmice/',
+        'https://anibalribeiro.cz/FenixRunner/',
+        'https://anibalribeiro.cz/FenixRunner/privacy/',
+        'https://anibalribeiro.cz/FenixRunner/terms/',
       ]),
     );
-    expect(locs).toHaveLength(2);
+    // The noindex buy page is deliberately left out.
+    expect(locs).toHaveLength(5);
   });
 });
 
 describe('header', () => {
-  it('exposes Work, CV, and Contact jump links', () => {
+  it('exposes Apps I made, CV, and Contact jump links', () => {
     const { document } = parseIndex();
     const header = document.querySelector('header');
     expect(header).toBeTruthy();
     expect(header?.querySelector('nav')).toBeTruthy();
-    expect(header?.querySelector('a[href="#work"]')?.textContent).toBe('Work');
+    expect(header?.querySelector('a[href="#work"]')?.textContent).toBe('Apps I made');
     expect(header?.querySelector('a[href="#cv"]')?.textContent).toBe('CV');
     expect(header?.querySelector('a[href="#contact"]')?.textContent).toBe(
       'Contact',
@@ -149,13 +153,13 @@ describe('hero', () => {
 });
 
 describe('work', () => {
-  it('renders both projects as h3s under #work', () => {
+  it('renders all three projects as h3s under #work', () => {
     const { document } = parseIndex();
     const work = document.querySelector('#work');
     expect(work).toBeTruthy();
-    expect(work?.querySelector('h2')?.textContent).toBe('Work');
+    expect(work?.querySelector('h2')?.textContent).toBe('Apps I made');
     const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
-    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice']);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Fenix Runner']);
   });
 
   it('uses named external links with noopener', () => {
@@ -181,10 +185,14 @@ describe('work', () => {
   it('shows a 48px official icon on each project card', () => {
     const { document } = parseIndex();
     const articles = [...document.querySelectorAll('#work article')];
-    expect(articles).toHaveLength(2);
+    expect(articles).toHaveLength(3);
 
     const alts = articles.map((article) => article.querySelector('img')?.getAttribute('alt'));
-    expect(alts).toEqual(['Translate Pro for Brave icon', 'WinMice icon']);
+    expect(alts).toEqual([
+      'Translate Pro for Brave icon',
+      'WinMice icon',
+      'Fenix Runner icon',
+    ]);
 
     for (const article of articles) {
       const img = article.querySelector('img');
@@ -481,4 +489,99 @@ describe('Winmice product page', () => {
   });
 });
 
+const workerOrigin = 'https://er.anibalcatheringer.workers.dev';
 
+describe('Fenix Runner product page', () => {
+  it('is emitted at /FenixRunner/ with product SEO and JSON-LD', () => {
+    const { document } = parsePage('FenixRunner/index.html');
+    expect(document.querySelector('title')?.textContent).toBe(
+      'Fenix Runner — a customizable watch face for Garmin (Connect IQ)',
+    );
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://anibalribeiro.cz/FenixRunner/',
+    );
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    const data = JSON.parse(
+      document.querySelector('script[type="application/ld+json"]')!.textContent!,
+    );
+    const app = data['@graph'].find((n: { '@type': string }) => n['@type'] === 'SoftwareApplication');
+    expect(app).toMatchObject({ name: 'Fenix Runner', operatingSystem: 'Garmin Connect IQ' });
+    expect(app.offers.price).toBe('3.00');
+  });
+
+  it('shows the cropped hero banner without the old product name baked in', () => {
+    const { document } = parsePage('FenixRunner/index.html');
+    const img = document.querySelector('figure.hero-banner img');
+    expect(img).toBeTruthy();
+    expect(img?.getAttribute('alt')).toContain('Fenix Runner');
+    expect(document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe(
+      'https://anibalribeiro.cz/fenix-runner-og.jpg',
+    );
+  });
+
+  it('sends the hero CTA to the unlock page and links the legal pages', () => {
+    const { document } = parsePage('FenixRunner/index.html');
+    const cta = document.querySelector('.product-hero a.download[href="/FenixRunner/buy/"]');
+    expect(cta?.textContent).toContain('$3.00');
+    expect(document.querySelector('a[href="/FenixRunner/privacy/"]')).toBeTruthy();
+    expect(document.querySelector('a[href="/FenixRunner/terms/"]')).toBeTruthy();
+  });
+});
+
+describe('Fenix Runner legal pages', () => {
+  it.each([
+    ['FenixRunner/privacy/index.html', 'Fenix Runner — Privacy Policy'],
+    ['FenixRunner/terms/index.html', 'Fenix Runner — Terms of Service'],
+  ])('%s is indexable, titled and has one h1', (file, title) => {
+    const { document } = parsePage(file);
+    expect(document.querySelector('title')?.textContent).toBe(title);
+    expect(document.querySelector('h1')?.textContent).toBe(title);
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
+      'index, follow',
+    );
+  });
+
+  it('name Creem as merchant of record and link the two policies together', () => {
+    const terms = parsePage('FenixRunner/terms/index.html').document;
+    const privacy = parsePage('FenixRunner/privacy/index.html').document;
+    expect(terms.body.textContent).toContain('merchant of record');
+    expect(privacy.body.textContent).toContain('merchant of record');
+    expect(terms.querySelector('a[href="/FenixRunner/privacy/"]')).toBeTruthy();
+    expect(privacy.querySelector('a[href="/FenixRunner/terms/"]')).toBeTruthy();
+  });
+
+  it('are linked from the product page', () => {
+    const { document } = parsePage('FenixRunner/index.html');
+    expect(document.querySelector('a[href="/FenixRunner/privacy/"]')).toBeTruthy();
+    expect(document.querySelector('a[href="/FenixRunner/terms/"]')).toBeTruthy();
+    expect(document.querySelector('a[href="/FenixRunner/buy/"]')).toBeTruthy();
+  });
+});
+
+describe('Fenix Runner buy page', () => {
+  it('is noindex and posts a Device Code to the licence Worker without scripts', () => {
+    const { document } = parsePage('FenixRunner/buy/index.html');
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe(
+      'noindex, follow',
+    );
+    const form = document.querySelector('form.buy-form');
+    expect(form?.getAttribute('method')).toBe('get');
+    expect(form?.getAttribute('action')).toBe(`${workerOrigin}/u`);
+    expect(form?.querySelector('input[name="d"]')?.hasAttribute('required')).toBe(true);
+    expect(document.querySelectorAll('script:not([type="application/ld+json"])')).toHaveLength(0);
+  });
+});
+
+describe('purchase redirect rules', () => {
+  const htaccess = readFileSync(path.join(root, 'public/.htaccess'), 'utf8');
+
+  it('forward a Device Code to the Worker checkout with a temporary redirect', () => {
+    expect(htaccess).toContain(`${workerOrigin}/u?d=%1`);
+    expect(htaccess).toMatch(/RewriteRule \^\(\?:buy\|FenixRunner\/buy\)\/\?\$ .* \[R=302,L,QSD\]/);
+  });
+
+  it('send /buy without a code to the form page', () => {
+    expect(htaccess).toMatch(/RewriteRule \^buy\/\?\$ \/FenixRunner\/buy\/ \[R=302,L\]/);
+  });
+});

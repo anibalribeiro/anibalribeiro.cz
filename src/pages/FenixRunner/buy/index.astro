@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../../assets/projects/fenix-runner.png';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { fenixRunner } from '../../../data/fenixRunner';
+import { origin } from '../../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import { canonicalUrl } from '../../../lib/seo';
+import '../../../styles/product.css';
+
+const { unlock } = fenixRunner;
+---
+<Layout
+  title="Unlock Fenix Runner — enter your Device Code"
+  description="Unlock the Fenix Runner trial version on your watch with a one-time creem checkout."
+  canonical={canonicalUrl(unlock.buyPath)}
+  ogImage={`${origin}/fenix-runner-icon.png`}
+  preloadHero={false}
+  robots="noindex, follow"
+>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="Fenix Runner icon" width={96} height={96} class="product-icon" />
+        <p class="badge">Unlock</p>
+      </div>
+      <h1>Unlock Fenix Runner</h1>
+      <p class="lede">
+        One payment of {unlock.price}, no subscription. Your watch is unlocked
+        permanently, and it keeps working without any server.
+      </p>
+    </header>
+
+    <section aria-labelledby="code-heading">
+      <h2 id="code-heading">Enter your Device Code</h2>
+      <p class="section-lede">
+        The 8-character code is shown on the locked watch screen below the QR
+        code, for example <code>MNT8-1AY5</code>. It also appears in the watch
+        face settings in the Garmin Connect app. Scanning the QR code on the
+        watch skips this step.
+      </p>
+      <form class="buy-form" method="get" action={`${unlock.workerOrigin}/u`}>
+        <label for="device-code">Device Code</label>
+        <input
+          id="device-code"
+          name="d"
+          placeholder="XXXX-XXXX"
+          minlength="8"
+          maxlength="9"
+          pattern="[A-Za-z0-9]{4}-?[A-Za-z0-9]{4}"
+          autocapitalize="characters"
+          autocomplete="off"
+          spellcheck="false"
+          required
+        />
+        <button type="submit" class="download">Continue to checkout ({unlock.price})</button>
+      </form>
+      <p class="form-note">
+        You are sent to a secure checkout run by <a href="https://www.creem.io" rel="noopener noreferrer">Creem</a>,
+        the merchant of record that handles payment, tax and receipts. I never
+        see your card details.
+      </p>
+    </section>
+
+    <section aria-labelledby="after-heading">
+      <h2 id="after-heading">After you pay</h2>
+      <ol>
+        <li>The checkout returns you to a page that shows a backup unlock code.</li>
+        <li>
+          The watch unlocks by itself within about 5 minutes while it is
+          connected to your phone.
+        </li>
+        <li>
+          To unlock at once, enter the backup code in the watch face settings.
+          Keep it: it works again after a reinstall on the same watch.
+        </li>
+      </ol>
+      <p>
+        The unlock belongs to one watch, because the Device Code comes from that
+        watch. For a refund or any problem, write to
+        <a href={fenixRunner.supportUrl}>email@anibalribeiro.cz</a> with your Device
+        Code.
+      </p>
+    </section>
+  </article>
+  <p class="product-links">
+    <a href="/FenixRunner/">About Fenix Runner</a>
+    <a href="/FenixRunner/privacy/">Privacy</a>
+    <a href="/FenixRunner/terms/">Terms</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

@@ -4,5 +4,6 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://anibalribeiro.cz',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  // The buy page is a noindex utility page, so it stays out of the sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/FenixRunner/buy/') })],
 });

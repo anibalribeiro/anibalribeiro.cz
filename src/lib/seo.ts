@@ -1,4 +1,5 @@
 import { origin, site } from '../data/site';
+import { fenixRunner } from '../data/fenixRunner';
 import { winmice } from '../data/winmice';
 
 export function canonicalUrl(pathname = '/'): string {
@@ -27,6 +28,40 @@ export function jsonLdGraph() {
         email: `mailto:${site.email}`,
         image: `${origin}/photo.jpg`,
         sameAs: [site.socials.github, site.socials.linkedin],
+      },
+    ],
+  };
+}
+
+export function fenixRunnerJsonLd() {
+  const url = canonicalUrl('/FenixRunner');
+  return {
+    '@context': 'https://schema.org' as const,
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: fenixRunner.name,
+        url,
+        image: `${origin}/fenix-runner-icon.png`,
+        screenshot: `${origin}/fenix-runner-og.jpg`,
+        description: fenixRunner.seo.description,
+        operatingSystem: 'Garmin Connect IQ',
+        applicationCategory: 'WatchFaceApplication',
+        author: { '@type': 'Person', name: site.name, url: canonicalUrl() },
+        offers: {
+          '@type': 'Offer',
+          price: '3.00',
+          priceCurrency: 'USD',
+          url: canonicalUrl(fenixRunner.unlock.buyPath),
+        },
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: fenixRunner.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
       },
     ],
   };

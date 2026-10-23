@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { canonicalUrl, jsonLdGraph, winmiceJsonLd } from './seo';
+import { canonicalUrl, fenixRunnerJsonLd, jsonLdGraph, winmiceJsonLd } from './seo';
 
 describe('seo helpers', () => {
   it('canonicalizes to the apex origin with a trailing slash', () => {
@@ -33,6 +33,8 @@ describe('seo helpers', () => {
   it('canonicalizes nested product paths with a trailing slash', () => {
     expect(canonicalUrl('/Winmice')).toBe('https://anibalribeiro.cz/Winmice/');
     expect(canonicalUrl('/Winmice/')).toBe('https://anibalribeiro.cz/Winmice/');
+    expect(canonicalUrl('/FenixRunner')).toBe('https://anibalribeiro.cz/FenixRunner/');
+    expect(canonicalUrl('/FenixRunner/')).toBe('https://anibalribeiro.cz/FenixRunner/');
   });
 
   it('builds WinMice SoftwareApplication JSON-LD', () => {
@@ -42,6 +44,16 @@ describe('seo helpers', () => {
       name: 'WinMice',
       operatingSystem: 'macOS',
       url: 'https://anibalribeiro.cz/Winmice/',
+    });
+  });
+
+  it('builds Fenix Runner SoftwareApplication JSON-LD', () => {
+    const graph = fenixRunnerJsonLd();
+    const app = graph['@graph'].find((node) => node['@type'] === 'SoftwareApplication');
+    expect(app).toMatchObject({
+      name: 'Fenix Runner',
+      operatingSystem: 'Garmin Connect IQ',
+      url: 'https://anibalribeiro.cz/FenixRunner/',
     });
   });
 });

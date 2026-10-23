@@ -1,0 +1,159 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/projects/fenix-runner.png';
+import hero from '../../assets/fenix-runner/hero.png';
+import screenAlwaysOn from '../../assets/fenix-runner/05-aod-digital.png';
+import screenAnalog from '../../assets/fenix-runner/03-analog-ember.png';
+import screenCrimson from '../../assets/fenix-runner/04-analog-crimson.png';
+import screenDigital from '../../assets/fenix-runner/01-digital-ember.png';
+import screenHybrid from '../../assets/fenix-runner/02-hybrid-trail.png';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { fenixRunner } from '../../data/fenixRunner';
+import { origin } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl, fenixRunnerJsonLd } from '../../lib/seo';
+import '../../styles/product.css';
+
+const { unlock, storeUrl } = fenixRunner;
+const styles = [
+  { title: 'Digital', src: screenDigital, alt: 'Fenix Runner digital time style on the ember rock background' },
+  { title: 'Hybrid', src: screenHybrid, alt: 'Fenix Runner hybrid time style, green hands over outlined digits on the topographic background' },
+  { title: 'Analog', src: screenAnalog, alt: 'Fenix Runner analog time style with three ring gauges and a segmented arc' },
+  { title: 'Accent colours', src: screenCrimson, alt: 'Fenix Runner analog time style with red hands and red gauges' },
+];
+---
+<Layout
+  title={fenixRunner.seo.title}
+  description={fenixRunner.seo.description}
+  canonical={canonicalUrl('/FenixRunner')}
+  jsonLd={JSON.stringify(fenixRunnerJsonLd())}
+  ogImage={`${origin}/fenix-runner-og.jpg`}
+  ogImageWidth="1200"
+  ogImageHeight="630"
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="Fenix Runner icon" width={96} height={96} class="product-icon" />
+        <p class="badge">Garmin watch face</p>
+      </div>
+      <h1>{fenixRunner.tagline}</h1>
+      <p class="lede">{fenixRunner.lede}</p>
+      <p class="cta-row">
+        {
+          storeUrl && (
+            <a class="download" href={storeUrl} target="_blank" rel="noopener noreferrer">
+              Get it on the Connect IQ Store
+            </a>
+          )
+        }
+        <a class="download" href={unlock.buyPath}>Unlock for {unlock.price}</a>
+        <a class="download" href="#trial">How the trial works</a>
+      </p>
+    </header>
+
+    <figure class="hero-banner">
+      <Image
+        src={hero}
+        alt="Three Fenix Runner watch faces: digital on rock texture, hybrid with outlined digits, and analog with red hands"
+        width={832}
+        densities={[1, 2]}
+        loading="eager"
+      />
+    </figure>
+
+    <section aria-labelledby="styles-heading">
+      <h2 id="styles-heading">Three time styles, your colours</h2>
+      <p class="section-lede">
+        Digital, analog or a hybrid of both — pick the style your wrist reads fastest.
+      </p>
+      <div class="feature-grid">
+        {
+          styles.map((shot) => (
+            <article>
+              <h3>{shot.title}</h3>
+              <details class="shot">
+                <summary>
+                  <Image src={shot.src} alt="" width={280} densities={[1, 2]} loading="lazy" />
+                  <span class="hint-expand">{shot.title} — click to enlarge</span>
+                  <span class="hint-collapse">{shot.title} — click to collapse</span>
+                </summary>
+                <Image src={shot.src} alt={shot.alt} width={420} densities={[1, 2]} loading="lazy" />
+              </details>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section aria-labelledby="yours-heading">
+      <h2 id="yours-heading">Make it yours</h2>
+      <ul>
+        <li>5 digit fonts, 4 hand styles and 4 gauge styles, 5 backgrounds or plain black, and 6 accent colours</li>
+        <li>Configurable data slots and arc gauges: steps, heart rate, altitude, weather and more</li>
+        <li>On-watch editor: change style, data and colours without your phone</li>
+        <li>Available in 36 languages</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="battery-heading">
+      <h2 id="battery-heading">Battery-friendly by design</h2>
+      <p>
+        Data slots refresh on a slow cadence the watch can afford, and the
+        always-on view stays dim with outlined digits.
+      </p>
+      <Image
+        src={screenAlwaysOn}
+        alt="Fenix Runner always-on view: dimmed outlined digits with the date and battery"
+        width={280}
+        densities={[1, 2]}
+        loading="lazy"
+        class="battery-shot"
+      />
+    </section>
+
+    <section id="trial" aria-labelledby="trial-heading">
+      <h2 id="trial-heading">Try it free, unlock it once</h2>
+      <ol>
+        <li>Install Fenix Runner and use all of it for {unlock.trial}.</li>
+        <li>
+          After that the face locks and shows a QR code with your Device Code.
+          Scan it, or enter the code on the <a href={unlock.buyPath}>unlock page</a>.
+        </li>
+        <li>
+          Pay {unlock.price} once on a secure Creem checkout. The watch unlocks by itself
+          within about 5 minutes and stays unlocked, with no subscription.
+        </li>
+      </ol>
+      <p>
+        <a class="download" href={unlock.buyPath}>Unlock for {unlock.price}</a>
+      </p>
+    </section>
+
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Fenix Runner FAQ</h2>
+      {
+        fenixRunner.faqs.map((faq) => (
+          <details>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))
+      }
+    </section>
+
+    <p class="form-note">
+      Fenix Runner is independent and not affiliated with or endorsed by Garmin.
+    </p>
+  </article>
+  <p class="product-links">
+    <a href={unlock.buyPath}>Unlock</a>
+    <a href="/FenixRunner/privacy/">Privacy</a>
+    <a href="/FenixRunner/terms/">Terms</a>
+    <a href={fenixRunner.supportUrl}>Contact</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

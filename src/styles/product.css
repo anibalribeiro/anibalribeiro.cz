@@ -186,6 +186,16 @@
   color: var(--muted);
 }
 
+/* The always-on view is a lone square shot, not a grid card: keep it small and
+   centered under its section. */
+.product .battery-shot {
+  display: block;
+  width: 280px;
+  margin: 1.25rem auto 0;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
 .product-links {
   display: flex;
   gap: 1rem;
@@ -201,4 +211,84 @@
   .feature-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Legal pages (privacy, terms): plain reading column, tighter sections. */
+.legal h1 {
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.03em;
+  font-size: 2rem;
+}
+
+.legal .meta {
+  margin: 0;
+  color: var(--muted);
+}
+
+.legal section {
+  margin-top: 1.75rem;
+}
+
+.legal p,
+.legal li {
+  max-width: 42rem;
+}
+
+.legal a,
+.buy-form + .form-note a,
+.product ol a {
+  color: var(--accent);
+}
+
+/* Buy page: one labelled field and a submit button, no script needed. */
+.buy-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 22rem;
+  margin-top: 1rem;
+}
+
+.buy-form label {
+  font-weight: 600;
+}
+
+.buy-form input {
+  font: 1.5rem ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.buy-form .download {
+  margin-top: 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--card);
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 40rem;
+}
+
+/* Wide product banner under the hero card; the image is already dark, so it
+   only needs rounded corners and a hairline to sit on the light page. */
+.product .hero-banner {
+  margin: 0 0 2.5rem;
+}
+
+.product .hero-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--line);
 }

@@ -1,0 +1,178 @@
+---
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { fenixRunner } from '../../../data/fenixRunner';
+import { origin } from '../../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import { canonicalUrl } from '../../../lib/seo';
+import '../../../styles/product.css';
+
+const { legal } = fenixRunner;
+---
+<Layout
+  title="Fenix Runner — Privacy Policy"
+  description="What data the Fenix Runner watch faces, the unlock service and this website handle, and your rights."
+  canonical={canonicalUrl('/FenixRunner/privacy')}
+  ogImage={`${origin}/fenix-runner-icon.png`}
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Fenix Runner — Privacy Policy</h1>
+    <p class="meta">Effective <time datetime={legal.effectiveDate}>{legal.effectiveLabel}</time></p>
+
+    <section>
+      <h2>Summary</h2>
+      <p>
+        The Fenix Runner watch face itself collects no personal data. The trial
+        and unlock versions contact one small server to learn whether a watch has
+        been paid for, and that server stores a random-looking Device Code, not
+        your name, email or location. Payment is handled by Creem, not by me.
+      </p>
+    </section>
+
+    <section>
+      <h2>Who is responsible</h2>
+      <p>
+        Aníbal Ribeiro, Prague, Czech Republic, is the controller for the data
+        described here. Contact:
+        <a href={fenixRunner.supportUrl}>email@anibalribeiro.cz</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>The watch face</h2>
+      <p>
+        Time, steps, heart rate, battery, weather and the other readings shown
+        by the face come from your watch and stay on it. The face does not
+        read them out, send them anywhere or build a profile. Your style, colour
+        and data-slot choices are stored on the watch and in the Garmin Connect
+        or Zepp app settings you already use.
+      </p>
+      <p>
+        A version that is sold through a store, with no trial, makes no network
+        requests of its own and has no licence server.
+      </p>
+    </section>
+
+    <section>
+      <h2>Trial and unlock versions</h2>
+      <p>
+        These versions lock after the trial and unlock after a one-time payment.
+        To do that, the watch works out a <strong>Device Code</strong>: 8
+        characters taken from a one-way hash of the watch's device identifier.
+        The identifier itself never leaves the watch.
+      </p>
+      <p>The watch sends the following to the unlock server, through your phone's connection:</p>
+      <ul>
+        <li>the Device Code;</li>
+        <li>whether the watch is already unlocked (yes or no);</li>
+        <li>
+          when you scan the QR code or open the buy page, the same Device Code
+          in the web address.
+        </li>
+      </ul>
+      <p>The unlock server stores:</p>
+      <ul>
+        <li>the time the Device Code was first seen, to track the trial;</li>
+        <li>
+          after a payment, the Device Code, the Creem order ID and the date, so
+          the unlock can be returned and shown again;
+        </li>
+        <li>IDs of payment events already processed, and refund records;</li>
+        <li>
+          a counter per IP address, kept about two minutes, to limit abuse.
+        </li>
+      </ul>
+      <p>
+        The server does not store your name, email address, payment details or
+        location. Standard operating logs (event type, Device Code, time) are
+        kept by the hosting provider, Cloudflare, which also sees IP addresses
+        as part of serving requests.
+      </p>
+      <p>
+        Once unlocked, the watch checks the code on the watch itself. Device
+        records are kept for as long as an unlock must keep working, because
+        codes sold must stay valid.
+      </p>
+    </section>
+
+    <section>
+      <h2>Payment</h2>
+      <p>
+        Payments are processed by <a href="https://www.creem.io" rel="noopener noreferrer">Creem</a>
+        as merchant of record. Creem collects and handles your payment details,
+        billing country, email address and tax information under
+        <a href="https://www.creem.io/privacy" rel="noopener noreferrer">its own privacy policy</a>.
+        I can see order details in my Creem account, such as your email address
+        and country, and use them to give support, process refunds and meet
+        accounting obligations.
+      </p>
+    </section>
+
+    <section>
+      <h2>This website</h2>
+      <p>
+        anibalribeiro.cz sets no cookies and runs no analytics or advertising
+        scripts. The web host keeps ordinary server logs (IP address, page, time)
+        for security and operations. If you email me, I use your message and
+        address only to reply.
+      </p>
+    </section>
+
+    <section>
+      <h2>Why I may process this data</h2>
+      <p>
+        To deliver what you bought and keep the unlock working (performance of a
+        contract), and to prevent abuse and keep records of sales (legitimate
+        interests and legal obligations).
+      </p>
+    </section>
+
+    <section>
+      <h2>Sharing and transfers</h2>
+      <p>
+        I do not sell data or use it for advertising. It is shared only with
+        Creem (payments) and Cloudflare (hosting the unlock server), who may
+        process it outside the EU under standard contractual safeguards. Garmin
+        and Zepp/Amazfit handle what their own stores and apps collect under
+        their own policies.
+      </p>
+    </section>
+
+    <section>
+      <h2>Your rights</h2>
+      <p>
+        You can ask to see, correct or delete data tied to your Device Code or
+        order, to restrict or object to its use, or to receive a copy. Write to
+        <a href={fenixRunner.supportUrl}>email@anibalribeiro.cz</a> and include your
+        Device Code. I may need to keep payment records for accounting law.
+        Deleting a paid record means an unlock can no longer be re-issued by the
+        server, but codes you already hold keep working on the watch. You may
+        also complain to the Czech data protection authority,
+        <a href="https://www.uoou.gov.cz" rel="noopener noreferrer">Úřad pro ochranu osobních údajů</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Children</h2>
+      <p>
+        Fenix Runner is not directed at children and I do not knowingly collect
+        data from them.
+      </p>
+    </section>
+
+    <section>
+      <h2>Changes</h2>
+      <p>
+        If this policy changes, the new version appears here with a new
+        effective date.
+      </p>
+    </section>
+  </article>
+  <p class="product-links">
+    <a href="/FenixRunner/">About Fenix Runner</a>
+    <a href="/FenixRunner/terms/">Terms</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

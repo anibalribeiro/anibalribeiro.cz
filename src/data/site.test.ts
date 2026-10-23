@@ -14,16 +14,17 @@ describe('site data', () => {
     expect(site.photoAlt).toBe('Portrait of Aníbal Ribeiro');
   });
 
-  it('includes the agreed bio mentioning both projects', () => {
+  it('includes the agreed bio mentioning the side projects', () => {
     expect(site.bio).toContain('software engineering manager');
     expect(site.bio).toContain('Translate Pro for Brave');
     expect(site.bio).toContain('WinMice');
+    expect(site.bio).toContain('Fenix Runner');
   });
 
   it('exposes SEO title and description', () => {
     expect(site.seo.title).toBe('Aníbal Ribeiro — Software Engineering Manager');
     expect(site.seo.description).toBe(
-      'Software engineering manager. Side projects: Translate Pro for Brave, a customizable in-page translator, and WinMice, a native macOS mouse utility.',
+      'Software engineering manager. Side projects: Translate Pro for Brave, a customizable in-page translator; WinMice, a native macOS mouse utility; and Fenix Runner, a customizable watch face for Garmin watches.',
     );
   });
 
@@ -32,8 +33,8 @@ describe('site data', () => {
     expect(site.socials.linkedin).toBe('https://www.linkedin.com/in/anibal-ribeiro/');
   });
 
-  it('defines Translate Pro and WinMice with the agreed links', () => {
-    expect(site.projects).toHaveLength(2);
+  it('defines Translate Pro, WinMice and Fenix Runner with the agreed links', () => {
+    expect(site.projects).toHaveLength(3);
 
     const translate = site.projects[0];
     expect(translate.title).toBe('Translate Pro for Brave');
@@ -62,6 +63,22 @@ describe('site data', () => {
     expect(winmice.secondary).toEqual({
       label: 'Product site',
       href: '/Winmice/',
+    });
+
+    const fenixRunner = site.projects[2];
+    expect(fenixRunner.title).toBe('Fenix Runner');
+    expect(fenixRunner.icon).toBe('fenix-runner');
+    expect(fenixRunner.tags).toEqual(['Garmin', 'Connect IQ']);
+    expect(fenixRunner.description).toBe(
+      'A customizable watch face for Garmin watches. Free 48-hour trial, then a one-time unlock.',
+    );
+    expect(fenixRunner.primary).toEqual({
+      label: 'Product site',
+      href: '/FenixRunner/',
+    });
+    expect(fenixRunner.secondary).toEqual({
+      label: 'Unlock',
+      href: '/FenixRunner/buy/',
     });
   });
 });

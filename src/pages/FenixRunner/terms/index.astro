@@ -1,0 +1,158 @@
+---
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { fenixRunner } from '../../../data/fenixRunner';
+import { origin } from '../../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import { canonicalUrl } from '../../../lib/seo';
+import '../../../styles/product.css';
+
+const { legal, unlock } = fenixRunner;
+---
+<Layout
+  title="Fenix Runner — Terms of Service"
+  description="The terms for using and buying Fenix Runner watch faces: trial, one-time unlock, refunds and liability."
+  canonical={canonicalUrl('/FenixRunner/terms')}
+  ogImage={`${origin}/fenix-runner-icon.png`}
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Fenix Runner — Terms of Service</h1>
+    <p class="meta">Effective <time datetime={legal.effectiveDate}>{legal.effectiveLabel}</time></p>
+
+    <section>
+      <h2>1. Who and what</h2>
+      <p>
+        Fenix Runner is a watch face made by Aníbal Ribeiro, Prague, Czech
+        Republic ("I", "me"). These terms apply when you install or buy Fenix
+        Runner for a Garmin (Connect IQ) watch, or an Amazfit (Zepp OS) watch where offered, and when you
+        use the unlock page on this website. If you buy from the Garmin Connect IQ
+        Store, Garmin's store terms also apply to that purchase.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Licence</h2>
+      <p>
+        I grant you a personal, non-exclusive, non-transferable licence to use
+        Fenix Runner on watches you own. You may not copy, resell or redistribute
+        it, reverse engineer it except where the law allows, remove the licence
+        checks, or share or sell unlock codes. The software, artwork and layouts
+        remain mine; bundled fonts stay under their own open licences.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Trial and unlock</h2>
+      <p>
+        The trial and unlock versions work fully for a trial period, then lock
+        until you unlock them. The Garmin trial lasts 48 hours; any other length is stated in
+        the store listing. Unlocking costs {unlock.price} USD, paid once, with no
+        subscription.
+      </p>
+      <p>
+        An unlock is tied to one watch through its Device Code. It stays valid
+        for that watch for the life of the app, including after a reinstall, and
+        works without contacting my server. A different watch needs its own
+        unlock. A price shown at checkout may include tax or differ by currency.
+      </p>
+    </section>
+
+    <section>
+      <h2>4. Payment</h2>
+      <p>
+        Payments are handled by
+        <a href="https://www.creem.io" rel="noopener noreferrer">Creem</a>, which is the
+        merchant of record: it sells to you, collects taxes and issues receipts,
+        and its terms apply to the payment. I do not receive your card details.
+        Purchases from the Garmin Connect IQ Store are charged by Garmin.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Refunds</h2>
+      <p>
+        If Fenix Runner does not work for you, email me within 14 days of buying
+        and I will refund you through Creem. Include your Device Code or order
+        number. A refunded purchase should no longer be used. Purchases from the
+        Garmin Connect IQ Store follow Garmin's refund rules instead. Your
+        statutory consumer rights are not affected.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Compatibility and changes</h2>
+      <p>
+        Watch models, firmware and phone apps differ, and data such as heart
+        rate or weather depends on what your watch provides. I test on selected
+        devices and cannot promise it will look or run the same on every watch.
+        I may update, change or stop supporting Fenix Runner. An unlock you have
+        paid for is not removed by an update.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. No medical use</h2>
+      <p>
+        Fenix Runner only displays readings from your watch. It is not a medical
+        device and must not be relied on for health or safety decisions.
+      </p>
+    </section>
+
+    <section>
+      <h2>8. Trademarks</h2>
+      <p>
+        Garmin, Connect IQ, Amazfit, Zepp and other names are trademarks of their
+        owners. Fenix Runner is independent and not affiliated with, endorsed by
+        or sponsored by them.
+      </p>
+    </section>
+
+    <section>
+      <h2>9. Warranty and liability</h2>
+      <p>
+        Fenix Runner is provided "as is", without promises beyond those the law
+        requires. To the extent the law allows, I am not liable for indirect or
+        lost-profit losses, and my total liability for any claim is limited to
+        the amount you paid for the app. Nothing here limits liability that
+        cannot be limited by law, including for intent or gross negligence, or
+        your mandatory consumer rights.
+      </p>
+    </section>
+
+    <section>
+      <h2>10. Privacy</h2>
+      <p>
+        How data is handled is described in the
+        <a href="/FenixRunner/privacy/">Privacy Policy</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>11. Law and disputes</h2>
+      <p>
+        These terms are governed by the law of the Czech Republic. If you are a
+        consumer, you keep the protection of the mandatory rules of the country
+        where you live. Please contact me first; most problems are solved by
+        email. Consumers in the EU may also use the Czech Trade Inspection
+        Authority (<a href="https://www.coi.cz" rel="noopener noreferrer">ČOI</a>) for
+        out-of-court dispute resolution.
+      </p>
+    </section>
+
+    <section>
+      <h2>12. Changes and contact</h2>
+      <p>
+        I may update these terms; changes apply to later purchases and appear
+        here with a new effective date. Questions:
+        <a href={fenixRunner.supportUrl}>email@anibalribeiro.cz</a>.
+      </p>
+    </section>
+  </article>
+  <p class="product-links">
+    <a href="/FenixRunner/">About Fenix Runner</a>
+    <a href="/FenixRunner/privacy/">Privacy</a>
+  </p>
+  <Footer slot="footer" />
+</Layout>

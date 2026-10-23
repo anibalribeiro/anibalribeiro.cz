@@ -3,3 +3,11 @@ RewriteEngine On
 # Consolidate WinMice URL casing to /Winmice/
 RewriteCond %{REQUEST_URI} !^/Winmice
 RewriteRule ^[Ww]in[Mm]ice/?$ /Winmice/ [R=301,L]
+
+# Fenix Runner purchase redirect.
+# /buy and /buy/?d=XXXX-XXXX hand a watch's Device Code to the licence Worker,
+# which opens a creem checkout bound to that device. Without a code, /buy/ shows
+# the static form at /FenixRunner/buy/. 302, not 301: the Worker origin may move.
+RewriteCond %{QUERY_STRING} (?:^|&)d=([0-9A-Za-z]{4}-?[0-9A-Za-z]{4})(?:&|$)
+RewriteRule ^(?:buy|FenixRunner/buy)/?$ https://er.anibalcatheringer.workers.dev/u?d=%1 [R=302,L,QSD]
+RewriteRule ^buy/?$ /FenixRunner/buy/ [R=302,L]
