@@ -33,8 +33,8 @@ describe('site data', () => {
     expect(site.socials.linkedin).toBe('https://www.linkedin.com/in/anibal-ribeiro/');
   });
 
-  it('defines the four projects with their product links', () => {
-    expect(site.projects).toHaveLength(4);
+  it('defines the nine projects with their product links', () => {
+    expect(site.projects).toHaveLength(9);
 
     const translate = site.projects[0];
     expect(translate.title).toBe('Translate Pro for Brave');
@@ -65,7 +65,7 @@ describe('site data', () => {
       href: '/Winmice/',
     });
 
-    const fenixRunner = site.projects[2];
+    const fenixRunner = site.projects[4];
     expect(fenixRunner.title).toBe('Fenix Runner');
     expect(fenixRunner.icon).toBe('fenix-runner');
     expect(fenixRunner.tags).toEqual(['Garmin', 'Connect IQ']);

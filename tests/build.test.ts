@@ -108,10 +108,15 @@ describe('crawl files', () => {
         'https://anibalribeiro.cz/FenixRunner/terms/',
         'https://anibalribeiro.cz/terms/',
         'https://anibalribeiro.cz/privacy/',
+        'https://anibalribeiro.cz/ridge/',
+        'https://anibalribeiro.cz/pulse/',
+        'https://anibalribeiro.cz/daylight/',
+        'https://anibalribeiro.cz/aurora/',
+        'https://anibalribeiro.cz/football-live/',
       ]),
     );
     // The noindex buy page is deliberately left out.
-    expect(locs).toHaveLength(10);
+    expect(locs).toHaveLength(15);
   });
 });
 
@@ -155,13 +160,13 @@ describe('hero', () => {
 });
 
 describe('work', () => {
-  it('renders all four projects as h3s under #work', () => {
+  it('renders all nine projects as h3s under #work', () => {
     const { document } = parseIndex();
     const work = document.querySelector('#work');
     expect(work).toBeTruthy();
     expect(work?.querySelector('h2')?.textContent).toBe('Apps I made');
     const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
-    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Fenix Runner', 'Poke Battle']);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Football Live', 'Poke Battle', 'Fenix Runner', 'Ridge', 'Pulse', 'Daylight', 'Aurora']);
   });
 
   it('uses named external links with noopener', () => {
@@ -187,14 +192,19 @@ describe('work', () => {
   it('shows a 48px official icon on each project card', () => {
     const { document } = parseIndex();
     const articles = [...document.querySelectorAll('#work article')];
-    expect(articles).toHaveLength(4);
+    expect(articles).toHaveLength(9);
 
     const alts = articles.map((article) => article.querySelector('img')?.getAttribute('alt'));
     expect(alts).toEqual([
       'Translate Pro for Brave icon',
       'WinMice icon',
-      'Fenix Runner icon',
+      'Football Live icon',
       'Poke Battle icon',
+      'Fenix Runner icon',
+      'Ridge icon',
+      'Pulse icon',
+      'Daylight icon',
+      'Aurora icon',
     ]);
 
     for (const article of articles) {
@@ -653,5 +663,42 @@ describe('Store-wide legal pages', () => {
     const { document } = parseIndex();
     expect(document.querySelector('footer a[href="/terms/"]')).toBeTruthy();
     expect(document.querySelector('footer a[href="/privacy/"]')).toBeTruthy();
+  });
+});
+
+
+describe('Garmin app pages', () => {
+  const apps = [
+    ['ridge', 'Ridge', 'e3617d06-8329-4dbb-936a-9565a0b3d72b', '2.99', 6],
+    ['pulse', 'Pulse', 'c8f95bf2-583f-4228-aac2-0c9b3b85c40b', '2.99', 6],
+    ['daylight', 'Daylight', 'c788e9e3-b158-4cb3-9d17-b444c687e861', '2.99', 8],
+    ['aurora', 'Aurora', '2a9eb91a-6c1e-49bf-87d9-16df3e68afeb', '2.99', 7],
+    ['football-live', 'Football Live', '275bac70-c30f-429e-a6ea-cadd9d53d5ee', '4.49', 8],
+  ] as const;
+
+  it.each(apps)('publishes /%s/ with its store link, price and screenshots', (slug, name, storeId, price, shots) => {
+    const { document } = parsePage(`${slug}/index.html`);
+    expect(document.querySelector('h1')?.textContent).toBe(name);
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`https://anibalribeiro.cz/${slug}/`);
+    expect(document.querySelector(`a[href="https://apps.garmin.com/apps/${storeId}"]`)).toBeTruthy();
+    expect(document.querySelector('.cta-row')?.textContent).toContain(`$${price}`);
+    expect(document.querySelectorAll('.feature-grid details.shot')).toHaveLength(shots);
+    expect(document.querySelector('.product-links a[href="/terms/"]')).toBeTruthy();
+    expect(document.querySelector('.product-links a[href="/privacy/"]')).toBeTruthy();
+    expect(document.querySelector('script[type="application/ld+json"]')?.textContent).toContain('SoftwareApplication');
+  });
+
+  it('links every app page from the homepage', () => {
+    const { document } = parseIndex();
+    for (const [slug] of apps) {
+      expect(document.querySelector(`#work a[href="/${slug}/"]`)).toBeTruthy();
+    }
+  });
+
+  it('keeps the watch faces and the data-driven Football Live disclosures distinct', () => {
+    expect(parsePage('ridge/index.html').document.body.textContent).toContain('refunded within 48 hours');
+    const football = parsePage('football-live/index.html').document.body.textContent ?? '';
+    expect(football).toContain('Do not use it for betting');
+    expect(football).toContain('favourite team codes');
   });
 });

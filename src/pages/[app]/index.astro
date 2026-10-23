@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { garminApps, garminStoreUrl } from '../../data/garminApps';
+import { origin, site } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl } from '../../lib/seo';
+import '../../styles/product.css';
+
+export function getStaticPaths() {
+  return garminApps.map((app) => ({ params: { app: app.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/apps/*/*.png', { eager: true });
+const asset = (file: string) => {
+  const found = images[`../../assets/apps/${app.slug}/${file}`];
+  if (!found) throw new Error(`Missing asset ${app.slug}/${file}`);
+  return found.default;
+};
+const icon = asset('icon.png');
+const hero = asset('hero.png');
+const storeUrl = garminStoreUrl(app.storeId);
+const path = `/${app.slug}`;
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: app.name,
+  description: app.description,
+  url: canonicalUrl(path),
+  operatingSystem: 'Garmin Connect IQ',
+  applicationCategory: app.category,
+  image: `${origin}${asset('icon.png').src}`,
+  author: { '@type': 'Person', name: site.name, url: canonicalUrl() },
+  offers: { '@type': 'Offer', price: app.price, priceCurrency: 'USD', url: storeUrl },
+});
+---
+<Layout
+  title={`${app.name} — ${app.tagline.replace(/\.$/, '')}`}
+  description={`${app.description} ${app.kind} for Garmin watches, $${app.price} on the Connect IQ Store.`}
+  canonical={canonicalUrl(path)}
+  jsonLd={jsonLd}
+  ogImage={`${origin}${hero.src}`}
+  ogImageWidth="1440"
+  ogImageHeight="720"
+  preloadHero={false}
+>
+  <Header slot="header" />
+  <article class="product" data-app={app.slug}>
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt={`${app.name} icon`} width={96} height={96} class="product-icon" />
+        <p class="badge">{app.kind}</p>
+      </div>
+      <h1>{app.name}</h1>
+      <p class="lede">{app.tagline}</p>
+      <p>{app.description}</p>
+      <p class="cta-row">
+        <a class="download" href={storeUrl} target="_blank" rel="noopener noreferrer">
+          Get it on the Connect IQ Store · ${app.price}
+        </a>
+        <a class="download" href="#screens">See screenshots</a>
+      </p>
+    </header>
+
+    <figure class="hero-banner">
+      <Image src={hero} alt={app.heroAlt} width={832} densities={[1, 2]} loading="eager" />
+    </figure>
+
+    <section aria-labelledby="features-heading">
+      <h2 id="features-heading">What it does</h2>
+      <ul>
+        {app.features.map((feature) => <li>{feature}</li>)}
+      </ul>
+    </section>
+
+    <section id="screens" aria-labelledby="screens-heading">
+      <h2 id="screens-heading">{app.shotsHeading}</h2>
+      <p class="section-lede">{app.shotsLede}</p>
+      <div class="feature-grid" data-kind={app.kind === 'Garmin watch app' ? 'app' : 'face'}>
+        {app.shots.map((shot) => (
+          <article>
+            <h3>{shot.title}</h3>
+            <details class="shot">
+              <summary>
+                <Image src={asset(shot.file)} alt="" width={280} densities={[1, 2]} loading="lazy" />
+                <span class="hint-expand">{shot.title} — click to enlarge</span>
+                <span class="hint-collapse">{shot.title} — click to collapse</span>
+              </summary>
+              <Image src={asset(shot.file)} alt={shot.alt} width={420} densities={[1, 2]} loading="lazy" />
+            </details>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {app.sections.map((section) => (
+      <section>
+        <h2>{section.heading}</h2>
+        {section.paragraphs?.map((text) => <p>{text}</p>)}
+        {section.items && <ul>{section.items.map((item) => <li>{item}</li>)}</ul>}
+      </section>
+    ))}
+
+    <section aria-labelledby="buy-heading">
+      <h2 id="buy-heading">Getting {app.name}</h2>
+      <p>
+        {app.name} costs ${app.price} USD, paid once on the Garmin Connect IQ Store, where the
+        list of compatible watches is shown. Install it from the Connect IQ app on your phone.
+        {app.refundNote ? ` ${app.refundNote}` : ''}
+      </p>
+      <p>
+        <a class="download" href={storeUrl} target="_blank" rel="noopener noreferrer">
+          Get it on the Connect IQ Store
+        </a>
+      </p>
+    </section>
+
+    <section aria-labelledby="privacy-heading">
+      <h2 id="privacy-heading">Privacy</h2>
+      <p>{app.privacyNote} See the <a href="/privacy/">Privacy Policy</a> for how this website handles data.</p>
+    </section>
+
+    {app.kind === 'Garmin watch app' && (
+      <p class="form-note">
+        Not affiliated with, endorsed by or sponsored by any league, club, data provider or Garmin.
+        Team and competition names are used only to identify matches.
+      </p>
+    )}
+  </article>
+  <nav class="product-links" aria-label={`${app.name} links`}>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href={`mailto:${site.email}`}>Contact</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>
+<style>
+  .product-links { flex-wrap: wrap; }
+  .feature-grid[data-kind='app'] img { border-radius: 50%; }
+</style>
