@@ -1,0 +1,31 @@
+---
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { legal, origin, site } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl } from '../../lib/seo';
+import '../../styles/product.css';
+---
+<Layout title="Privacy Policy" description="How personal data is handled when you visit anibalribeiro.cz, buy through Creem or contact support." canonical={canonicalUrl('/privacy')} ogImage={`${origin}/og.png`} preloadHero={false}>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective <time datetime={legal.effectiveDate}>{legal.effectiveLabel}</time></p>
+    <section><h2>Summary</h2><p>This website sets no cookies and runs no analytics or advertising scripts. Payments are handled by Creem, not by me. I only receive the order details I need to deliver what you bought, give support and keep accounting records. I do not sell personal data.</p></section>
+    <section><h2>Who is responsible</h2><p>{site.name}, Prague, Czech Republic, is the controller of the personal data described here. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p></section>
+    <section><h2>Visiting this website</h2><p>The hosting provider keeps ordinary server logs, such as IP address, requested page, browser information and time, for security and operation. I do not use these logs to profile visitors.</p></section>
+    <section><h2>Purchases through Creem</h2><p>Purchases are processed by <a href="https://www.creem.io/">Creem</a> as merchant of record. Creem collects your payment details, billing country, email address and tax information, and handles receipts, taxes and chargebacks under its <a href="https://www.creem.io/privacy">Privacy Notice</a> and <a href="https://www.creem.io/buyer-terms">Buyer Terms</a>. I do not receive your full card details. In my Creem account I can see order details such as your email address, country, the product bought, the order reference and payment or refund status. I use them to deliver the purchase, answer support requests, process refunds and keep required financial records.</p></section>
+    <section><h2>Product-specific data</h2><p>Some products process data beyond this page. For example, the Fenix Runner unlock service handles a device-derived code, and the Poke Battle watch apps play offline and keep gameplay on your device. Details are in the privacy policies for <a href="/FenixRunner/privacy/">Fenix Runner</a> and <a href="/pokebattle/privacy/">Poke Battle</a>.</p></section>
+    <section><h2>Support and email</h2><p>If you email me, I process your email address, your message and any order or device information you choose to include, only to answer your request and resolve related issues.</p></section>
+    <section><h2>Purposes, legal bases and retention</h2><p>Fulfilling a purchase and answering support requests are processed to perform a contract or take steps you request before one. Security and abuse prevention rely on legitimate interests. Sales and payment records are kept as long as accounting and tax law requires. Support correspondence is kept while needed to resolve the enquiry and any related dispute.</p></section>
+    <section><h2>Recipients and international transfers</h2><p>Data may be handled by Creem, the website host and email providers as needed for payments, website operation and support, and by authorities where legally required. These providers may process data outside the European Economic Area; where required, transfers rely on an adequacy decision or other lawful safeguards. Garmin and Apple handle what their own stores and apps collect under their own policies.</p></section>
+    <section><h2>Your rights</h2><p>Where applicable, you can request access to, correction or deletion of your personal data, restriction of or objection to its processing, and a portable copy. Email <a href={`mailto:${site.email}`}>{site.email}</a> with enough detail to identify your order or correspondence. Some records must be kept by law. You may also complain to your local data protection authority, in the Czech Republic the <a href="https://uoou.gov.cz/">Office for Personal Data Protection</a>.</p></section>
+    <section><h2>Children</h2><p>My products and website are not directed at children, and I do not knowingly collect personal data from them. Purchases must be made by someone legally able to enter the contract or with a parent or guardian’s permission.</p></section>
+    <section><h2>Changes</h2><p>Updates to this policy appear on this page with a new effective date.</p></section>
+  </article>
+  <nav class="product-links" aria-label="Legal links">
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>

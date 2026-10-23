@@ -106,10 +106,12 @@ describe('crawl files', () => {
         'https://anibalribeiro.cz/FenixRunner/',
         'https://anibalribeiro.cz/FenixRunner/privacy/',
         'https://anibalribeiro.cz/FenixRunner/terms/',
+        'https://anibalribeiro.cz/terms/',
+        'https://anibalribeiro.cz/privacy/',
       ]),
     );
     // The noindex buy page is deliberately left out.
-    expect(locs).toHaveLength(8);
+    expect(locs).toHaveLength(10);
   });
 });
 
@@ -630,5 +632,26 @@ describe('Poke Battle pages', () => {
       expect(sitemap).toContain(`https://anibalribeiro.cz/${route}`);
     }
     expect(parseIndex().document.querySelector('#work a[href="/pokebattle/"]')).toBeTruthy();
+  });
+});
+
+
+describe('Store-wide legal pages', () => {
+  it.each([
+    ['privacy/index.html', 'Privacy Policy', 'https://anibalribeiro.cz/privacy/', '/terms/'],
+    ['terms/index.html', 'Terms of Service', 'https://anibalribeiro.cz/terms/', '/privacy/'],
+  ])('publishes %s for the Creem shop', (file, heading, canonical, other) => {
+    const { document } = parsePage(file);
+    expect(document.querySelector('h1')?.textContent).toBe(heading);
+    expect(document.body.textContent).toContain('merchant of record');
+    expect(document.querySelector('a[href="https://www.creem.io/buyer-terms"]')).toBeTruthy();
+    expect(document.querySelector(`.product-links a[href="${other}"]`)).toBeTruthy();
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(canonical);
+  });
+
+  it('links both pages from the site footer', () => {
+    const { document } = parseIndex();
+    expect(document.querySelector('footer a[href="/terms/"]')).toBeTruthy();
+    expect(document.querySelector('footer a[href="/privacy/"]')).toBeTruthy();
   });
 });

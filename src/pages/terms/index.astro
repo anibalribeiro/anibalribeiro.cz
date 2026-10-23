@@ -1,0 +1,31 @@
+---
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { legal, origin, site } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl } from '../../lib/seo';
+import '../../styles/product.css';
+---
+<Layout title="Terms of Service" description="Terms for buying and using software from Aníbal Ribeiro's shop: payments through Creem, licences, refunds, liability and consumer rights." canonical={canonicalUrl('/terms')} ogImage={`${origin}/og.png`} preloadHero={false}>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Terms of Service</h1>
+    <p class="meta">Effective <time datetime={legal.effectiveDate}>{legal.effectiveLabel}</time></p>
+    <section><h2>1. Who sells and what these terms cover</h2><p>Software on this website is made and sold by {site.name}, an individual based in Prague, Czech Republic (“I”, “me”). These terms cover purchases of my apps and watch faces made through this website, currently <a href="/FenixRunner/">Fenix Runner</a> and <a href="/pokebattle/">Poke Battle</a>, and your use of this website. Each product also has its own terms with details specific to it; if they differ from these terms, the product terms apply to that product. Free tools such as WinMice and Translate Pro for Brave are provided under their own licences and store listings. Contact: <a href={`mailto:${site.email}`}>{site.email}</a>.</p></section>
+    <section><h2>2. Licence</h2><p>When you buy a product you receive a personal, non-exclusive, non-transferable licence to use it on devices you own, within the scope shown at checkout or in the product terms. You may not resell, redistribute or share the software, unlock codes or licence keys, or remove or bypass licence checks, except where the law permits. I keep all rights in the software and artwork. Third-party names, trademarks and open-licensed components remain the property of their owners.</p></section>
+    <section><h2>3. Orders and payment</h2><p>Payments are processed by <a href="https://www.creem.io/">Creem</a>, which acts as merchant of record: it sells to you, collects the price and any applicable taxes, and issues your receipt. Creem’s <a href="https://www.creem.io/buyer-terms">Buyer Terms</a> apply to the payment. The price, currency, taxes and what you are buying are shown before you pay. I do not receive your full card details. Purchases made through Garmin’s Connect IQ Store or the Apple App Store are processed by that store under its own terms.</p></section>
+    <section><h2>4. Delivery</h2><p>The products are digital. After payment you receive access, an unlock or download instructions as described for the product, typically within minutes. If something does not arrive, contact me with your order reference and I will fix it or refund you.</p></section>
+    <section><h2>5. Refunds and your consumer rights</h2><p>If a product does not work for you, email <a href={`mailto:${site.email}`}>{site.email}</a> with your order reference and a description of the problem. Refund conditions for each product are set out in its terms (for example, Fenix Runner offers a refund within 14 days of purchase). Refunds are issued through Creem to your original payment method. A refunded licence should no longer be used. Purchases through Garmin or Apple follow that store’s refund process. Nothing in these terms limits your mandatory consumer rights, including any right to withdraw from or complain about faulty digital content under the law where you live. Where required, your consent to immediate digital delivery and the related acknowledgement about withdrawal is collected at checkout.</p></section>
+    <section><h2>6. Compatibility, updates and changes</h2><p>Devices, firmware and phone apps differ, so I cannot promise identical behaviour on every device; check the supported devices before buying. I may update, change or stop supporting a product. An unlock or licence you have paid for is not removed by an update.</p></section>
+    <section><h2>7. Independence</h2><p>Garmin, Connect IQ, Apple, Pokémon and other names mentioned on this website belong to their respective owners. My products are independent and are not affiliated with, sponsored by or endorsed by them.</p></section>
+    <section><h2>8. Warranty and liability</h2><p>To the extent the law allows, products are provided as available without warranties beyond those the law requires, and I am not liable for indirect losses or lost profits. My total liability for any claim relating to a product is limited to the amount you paid for it. Nothing here excludes or limits liability that cannot lawfully be excluded, including liability for intent or gross negligence or your mandatory consumer rights.</p></section>
+    <section><h2>9. Privacy</h2><p>See the <a href="/privacy/">Privacy Policy</a> for how personal data is handled when you visit this website, buy a product or contact me.</p></section>
+    <section><h2>10. Law and disputes</h2><p>These terms are governed by Czech law, subject to the mandatory consumer protections of the country where you live. Please contact me first; most problems are solved by email. Eligible consumer disputes may be referred to the <a href="https://coi.gov.cz/en/alternative-dispute-resolution/">Czech Trade Inspection Authority</a> for out-of-court resolution. This does not limit your right to bring a claim before a competent court.</p></section>
+    <section><h2>11. Changes</h2><p>I may update these terms. Changes are published here with a new effective date and apply to later purchases; they do not remove rights attached to a purchase you have already made.</p></section>
+  </article>
+  <nav class="product-links" aria-label="Legal links">
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>

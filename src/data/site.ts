@@ -1,5 +1,10 @@
 export const origin = 'https://anibalribeiro.cz' as const;
 
+export const legal = {
+  effectiveDate: '2026-10-23',
+  effectiveLabel: '23 October 2026',
+} as const;
+
 export type ProjectLink = {
   label: string;
   href: string;
