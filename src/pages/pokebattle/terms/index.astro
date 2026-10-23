@@ -1,0 +1,33 @@
+---
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { pokeBattle } from '../../../data/pokeBattle';
+import { origin } from '../../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import { canonicalUrl } from '../../../lib/seo';
+import '../../../styles/product.css';
+---
+<Layout title="Poke Battle — Terms of Service" description="Terms for using Poke Battle, Creem purchases, delivery, refunds and consumer rights." canonical={canonicalUrl('/pokebattle/terms')} ogImage={`${origin}/pokebattle/icon.png`} ogImageWidth="500" ogImageHeight="500" preloadHero={false}>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Poke Battle — Terms of Service</h1>
+    <p class="meta">Effective <time datetime={pokeBattle.effectiveDate}>{pokeBattle.effectiveLabel}</time></p>
+    <section><h2>1. Scope and contact</h2><p>Poke Battle is a watch game developed by Aníbal Ribeiro, Prague, Czech Republic. These terms cover Poke Battle for Garmin, Random PokeBattle for Apple Watch where offered, and this product website. Contact: <a href="mailto:email@anibalribeiro.cz">email@anibalribeiro.cz</a>. The relevant store terms also apply to purchases made through Garmin or Apple.</p></section>
+    <section><h2>2. Permission to use</h2><p>Subject to these terms and the applicable purchase conditions, you may use the app for personal use on supported devices within the scope stated in your store listing or checkout. You may not resell or redistribute the app or bypass access controls, except where applicable law permits. Third-party names, artwork and open-licensed components remain subject to their owners’ rights and applicable licences. No ownership of Pokémon characters or artwork is transferred by a purchase.</p></section>
+    <section><h2>3. Purchases and delivery</h2><p>When offered, direct purchases are processed by <a href="https://www.creem.io/">Creem</a> as merchant of record under its <a href="https://www.creem.io/buyer-terms">Buyer Terms</a>. The total price, currency, applicable taxes, supported platform, licence scope and delivery or activation instructions are shown before payment. Follow those instructions and retain your receipt. No trial length, device-transfer entitlement or cross-platform purchase is promised unless expressly included in the offer. Purchases are not yet available through this page.</p></section>
+    <section><h2>4. Refunds and consumer rights</h2><p>For a purchase or access problem, contact <a href="mailto:email@anibalribeiro.cz">email@anibalribeiro.cz</a> with your order reference and a description of the issue. Creem purchases are subject to its buyer terms, the refund conditions disclosed before payment and applicable consumer law. Purchases through Apple or Garmin follow that store’s refund process. Nothing in these terms excludes mandatory rights concerning withdrawal, faulty digital content or other consumer remedies. Any consent to immediate digital delivery and acknowledgement concerning withdrawal must be obtained during checkout where required by law.</p></section>
+    <section><h2>5. Compatibility and saved progress</h2><p>Check the supported devices in the relevant listing before buying. Controls and presentation vary by platform and watch. Gameplay records and settings are stored on your device and may be lost when you reset, uninstall or replace it. Updates may change features or compatibility; this does not limit any rights or remedies required by law.</p></section>
+    <section><h2>6. Intellectual property and independence</h2><p>Pokémon and related names, characters and artwork belong to their respective owners, including Nintendo, Game Freak and The Pokémon Company. Garmin, Connect IQ and Apple are trademarks of their respective owners. This is an independent fan project and is not affiliated with, sponsored by or endorsed by those companies. These terms grant no rights in their trademarks or artwork beyond what applicable law permits.</p></section>
+    <section><h2>7. Warranty and liability</h2><p>To the extent permitted by law, the app is provided as available without additional warranties, and I am not liable for indirect losses or lost profits. Nothing excludes liability or guarantees that cannot lawfully be excluded, including mandatory consumer rights. Any statutory obligations concerning digital content remain applicable.</p></section>
+    <section><h2>8. Privacy</h2><p>See the <a href="/pokebattle/privacy/">Privacy Policy</a> for local gameplay storage, purchases, website requests and support correspondence.</p></section>
+    <section><h2>9. Law and disputes</h2><p>These terms are governed by Czech law, subject to the mandatory consumer protections applicable where you live. Please contact me about a dispute first. Eligible consumer disputes may be referred to the <a href="https://coi.gov.cz/en/alternative-dispute-resolution/">Czech Trade Inspection Authority</a> for alternative dispute resolution. This does not restrict your right to bring a claim before a competent court.</p></section>
+    <section><h2>10. Changes</h2><p>Changes will be published here with an updated effective date. They do not retrospectively remove rights attached to an existing purchase.</p></section>
+  </article>
+  <nav class="product-links" aria-label="Poke Battle links">
+    <a href="/pokebattle/">About Poke Battle</a>
+    <a href="/pokebattle/privacy/">Privacy</a><a href="/pokebattle/terms/">Terms</a>
+    <a href="/pokebattle/support/">Support</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>
+<style>.product-links { flex-wrap: wrap; }</style>

@@ -1,0 +1,33 @@
+---
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { pokeBattle } from '../../../data/pokeBattle';
+import { origin } from '../../../data/site';
+import Layout from '../../../layouts/Layout.astro';
+import { canonicalUrl } from '../../../lib/seo';
+import '../../../styles/product.css';
+---
+<Layout title="Poke Battle — Privacy Policy" description="How Poke Battle handles offline gameplay, Creem purchases, website visits and support." canonical={canonicalUrl('/pokebattle/privacy')} ogImage={`${origin}/pokebattle/icon.png`} ogImageWidth="500" ogImageHeight="500" preloadHero={false}>
+  <Header slot="header" />
+  <article class="product legal">
+    <h1>Poke Battle — Privacy Policy</h1>
+    <p class="meta">Effective <time datetime={pokeBattle.effectiveDate}>{pokeBattle.effectiveLabel}</time></p>
+    <section><h2>Summary</h2><p>Poke Battle for Garmin and Random PokeBattle for Apple Watch play offline. The current apps do not transmit battle history, Pokédex progress or settings to me, and contain no advertising or analytics. Buying through Creem, visiting this website or contacting support involves separate data processing described below.</p></section>
+    <section><h2>Who is responsible</h2><p>Aníbal Ribeiro, Prague, Czech Republic, is responsible for the personal data he processes for this product, website and support. Contact: <a href="mailto:email@anibalribeiro.cz">email@anibalribeiro.cz</a>.</p></section>
+    <section><h2>Data on your watch</h2><p>Battle history, win/loss records, Pokédex progress and options are saved locally. The current apps do not require an account or send gameplay, health or location data to a developer server. Use Options to reset battle history; uninstall the app to remove its local data. Platform backup and restore features are governed by Garmin or Apple. RESET HISTORY is not a request to erase payment or support records.</p></section>
+    <section><h2>Purchases through Creem</h2><p>When paid versions are offered through <a href="https://www.creem.io/">Creem</a>, Creem acts as merchant of record and handles checkout, payment details, receipts and taxes under its <a href="https://www.creem.io/privacy">Privacy Notice</a> and <a href="https://www.creem.io/buyer-terms">Buyer Terms</a>. I may receive your email address, order reference, purchased product, payment status and billing information needed to deliver the purchase, provide support, handle refunds and keep accounting records. I do not receive your full card details. The current watch apps have no device-code unlock server; this policy will be updated before a service requiring additional data is introduced.</p></section>
+    <section><h2>Website and support</h2><p>These product pages set no cookies and include no analytics or advertising scripts. The hosting provider may process ordinary request logs, including IP address, requested page, browser information and time, for security and operation. If you email me, I process your email address, message and any order or device information you choose to include to answer your request.</p></section>
+    <section><h2>Purposes, legal bases and retention</h2><p>Purchase fulfilment and requested support are processed to perform a contract or take steps you request before a purchase. Security, abuse prevention and resolving support issues rely on legitimate interests. Required financial records are retained to comply with legal obligations. Support correspondence is kept while needed to resolve the enquiry and related disputes; purchase records are kept for fulfilment and applicable accounting obligations. Gameplay stays on your device until you remove it.</p></section>
+    <section><h2>Recipients and international processing</h2><p>Data may be handled by Creem, website hosting and email providers as needed for purchases, website operation and support, and by authorities where legally required. I do not sell your data. Providers may process data outside the European Economic Area; where required, transfers must use an applicable adequacy decision or other lawful safeguards. Creem explains its processing and transfer safeguards in its privacy notice. Apple and Garmin handle their own stores, backups and platform services under their own policies.</p></section>
+    <section><h2>Your rights</h2><p>Where applicable, you can request access, correction, deletion, restriction or portability of personal data, or object to processing based on legitimate interests. Email <a href="mailto:email@anibalribeiro.cz">email@anibalribeiro.cz</a> with enough information to identify the relevant order or correspondence. Some records must be retained by law. I cannot retrieve gameplay stored only on your watch. You may complain to your local data protection authority or the Czech <a href="https://uoou.gov.cz/">Office for Personal Data Protection</a>.</p></section>
+    <section><h2>Children</h2><p>The current offline apps do not collect personal data from players, including children. Purchases must be made by someone legally able to enter the purchase contract or with appropriate parental permission. If you believe a child supplied personal data through support, contact me.</p></section>
+    <section><h2>Changes</h2><p>Updates to this policy will appear on this page with a revised effective date.</p></section>
+  </article>
+  <nav class="product-links" aria-label="Poke Battle links">
+    <a href="/pokebattle/">About Poke Battle</a>
+    <a href="/pokebattle/privacy/">Privacy</a><a href="/pokebattle/terms/">Terms</a>
+    <a href="/pokebattle/support/">Support</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>
+<style>.product-links { flex-wrap: wrap; }</style>

@@ -109,7 +109,7 @@ describe('crawl files', () => {
       ]),
     );
     // The noindex buy page is deliberately left out.
-    expect(locs).toHaveLength(5);
+    expect(locs).toHaveLength(8);
   });
 });
 
@@ -153,13 +153,13 @@ describe('hero', () => {
 });
 
 describe('work', () => {
-  it('renders all three projects as h3s under #work', () => {
+  it('renders all four projects as h3s under #work', () => {
     const { document } = parseIndex();
     const work = document.querySelector('#work');
     expect(work).toBeTruthy();
     expect(work?.querySelector('h2')?.textContent).toBe('Apps I made');
     const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
-    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Fenix Runner']);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Fenix Runner', 'Poke Battle']);
   });
 
   it('uses named external links with noopener', () => {
@@ -185,13 +185,14 @@ describe('work', () => {
   it('shows a 48px official icon on each project card', () => {
     const { document } = parseIndex();
     const articles = [...document.querySelectorAll('#work article')];
-    expect(articles).toHaveLength(3);
+    expect(articles).toHaveLength(4);
 
     const alts = articles.map((article) => article.querySelector('img')?.getAttribute('alt'));
     expect(alts).toEqual([
       'Translate Pro for Brave icon',
       'WinMice icon',
       'Fenix Runner icon',
+      'Poke Battle icon',
     ]);
 
     for (const article of articles) {
@@ -583,5 +584,51 @@ describe('purchase redirect rules', () => {
 
   it('send /buy without a code to the form page', () => {
     expect(htaccess).toMatch(/RewriteRule \^buy\/\?\$ \/FenixRunner\/buy\/ \[R=302,L\]/);
+  });
+});
+
+
+describe('Poke Battle pages', () => {
+  it('publishes a coming-soon product page with legal and existing support links', () => {
+    const { document } = parsePage('pokebattle/index.html');
+    expect(document.querySelector('h1')?.textContent).toBe('Poke Battle');
+    expect(document.body.textContent).toContain('Purchase coming soon');
+    expect(document.querySelector('.product-hero .cta-row')?.textContent).toContain('4.00 USD');
+    expect(document.querySelector('#purchase-heading')?.parentElement?.textContent).toContain('4.00 USD');
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://anibalribeiro.cz/pokebattle/');
+    for (const slug of ['privacy', 'terms', 'support']) {
+      expect(document.querySelector(`a[href="/pokebattle/${slug}/"]`)).toBeTruthy();
+      expect(readDist(`pokebattle/${slug}/index.html`)).toContain('<h1');
+    }
+    expect(document.querySelectorAll('.feature-grid details.shot')).toHaveLength(4);
+    expect(document.querySelector('a[href*="workers.dev"]')).toBeNull();
+    expect(document.querySelector('a[href*="creem.io"]')).toBeNull();
+  });
+
+  it('keeps privacy relevant to both apps and discloses Creem separately', () => {
+    const { document } = parsePage('pokebattle/privacy/index.html');
+    expect(document.body.textContent).toContain('Apple Watch');
+    expect(document.body.textContent).toContain('Garmin');
+    expect(document.body.textContent).toContain('merchant of record');
+    expect(document.querySelector('a[href="https://www.creem.io/privacy"]')).toBeTruthy();
+    expect(document.querySelector('a[href="/pokebattle/terms/"]')).toBeTruthy();
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://anibalribeiro.cz/pokebattle/privacy/');
+  });
+
+  it('provides purchase terms without promising a trial or existing activation system', () => {
+    const { document } = parsePage('pokebattle/terms/index.html');
+    expect(document.body.textContent).toContain('Purchases are not yet available');
+    expect(document.body.textContent).toContain('Refunds and consumer rights');
+    expect(document.querySelector('a[href="https://www.creem.io/buyer-terms"]')).toBeTruthy();
+    expect(document.querySelector('a[href="/pokebattle/privacy/"]')).toBeTruthy();
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://anibalribeiro.cz/pokebattle/terms/');
+  });
+
+  it('includes the product and legal pages in the sitemap and links from the homepage', () => {
+    const sitemap = readDist('sitemap-0.xml');
+    for (const route of ['pokebattle/', 'pokebattle/privacy/', 'pokebattle/terms/']) {
+      expect(sitemap).toContain(`https://anibalribeiro.cz/${route}`);
+    }
+    expect(parseIndex().document.querySelector('#work a[href="/pokebattle/"]')).toBeTruthy();
   });
 });

@@ -7,7 +7,7 @@ export type ProjectLink = {
 
 export type Project = {
   title: string;
-  icon: 'translate-pro' | 'winmice' | 'fenix-runner';
+  icon: 'translate-pro' | 'winmice' | 'fenix-runner' | 'pokebattle';
   tags: readonly string[];
   description: string;
   primary: ProjectLink;
@@ -68,6 +68,14 @@ export const site = {
         label: 'Unlock',
         href: '/FenixRunner/buy/',
       },
+    },
+    {
+      title: 'Poke Battle',
+      icon: 'pokebattle',
+      tags: ['Garmin', 'Game'],
+      description: 'Quick Pokémon battles on your wrist. All 151 originals, Game Boy sprites and offline play.',
+      primary: { label: 'Product site', href: '/pokebattle/' },
+      secondary: { label: 'Support', href: '/pokebattle/support/' },
     },
   ] satisfies readonly Project[],
 };

@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/pokebattle/icon.png';
+import battle from '../../assets/pokebattle/battle.png';
+import menu from '../../assets/pokebattle/menu.png';
+import dex from '../../assets/pokebattle/pokedex.png';
+import won from '../../assets/pokebattle/won.png';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { pokeBattle } from '../../data/pokeBattle';
+import { origin } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl } from '../../lib/seo';
+import '../../styles/product.css';
+const shots = [
+  { title: 'Pick your move', src: battle, alt: 'Poke Battle on Garmin: Doduo faces Squirtle with HP bars and four moves' },
+  { title: 'One more battle', src: menu, alt: 'Poke Battle main menu with New Battle, History, Pokédex and Options' },
+  { title: 'Build your Pokédex', src: dex, alt: 'Poke Battle Pokédex showing Squirtle and progress for species seen and beaten' },
+  { title: 'Keep your record', src: won, alt: 'Poke Battle victory screen showing Mankey versus Wartortle' },
+];
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+  name: pokeBattle.name, description: pokeBattle.description,
+  url: canonicalUrl('/pokebattle'), operatingSystem: 'Garmin Connect IQ',
+  applicationCategory: 'GameApplication', image: `${origin}/pokebattle/icon.png`,
+});
+---
+<Layout title="Poke Battle — Pokémon battles on your Garmin watch" description={pokeBattle.description}
+  canonical={canonicalUrl('/pokebattle')} jsonLd={jsonLd}
+  ogImage={`${origin}/pokebattle/icon.png`} ogImageWidth="500" ogImageHeight="500" preloadHero={false}>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="Poke Battle icon" width={96} height={96} class="product-icon" />
+        <p class="badge">Garmin watch game</p>
+      </div>
+      <h1>Poke Battle</h1>
+      <p class="lede">The original 151. Four moves. One quick battle on your wrist.</p>
+      <p>{pokeBattle.description}</p>
+      <p class="cta-row">
+        {pokeBattle.checkoutUrl ? <a class="download" href={pokeBattle.checkoutUrl}>Buy for {pokeBattle.price} USD</a> : <span class="badge">{pokeBattle.price} USD · Purchase coming soon</span>}
+        <a class="download" href="#play">See how it plays</a>
+      </p>
+    </header>
+    <section id="play" aria-labelledby="play-heading">
+      <h2 id="play-heading">A little Game Boy on your wrist</h2>
+      <p class="section-lede">Start a random matchup, choose a move each turn, and battle until one side faints. Lost a close one? Retry the same matchup.</p>
+      <div class="feature-grid">
+        {shots.map((shot) => <article>
+          <h3>{shot.title}</h3>
+          <details class="shot"><summary>
+            <Image src={shot.src} alt="" width={280} loading="lazy" />
+            <span class="hint-expand">{shot.title} — click to enlarge</span>
+            <span class="hint-collapse">{shot.title} — click to collapse</span>
+          </summary><Image src={shot.src} alt={shot.alt} width={454} loading="lazy" /></details>
+        </article>)}
+      </div>
+    </section>
+    <section aria-labelledby="features-heading">
+      <h2 id="features-heading">Short battles, plenty to come back for</h2>
+      <ul>
+        <li>All 151 original Pokémon, authentic Red/Blue sprites and classic battle text.</li>
+        <li>Four curated moves per Pokémon, modern type matchups, status conditions and a competitive opponent.</li>
+        <li>Battle history, a win/loss/draw record and a Pokédex saved on your watch.</li>
+        <li>Buttons or touch controls on compatible Garmin watches, including the Forerunner 970.</li>
+        <li>Offline battles, with no account, advertising or analytics.</li>
+      </ul>
+    </section>
+    <section aria-labelledby="purchase-heading">
+      <h2 id="purchase-heading">Buying Poke Battle</h2>
+      <p>Poke Battle will cost {pokeBattle.price} USD through Creem. Applicable taxes, supported devices and access instructions will be shown before you pay. Checkout is coming soon.</p>
+      <p>Already playing Random PokeBattle on Apple Watch? Visit the <a href="/pokebattle/support/">support page</a> for controls and help. App Store purchases are handled by Apple.</p>
+    </section>
+    <p class="form-note">An independent fan project. Pokémon and related names and artwork belong to their respective owners, including Nintendo, Game Freak and The Pokémon Company. Poke Battle is not affiliated with or endorsed by them or Garmin.</p>
+  </article>
+  <nav class="product-links" aria-label="Poke Battle links">
+    <a href="/pokebattle/privacy/">Privacy</a><a href="/pokebattle/terms/">Terms</a>
+    <a href="/pokebattle/support/">Support</a><a href={pokeBattle.supportUrl}>Contact</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>
+<style>
+  .feature-grid img { image-rendering: pixelated; }
+  .product-links { flex-wrap: wrap; }
+</style>

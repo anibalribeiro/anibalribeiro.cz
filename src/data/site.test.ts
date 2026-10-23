@@ -33,8 +33,8 @@ describe('site data', () => {
     expect(site.socials.linkedin).toBe('https://www.linkedin.com/in/anibal-ribeiro/');
   });
 
-  it('defines Translate Pro, WinMice and Fenix Runner with the agreed links', () => {
-    expect(site.projects).toHaveLength(3);
+  it('defines the four projects with their product links', () => {
+    expect(site.projects).toHaveLength(4);
 
     const translate = site.projects[0];
     expect(translate.title).toBe('Translate Pro for Brave');
