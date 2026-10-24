@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { buildSite, parseIndex, parsePage, readDist } from './helpers/build';
+import { pokeBattle } from '../src/data/pokeBattle';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 
@@ -624,8 +625,16 @@ describe('Poke Battle pages', () => {
     }
     expect(document.querySelectorAll('.feature-grid details.shot')).toHaveLength(4);
     expect(document.querySelector('a[href*="workers.dev"]')).toBeNull();
-    expect(document.querySelector('a[href*="creem.io"]')).toBeNull();
-    expect(document.body.textContent).not.toContain('through Creem');
+  });
+
+  it('explains the Zepp OS trial and the one-time Creem activation', () => {
+    const { document } = parsePage('pokebattle/index.html');
+    const purchase = document.querySelector('#purchase-heading')?.parentElement?.textContent ?? '';
+    expect(purchase).toContain('3 New Battles a day');
+    expect(purchase).toContain('through Creem');
+    expect(purchase).toContain('licence key');
+    const creem = document.querySelector('#purchase-heading')?.parentElement?.querySelector('a[href*="creem.io"]');
+    expect(creem?.getAttribute('href') ?? null).toBe(pokeBattle.zeppCheckoutUrl);
   });
 
   it('keeps privacy relevant to both apps and discloses Creem separately', () => {
@@ -634,13 +643,16 @@ describe('Poke Battle pages', () => {
     expect(document.body.textContent).toContain('Garmin');
     expect(document.body.textContent).toContain('merchant of record');
     expect(document.querySelector('a[href="https://www.creem.io/privacy"]')).toBeTruthy();
+    expect(document.body.textContent).toContain('Zepp OS licence activation');
+    expect(document.body.textContent).not.toContain('no device-code unlock server');
     expect(document.querySelector('a[href="/pokebattle/terms/"]')).toBeTruthy();
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://anibalribeiro.cz/pokebattle/privacy/');
   });
 
-  it('provides purchase terms without promising a trial or existing activation system', () => {
+  it('provides purchase terms for the Zepp OS trial and Creem activation', () => {
     const { document } = parsePage('pokebattle/terms/index.html');
-    expect(document.body.textContent).toContain('Purchases are not yet available');
+    expect(document.body.textContent).toContain('3 New Battles a day');
+    expect(document.body.textContent).toContain('licence key is deactivated');
     expect(document.body.textContent).toContain('Refunds and consumer rights');
     expect(document.querySelector('a[href="https://www.creem.io/buyer-terms"]')).toBeTruthy();
     expect(document.querySelector('a[href="/pokebattle/privacy/"]')).toBeTruthy();

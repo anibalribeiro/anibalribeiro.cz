@@ -75,7 +75,9 @@ const jsonLd = JSON.stringify({
     <section aria-labelledby="purchase-heading">
       <h2 id="purchase-heading">Get Poke Battle</h2>
       <p>Poke Battle costs ${pokeBattle.price} USD. The Garmin version is available now from the Garmin Store, and Garmin handles the purchase. Applicable taxes and supported devices are shown there before you pay.</p>
-      <p>The Zepp OS version and the Apple Watch version (listed on the App Store as Random PokeBattle) are coming soon. App Store purchases are handled by Apple, and prices in each store can vary by country and tax.</p>
+      <p>The Zepp OS version is coming soon. It will be free to download and play as a trial with 3 New Battles a day, reset at midnight. Retrying a matchup, History, the Pokédex and Options are never limited, and a battle you have started always finishes.</p>
+      <p>To unlock unlimited battles on Zepp OS, buy the full activation once for ${pokeBattle.price} USD {pokeBattle.zeppCheckoutUrl ? <a href={pokeBattle.zeppCheckoutUrl}>through Creem</a> : 'through Creem'}, which handles payment, tax and refunds as merchant of record. You can also open the checkout by scanning the QR code on the watch's Daily Limit screen or from Poke Battle's settings in the Zepp app. After paying, you receive a licence key on the confirmation page and by email. Enter it in Poke Battle's settings in the Zepp app to activate your watch. It is a one-time purchase for one watch, with no subscription, and you can move the licence to another watch later.</p>
+      <p>The Apple Watch version (listed on the App Store as Random PokeBattle) is coming soon. App Store purchases are handled by Apple, and prices in each store can vary by country and tax.</p>
       <p>Already playing? Visit the <a href="/pokebattle/support/">support page</a> for controls and help.</p>
     </section>
     <p class="form-note">An independent fan project. Pokémon and related names and artwork belong to their respective owners, including Nintendo, Game Freak and The Pokémon Company. Poke Battle is not affiliated with or endorsed by them, Garmin, Zepp Health or Apple.</p>
