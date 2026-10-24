@@ -75,8 +75,25 @@ const jsonLd = JSON.stringify({
     <section aria-labelledby="purchase-heading">
       <h2 id="purchase-heading">Get Poke Battle</h2>
       <p>Poke Battle costs ${pokeBattle.price} USD. The Garmin version is available now from the Garmin Store, and Garmin handles the purchase. Applicable taxes and supported devices are shown there before you pay.</p>
-      <p>The Zepp OS version is coming soon. It will be free to download and play as a trial with 3 New Battles a day, reset at midnight. Retrying a matchup, History, the Pokédex and Options are never limited, and a battle you have started always finishes.</p>
-      <p>To unlock unlimited battles on Zepp OS, buy the full activation once for ${pokeBattle.price} USD {pokeBattle.zeppCheckoutUrl ? <a href={pokeBattle.zeppCheckoutUrl}>through Creem</a> : 'through Creem'}, which handles payment, tax and refunds as merchant of record. You can also open the checkout by scanning the QR code on the watch's Daily Limit screen or from Poke Battle's settings in the Zepp app. After paying, you receive a licence key on the confirmation page and by email. Enter it in Poke Battle's settings in the Zepp app to activate your watch. It is a one-time purchase for one watch, with no subscription, and you can move the licence to another watch later.</p>
+      <div class="offer" aria-labelledby="zepp-offer-heading">
+        <p class="offer-kicker">Zepp OS · one-time purchase</p>
+        <h3 id="zepp-offer-heading">Poke Battle Full Version for Zepp OS — lifetime licence</h3>
+        <p class="offer-price"><strong>${pokeBattle.price} USD</strong> once. No subscription, no renewals. Applicable taxes are shown at checkout.</p>
+        <p>The Zepp OS version is coming soon. It will be free to download and play as a trial with 3 New Battles a day, reset at midnight. Retrying a matchup, History, the Pokédex and Options are never limited, and a battle you have started always finishes. The full version removes the daily limit.</p>
+        <h4>What's included</h4>
+        <ul>
+          <li>Unlimited New Battles on your Zepp OS watch, with no daily limit.</li>
+          <li>A lifetime licence: pay once and keep the full version, including future updates of the Zepp OS app.</li>
+          <li>The full game: all 151 original Pokémon, four moves each, battle history, a win/loss/draw record and the Pokédex.</li>
+          <li>Activation on one watch, which you can move to another watch later with your licence key and purchase email.</li>
+          <li>A licence key delivered straight away on the confirmation page and by email.</li>
+          <li>Offline play once activated, with no account, advertising or analytics.</li>
+        </ul>
+        <h4>How it works</h4>
+        <p>Buy the full version {pokeBattle.zeppCheckoutUrl ? <a href={pokeBattle.zeppCheckoutUrl}>through Creem</a> : 'through Creem'}, which handles payment, tax and refunds as merchant of record. You can also open the checkout by scanning the QR code on the watch's Daily Limit screen or from Poke Battle's settings in the Zepp app. Enter your licence key in Poke Battle's settings in the Zepp app to activate your watch. Activation needs a Zepp OS watch paired with the Zepp app and an internet connection.</p>
+        <p class="offer-note">The licence covers the Zepp OS version only; the Garmin and Apple Watch versions are sold through their own stores. Refunds and your consumer rights are described in the <a href="/pokebattle/terms/">terms</a>.</p>
+        {pokeBattle.zeppCheckoutUrl && <a class="download" href={pokeBattle.zeppCheckoutUrl}>Buy the full version · ${pokeBattle.price} USD</a>}
+      </div>
       <p>The Apple Watch version (listed on the App Store as Random PokeBattle) is coming soon. App Store purchases are handled by Apple, and prices in each store can vary by country and tax.</p>
       <p>Already playing? Visit the <a href="/pokebattle/support/">support page</a> for controls and help.</p>
     </section>
@@ -90,5 +107,12 @@ const jsonLd = JSON.stringify({
 </Layout>
 <style>
   .feature-grid img { image-rendering: pixelated; }
+  .offer { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0; }
+  .offer h3 { margin-top: 0.25rem; font-size: 1.15rem; }
+  .offer h4 { margin: 1.1rem 0 0.4rem; font-size: 0.95rem; color: var(--text); }
+  .offer ul { padding-left: 1.2rem; }
+  .offer-kicker { margin: 0; font-size: 0.85rem; color: var(--muted); }
+  .offer-price strong { font-size: 1.35rem; color: var(--text); }
+  .offer-note { font-size: 0.9rem; color: var(--muted); }
   .product-links { flex-wrap: wrap; }
 </style>

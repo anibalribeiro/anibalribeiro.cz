@@ -633,6 +633,11 @@ describe('Poke Battle pages', () => {
     expect(purchase).toContain('3 New Battles a day');
     expect(purchase).toContain('through Creem');
     expect(purchase).toContain('licence key');
+    const offer = document.querySelector('.offer');
+    expect(offer?.querySelector('h3')?.textContent).toContain('Full Version for Zepp OS');
+    expect(offer?.textContent).toContain('$4.00 USD');
+    expect(offer?.textContent).toContain('lifetime licence');
+    expect(offer?.textContent).toContain("What's included");
     const creem = document.querySelector('#purchase-heading')?.parentElement?.querySelector('a[href*="creem.io"]');
     expect(creem?.getAttribute('href') ?? null).toBe(pokeBattle.zeppCheckoutUrl);
   });
