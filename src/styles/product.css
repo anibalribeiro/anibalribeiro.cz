@@ -48,6 +48,32 @@
   margin-top: 0;
 }
 
+.platform-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.store-buttons .download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.store-icon {
+  flex: none;
+}
+
+.store-buttons .price-note {
+  color: var(--muted);
+  font-weight: 650;
+}
+
+.cta-secondary {
+  margin: 0.75rem 0 0;
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

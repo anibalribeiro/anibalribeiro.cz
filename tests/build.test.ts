@@ -601,12 +601,22 @@ describe('purchase redirect rules', () => {
 
 
 describe('Poke Battle pages', () => {
-  it('publishes a coming-soon product page with legal and existing support links', () => {
+  it('publishes the product page with three store buttons, the price and legal and support links', () => {
     const { document } = parsePage('pokebattle/index.html');
     expect(document.querySelector('h1')?.textContent).toBe('Poke Battle');
-    expect(document.body.textContent).toContain('Purchase coming soon');
-    expect(document.querySelector('.product-hero .cta-row')?.textContent).toContain('4.00 USD');
-    expect(document.querySelector('#purchase-heading')?.parentElement?.textContent).toContain('4.00 USD');
+    const tags = [...document.querySelectorAll('.platform-tags .badge')].map((tag) => tag.textContent);
+    expect(tags).toEqual(expect.arrayContaining(['Garmin', 'Zepp OS', 'Apple Watch']));
+    const cta = document.querySelector('.product-hero .cta-row');
+    expect(cta?.textContent).toContain('$4.00 USD');
+    const garmin = cta?.querySelector('a.download');
+    expect(garmin?.textContent?.trim()).toBe('Garmin Store');
+    expect(cta?.querySelectorAll('.download svg.store-icon')).toHaveLength(3);
+    expect(document.querySelector('header nav a[href="/Winmice/"]')).toBeNull();
+    expect(document.querySelector('header nav a[href="/FenixRunner/"]')).toBeNull();
+    expect(garmin?.getAttribute('href')).toBe('https://apps-developer.garmin.com/apps/2170cdb5-233a-4f64-9ee7-8b17967438c2');
+    const soon = [...(cta?.querySelectorAll('button.download[disabled]') ?? [])].map((button) => button.textContent);
+    expect(soon.map((label) => label?.trim())).toEqual(['Zepp OS · Coming soon', 'App Store · Coming soon']);
+    expect(document.querySelector('#purchase-heading')?.parentElement?.textContent).toContain('$4.00 USD');
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://anibalribeiro.cz/pokebattle/');
     for (const slug of ['privacy', 'terms', 'support']) {
       expect(document.querySelector(`a[href="/pokebattle/${slug}/"]`)).toBeTruthy();
@@ -615,6 +625,7 @@ describe('Poke Battle pages', () => {
     expect(document.querySelectorAll('.feature-grid details.shot')).toHaveLength(4);
     expect(document.querySelector('a[href*="workers.dev"]')).toBeNull();
     expect(document.querySelector('a[href*="creem.io"]')).toBeNull();
+    expect(document.body.textContent).not.toContain('through Creem');
   });
 
   it('keeps privacy relevant to both apps and discloses Creem separately', () => {

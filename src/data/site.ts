@@ -80,7 +80,7 @@ export const site = {
     {
       title: 'Poke Battle',
       icon: 'pokebattle',
-      tags: ['Garmin', 'Game'],
+      tags: ['Garmin', 'Zepp OS', 'Apple Watch', 'Game'],
       description: 'Quick Pokémon battles on your wrist. All 151 originals, Game Boy sprites and offline play.',
       primary: { label: 'Product site', href: '/pokebattle/' },
       secondary: { label: 'Support', href: '/pokebattle/support/' },

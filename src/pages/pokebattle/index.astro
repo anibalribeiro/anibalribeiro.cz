@@ -7,11 +7,13 @@ import dex from '../../assets/pokebattle/pokedex.png';
 import won from '../../assets/pokebattle/won.png';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
+import StoreIcon from '../../components/StoreIcon.astro';
 import { pokeBattle } from '../../data/pokeBattle';
 import { origin } from '../../data/site';
 import Layout from '../../layouts/Layout.astro';
 import { canonicalUrl } from '../../lib/seo';
 import '../../styles/product.css';
+const platforms = pokeBattle.stores.map((store) => store.platform);
 const shots = [
   { title: 'Pick your move', src: battle, alt: 'Poke Battle on Garmin: Doduo faces Squirtle with HP bars and four moves' },
   { title: 'One more battle', src: menu, alt: 'Poke Battle main menu with New Battle, History, Pokédex and Options' },
@@ -21,11 +23,11 @@ const shots = [
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org', '@type': 'SoftwareApplication',
   name: pokeBattle.name, description: pokeBattle.description,
-  url: canonicalUrl('/pokebattle'), operatingSystem: 'Garmin Connect IQ',
+  url: canonicalUrl('/pokebattle'), operatingSystem: 'Garmin Connect IQ, Zepp OS, watchOS',
   applicationCategory: 'GameApplication', image: `${origin}/pokebattle/icon.png`,
 });
 ---
-<Layout title="Poke Battle — Pokémon battles on your Garmin watch" description={pokeBattle.description}
+<Layout title="Poke Battle — Pokémon battles on your Garmin, Zepp OS and Apple Watch" description={pokeBattle.description}
   canonical={canonicalUrl('/pokebattle')} jsonLd={jsonLd}
   ogImage={`${origin}/pokebattle/icon.png`} ogImageWidth="500" ogImageHeight="500" preloadHero={false}>
   <Header slot="header" />
@@ -33,15 +35,18 @@ const jsonLd = JSON.stringify({
     <header class="product-hero">
       <div class="product-brand">
         <Image src={icon} alt="Poke Battle icon" width={96} height={96} class="product-icon" />
-        <p class="badge">Garmin watch game</p>
+        <p class="platform-tags">{platforms.map((platform) => <span class="badge">{platform}</span>)}<span class="badge">Watch game</span></p>
       </div>
       <h1>Poke Battle</h1>
       <p class="lede">The original 151. Four moves. One quick battle on your wrist.</p>
       <p>{pokeBattle.description}</p>
-      <p class="cta-row">
-        {pokeBattle.checkoutUrl ? <a class="download" href={pokeBattle.checkoutUrl}>Buy for {pokeBattle.price} USD</a> : <span class="badge">{pokeBattle.price} USD · Purchase coming soon</span>}
-        <a class="download" href="#play">See how it plays</a>
-      </p>
+      <div class="cta-row store-buttons" aria-label="Get Poke Battle">
+        {pokeBattle.stores.map((store) => store.url
+          ? <a class="download" href={store.url}><StoreIcon name={store.icon} />{store.label}</a>
+          : <button class="download" type="button" disabled><StoreIcon name={store.icon} />{store.label} · Coming soon</button>)}
+        <span class="price-note">${pokeBattle.price} USD</span>
+      </div>
+      <p class="cta-secondary"><a href="#play">See how it plays</a></p>
     </header>
     <section id="play" aria-labelledby="play-heading">
       <h2 id="play-heading">A little Game Boy on your wrist</h2>
@@ -60,19 +65,20 @@ const jsonLd = JSON.stringify({
     <section aria-labelledby="features-heading">
       <h2 id="features-heading">Short battles, plenty to come back for</h2>
       <ul>
-        <li>All 151 original Pokémon, authentic Red/Blue sprites and classic battle text.</li>
+        <li>All 151 original Pokémon, Game Boy-style sprites and classic battle text.</li>
         <li>Four curated moves per Pokémon, modern type matchups, status conditions and a competitive opponent.</li>
         <li>Battle history, a win/loss/draw record and a Pokédex saved on your watch.</li>
-        <li>Buttons or touch controls on compatible Garmin watches, including the Forerunner 970.</li>
+        <li>One game, three watch platforms: Garmin Connect IQ watches (including the Forerunner 970), Zepp OS watches and Apple Watch, with touch, buttons or the Digital Crown depending on the watch.</li>
         <li>Offline battles, with no account, advertising or analytics.</li>
       </ul>
     </section>
     <section aria-labelledby="purchase-heading">
-      <h2 id="purchase-heading">Buying Poke Battle</h2>
-      <p>Poke Battle will cost {pokeBattle.price} USD through Creem. Applicable taxes, supported devices and access instructions will be shown before you pay. Checkout is coming soon.</p>
-      <p>Already playing Random PokeBattle on Apple Watch? Visit the <a href="/pokebattle/support/">support page</a> for controls and help. App Store purchases are handled by Apple.</p>
+      <h2 id="purchase-heading">Get Poke Battle</h2>
+      <p>Poke Battle costs ${pokeBattle.price} USD. The Garmin version is available now from the Garmin Store, and Garmin handles the purchase. Applicable taxes and supported devices are shown there before you pay.</p>
+      <p>The Zepp OS version and the Apple Watch version (listed on the App Store as Random PokeBattle) are coming soon. App Store purchases are handled by Apple, and prices in each store can vary by country and tax.</p>
+      <p>Already playing? Visit the <a href="/pokebattle/support/">support page</a> for controls and help.</p>
     </section>
-    <p class="form-note">An independent fan project. Pokémon and related names and artwork belong to their respective owners, including Nintendo, Game Freak and The Pokémon Company. Poke Battle is not affiliated with or endorsed by them or Garmin.</p>
+    <p class="form-note">An independent fan project. Pokémon and related names and artwork belong to their respective owners, including Nintendo, Game Freak and The Pokémon Company. Poke Battle is not affiliated with or endorsed by them, Garmin, Zepp Health or Apple.</p>
   </article>
   <nav class="product-links" aria-label="Poke Battle links">
     <a href="/pokebattle/privacy/">Privacy</a><a href="/pokebattle/terms/">Terms</a>
