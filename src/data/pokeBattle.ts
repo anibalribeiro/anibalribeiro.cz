@@ -5,7 +5,7 @@ export const pokeBattle = {
   supportUrl: 'mailto:email@anibalribeiro.cz',
   // `url: null` renders a disabled "coming soon" button. Never use the Fenix Runner Worker.
   stores: [
-    { id: 'garmin', icon: 'garmin' as const, platform: 'Garmin', label: 'Garmin Store', url: 'https://apps-developer.garmin.com/apps/2170cdb5-233a-4f64-9ee7-8b17967438c2' as string | null },
+    { id: 'garmin', icon: 'garmin' as const, platform: 'Garmin', label: 'Garmin Store', url: 'https://apps.garmin.com/apps/2170cdb5-233a-4f64-9ee7-8b17967438c2' as string | null },
     { id: 'zepp', icon: 'zepp' as const, platform: 'Zepp OS', label: 'Zepp OS', url: null as string | null },
     { id: 'apple', icon: 'appstore' as const, platform: 'Apple Watch', label: 'App Store', url: null as string | null },
   ],

@@ -613,7 +613,7 @@ describe('Poke Battle pages', () => {
     expect(cta?.querySelectorAll('.download svg.store-icon')).toHaveLength(3);
     expect(document.querySelector('header nav a[href="/Winmice/"]')).toBeNull();
     expect(document.querySelector('header nav a[href="/FenixRunner/"]')).toBeNull();
-    expect(garmin?.getAttribute('href')).toBe('https://apps-developer.garmin.com/apps/2170cdb5-233a-4f64-9ee7-8b17967438c2');
+    expect(garmin?.getAttribute('href')).toBe('https://apps.garmin.com/apps/2170cdb5-233a-4f64-9ee7-8b17967438c2');
     const soon = [...(cta?.querySelectorAll('button.download[disabled]') ?? [])].map((button) => button.textContent);
     expect(soon.map((label) => label?.trim())).toEqual(['Zepp OS · Coming soon', 'App Store · Coming soon']);
     expect(document.querySelector('#purchase-heading')?.parentElement?.textContent).toContain('$4.00 USD');
