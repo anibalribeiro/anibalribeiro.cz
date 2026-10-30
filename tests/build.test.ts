@@ -730,3 +730,24 @@ describe('Garmin app pages', () => {
     expect(football).toContain('favourite team codes');
   });
 });
+
+describe('PK Battle Apple pages', () => {
+  // Support and privacy pages for the Apple Watch listing only: unlinked, noindex,
+  // outside the sitemap, and free of the old product name.
+  for (const slug of ['support', 'privacy']) {
+    it(`ships a hidden, noindex ${slug} page that names only PK Battle`, () => {
+      const html = readDist(`pkbattle/${slug}/index.html`);
+      const { document } = parsePage(`pkbattle/${slug}/index.html`);
+      expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex, nofollow');
+      expect(document.querySelector('h1')?.textContent).toContain('PK Battle');
+      expect(html).not.toMatch(/pok[eé]|nintendo|game freak|game boy/i);
+      expect(document.querySelector('a[href="mailto:email@anibalribeiro.cz"]')).toBeTruthy();
+    });
+  }
+
+  it('is not linked from the home page or listed in the sitemap', () => {
+    const { document } = parseIndex();
+    expect(document.querySelector('a[href*="pkbattle"]')).toBeNull();
+    expect(readDist('sitemap-0.xml')).not.toContain('pkbattle');
+  });
+});
