@@ -741,7 +741,7 @@ describe('PK Battle Apple pages', () => {
       expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex, nofollow');
       expect(document.querySelector('h1')?.textContent).toContain('PK Battle');
       expect(html).not.toMatch(/pok[eé]|nintendo|game freak|game boy/i);
-      expect(document.querySelector('a[href="mailto:email@anibalribeiro.cz"]')).toBeTruthy();
+      expect(document.querySelectorAll('a[href^="mailto:"]')).toHaveLength(slug === 'support' ? 1 : 0);
     });
   }
 
