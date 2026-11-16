@@ -1,0 +1,391 @@
+/* Homepage: profile card on the left, experience and the app carousel on the right. */
+
+.home {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.home-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  min-width: 0;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 2rem;
+}
+
+.home h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  color: var(--text);
+}
+
+/* Profile */
+.profile {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile img {
+  width: 136px;
+  height: 136px;
+  border-radius: 32px;
+  object-fit: cover;
+}
+
+.profile-id {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+/* The name scales with the card so it always stays on one line. */
+.profile h1 {
+  margin: 0;
+  white-space: nowrap;
+  font-size: clamp(1.5rem, 12cqi, 2.4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.profile .badge {
+  margin: 0;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.bio {
+  margin: 0;
+  color: #374151;
+  font-size: 1.03rem;
+  line-height: 1.55;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.1rem;
+  padding: 0 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--card);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  filter: brightness(1.12);
+}
+
+/* Contact, inside the profile card */
+#contact {
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+}
+
+#contact h2 {
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.contact-list a:hover,
+.contact-list a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.contact-list svg {
+  flex-shrink: 0;
+}
+
+/* Experience */
+.roles {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.roles li {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.roles li:last-child {
+  padding-bottom: 0;
+}
+
+.role-mark {
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--badge);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.role-mark.small {
+  font-size: 0.85rem;
+}
+
+.role-mark.current {
+  background: var(--accent);
+  color: var(--card);
+}
+
+.role-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.role-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.1rem 1rem;
+}
+
+.role-head h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.role-dates,
+.role-org {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.current-dates {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.role-summary {
+  margin: 0.4rem 0 0;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+/* App carousel */
+.carousel {
+  min-width: 0;
+  padding-right: 0;
+}
+
+.carousel-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.25rem;
+  padding-right: 2rem;
+}
+
+.section-note {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.carousel-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carousel-nav[hidden] {
+  display: none;
+}
+
+.carousel-nav button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.carousel-nav button:last-child {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--card);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 0;
+  padding: 0 2rem 0.75rem 0;
+  scrollbar-width: thin;
+}
+
+.app-card {
+  position: relative;
+  flex: 0 0 min(14.5rem, 78%);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 18px;
+  background: var(--bg);
+}
+
+.app-card:hover,
+.app-card:focus-within {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.project-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.app-body {
+  flex-grow: 1;
+}
+
+.app-body h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.app-body .tags {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.app-body p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.app-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* The whole card is the click target. */
+.app-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+}
+
+@media (min-width: 56rem) {
+  .home {
+    grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .profile {
+    position: sticky;
+    top: 4.75rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .panel {
+    padding: 1.5rem;
+  }
+
+  .carousel {
+    padding-right: 0;
+  }
+
+  .carousel-head {
+    padding-right: 1.5rem;
+  }
+
+  .carousel-track {
+    padding-right: 1.5rem;
+  }
+}

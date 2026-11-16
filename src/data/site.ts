@@ -28,12 +28,55 @@ export type Project = {
   secondary?: ProjectLink;
 };
 
+export type Role = {
+  title: string;
+  org: string;
+  dates: string;
+  /** Short company mark shown beside the role. */
+  mark: string;
+  summary?: string;
+};
+
 export const site = {
   name: 'Aníbal Ribeiro',
   jobTitle: 'Software Engineering Manager',
   email: 'email@anibalribeiro.cz',
   bio: 'I’m a software engineering manager. Outside work I build small utility apps — the kind of tools I actually want to use. Recent ones: Translate Pro for Brave, a faster in-page translator for the browser; WinMice, a native macOS menu-bar app that brings Windows-style mouse scrolling and side buttons to Mac; and Fenix Runner, a customizable watch face for Garmin watches.',
+  location: 'Prague, Czech Republic',
+  shortBio:
+    '10+ years in software engineering, 4+ leading distributed teams. I manage backend engineers across Prague and Dublin on Workday’s People Analytics platform, and build small utility apps on the side.',
   cvAvailable: true,
+  cvPdf: '/cv/anibal-ribeiro-cv.pdf',
+  experience: [
+    {
+      title: 'Software Engineering Manager',
+      org: 'Workday · People Analytics · Prague',
+      dates: 'Jan 2023 – Present',
+      mark: 'W',
+      summary:
+        'Run the backend platform behind Workday People Analytics, delivering workforce insights to hundreds of enterprise tenants with up to 11M+ worker records each.',
+    },
+    {
+      title: 'Senior Software Engineer',
+      org: 'Workday · People Analytics · Prague',
+      dates: '2021 – Jan 2023',
+      mark: 'W',
+      summary:
+        'Backend tech lead. Co-created AQL, the query language that still powers all People Analytics data pipelines.',
+    },
+    {
+      title: 'Software Engineer',
+      org: 'Kendaxa · Prague',
+      dates: '2017 – 2020',
+      mark: 'K',
+    },
+    {
+      title: 'Software Engineering Intern',
+      org: 'Procter & Gamble · Rakovník',
+      dates: '2016 – 2017',
+      mark: 'P&G',
+    },
+  ] satisfies readonly Role[],
   photoAlt: 'Portrait of Aníbal Ribeiro',
   socials: {
     github: 'https://github.com/anibalribeiro',

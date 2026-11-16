@@ -27,7 +27,7 @@ const jsonLd = JSON.stringify({
   applicationCategory: 'GameApplication', image: `${origin}/pokebattle/icon.png`,
 });
 ---
-<Layout title="Poke Battle — Pokémon battles on your Garmin, Zepp OS and Apple Watch" description={pokeBattle.description}
+<Layout wide title="Poke Battle — Pokémon battles on your Garmin, Zepp OS and Apple Watch" description={pokeBattle.description}
   canonical={canonicalUrl('/pokebattle')} jsonLd={jsonLd}
   ogImage={`${origin}/pokebattle/icon.png`} ogImageWidth="500" ogImageHeight="500" preloadHero={false}>
   <Header slot="header" />
@@ -107,7 +107,7 @@ const jsonLd = JSON.stringify({
 </Layout>
 <style>
   .feature-grid img { image-rendering: pixelated; }
-  .offer { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0; }
+  .offer { background: var(--bg); border-radius: 18px; padding: 1.25rem; margin: 1.5rem 0; }
   .offer h3 { margin-top: 0.25rem; font-size: 1.15rem; }
   .offer h4 { margin: 1.1rem 0 0.4rem; font-size: 0.95rem; color: var(--text); }
   .offer ul { padding-left: 1.2rem; }

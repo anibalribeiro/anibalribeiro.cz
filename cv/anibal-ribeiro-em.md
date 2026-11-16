@@ -1,13 +1,13 @@
 # Aníbal Ribeiro
 **Software Engineering Manager**  
 Prague, Czech Republic · [anibalribeiro.cz](https://anibalribeiro.cz) · [email@anibalribeiro.cz](mailto:email@anibalribeiro.cz)  
-[linkedin.com/in/anibal-ribeiro](https://www.linkedin.com/in/anibal-ribeiro/) · [github.com/anibalribeiro](https://github.com/anibalribeiro) · +420 774 288 307
+[linkedin.com/in/anibal-ribeiro](https://www.linkedin.com/in/anibal-ribeiro/) · [github.com/anibalribeiro](https://github.com/anibalribeiro)
 
 ---
 
 ## Executive Summary
 
-Software Engineering Manager with 10+ years in software engineering and 4+ years leading distributed engineering teams. Currently manage 10+ backend engineers across Prague and Dublin, while leading delivery for a 15-person cross-functional scrum team powering Workday’s People Analytics platform. Focused on partnering closely with Product to turn product roadmaps into reliable high-scale backend services, mentoring engineers toward promotions, and using practical AI tools to cut engineering toil. Outside of work, actively build and ship small utility apps.
+Software Engineering Manager with 10+ years in software engineering and 4+ years leading distributed engineering teams. Manage 10+ backend engineers across Prague and Dublin and lead delivery for a 15-person cross-functional scrum team behind Workday’s People Analytics platform. Partner closely with Product to turn roadmaps into reliable high-scale backend services, mentor engineers toward promotion, and use practical AI tools to cut engineering toil. Outside work, build and ship small apps for watches, Mac and the browser.
 
 ---
 
@@ -46,25 +46,15 @@ Worked as backend tech lead on core data orchestration services and drove key ar
 
 ### **Kendaxa** · Prague, Czech Republic
 #### **Software Engineer** · *2017 – 2020*
-- Built backend microservices and asynchronous processing pipelines for enterprise CRM and document management using Java, Spring Boot, Apache Kafka, and MongoDB.
-- Implemented event-driven document processing workflows, containerized services with Docker, and built Angular frontend components.
-- Collaborated in an agile scrum team to deliver reliable customer relationship features on time.
+- **Backend Services:** Built microservices and asynchronous processing pipelines for enterprise CRM and document management using Java, Spring Boot, Apache Kafka, and MongoDB.
+- **Document Workflows:** Implemented event-driven document processing workflows, containerized services with Docker, and built Angular frontend components.
+- **Agile Delivery:** Collaborated in an agile scrum team to deliver reliable customer relationship features on time.
 
 ---
 
-### **Procter & Gamble** · Rakovnik, Czech Republic
+### **Procter & Gamble** · Rakovník, Czech Republic
 #### **Software Engineering Intern** · *2016 – 2017*
-- Built an internal web application to track and reduce operational waste across P&G manufacturing plants, replacing paper-based tracking with a centralized system.
-- Developed the application with PHP (Yii Framework), PostgreSQL, and Bootstrap.
-
----
-
-## Independent Projects & Applications
-
-- **WinMice** · *Native macOS Utility (Swift)* · [github.com/anibalribeiro/WinMice](https://github.com/anibalribeiro/WinMice) · [anibalribeiro.cz/Winmice](https://anibalribeiro.cz/Winmice/)  
-  An open-source macOS menu bar app that brings Windows-style stepped mouse scrolling and side-button navigation to Mac.
-- **Translate Pro for Brave** · *Browser Extension (TypeScript)* · [Chrome Web Store](https://chromewebstore.google.com/detail/ibgigmlamcafnomafjpeogpipkdhjjgb)  
-  A browser extension published on the Chrome Web Store that brings faster, one-click in-page translation to the Brave browser.
+- **Loss Tracking Tool:** Built an internal web application to track and reduce operational waste across P&G manufacturing plants, replacing paper-based tracking with a centralized system (PHP, Yii Framework, PostgreSQL, Bootstrap).
 
 ---
 

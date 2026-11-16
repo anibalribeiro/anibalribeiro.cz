@@ -1,7 +1,12 @@
 ---
 import { site } from '../data/site';
 const year = new Date().getFullYear();
+// The homepage is a personal profile; the shop's legal pages are only linked
+// from the app pages, where the purchases happen.
+const home = Astro.url.pathname === '/' || Astro.url.pathname === '';
 ---
 <footer>
-  <p>{site.name} · {year} · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></p>
+  <p>
+    {site.name} · {year}{!home && <> · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a></>}
+  </p>
 </footer>

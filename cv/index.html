@@ -396,86 +396,6 @@
       font-weight: 600;
     }
 
-    /* Independent Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      page-break-inside: avoid;
-    }
-
-    .project-card {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 11px 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-
-    .project-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .project-badge {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-light);
-      padding: 2px 7px;
-      border-radius: 4px;
-      border: 1px solid var(--accent-border);
-    }
-
-    .project-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.45;
-      margin-bottom: 8px;
-    }
-
-    .project-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 11.5px;
-      margin-top: auto;
-    }
-
-    .project-links a {
-      color: var(--accent);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-weight: 600;
-    }
-
-    .project-links a:hover {
-      text-decoration: underline;
-    }
-
-    .project-links svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    @media (max-width: 640px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     /* Education & Languages */
     .two-col-grid {
       display: grid;
@@ -655,45 +575,6 @@
         color: #0f172a;
       }
 
-      .projects-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 6pt;
-      }
-
-      .project-card {
-        padding: 4.5pt 6pt;
-        border: 0.5pt solid #cbd5e1;
-      }
-
-      .project-header {
-        margin-bottom: 3pt;
-      }
-
-      .project-title {
-        font-size: 9pt;
-      }
-
-      .project-badge {
-        font-size: 7.2pt;
-        padding: 0.5pt 3.5pt;
-      }
-
-      .project-desc {
-        font-size: 8pt;
-        line-height: 1.28;
-        margin-bottom: 3pt;
-      }
-
-      .project-links {
-        font-size: 7.5pt;
-        gap: 8pt;
-      }
-
-      .project-links svg {
-        width: 8px;
-        height: 8px;
-      }
-
       .two-col-grid {
         gap: 16pt;
       }
@@ -763,10 +644,6 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
             <a href="https://github.com/anibalribeiro" target="_blank">github.com/anibalribeiro</a>
           </span>
-          <span class="contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            +420 774 288 307
-          </span>
         </div>
       </div>
       <img src="photo.jpg" alt="Aníbal Ribeiro" class="profile-photo" />
@@ -779,7 +656,7 @@
         Professional Summary
       </div>
       <p class="summary-text">
-        Software Engineering Manager with 10+ years in software engineering and 4+ years leading distributed engineering teams. Currently manage 10+ backend engineers across Prague and Dublin, while leading delivery for a 15-person cross-functional scrum team powering Workday’s People Analytics platform. Focused on partnering closely with Product to turn product roadmaps into reliable high-scale backend services, mentoring engineers toward promotions, and using practical AI tools to cut engineering toil. Outside of work, actively build and ship small utility apps.
+        Software Engineering Manager with 10+ years in software engineering and 4+ years leading distributed engineering teams. Manage 10+ backend engineers across Prague and Dublin and lead delivery for a 15-person cross-functional scrum team behind Workday’s People Analytics platform. Partner closely with Product to turn roadmaps into reliable high-scale backend services, mentor engineers toward promotion, and use practical AI tools to cut engineering toil. Outside work, build and ship small apps for watches, Mac and the browser.
       </p>
     </div>
 
@@ -929,9 +806,9 @@
           Built microservices for enterprise CRM and document management.
         </div>
         <ul class="bullet-list">
-          <li>Built backend microservices and asynchronous processing pipelines for enterprise CRM and document management using Java, Spring Boot, Apache Kafka, and MongoDB.</li>
-          <li>Implemented event-driven document processing workflows, containerized services with Docker, and built Angular frontend components.</li>
-          <li>Collaborated in an agile scrum team to deliver reliable customer relationship features on time.</li>
+          <li><strong>Backend Services:</strong> Built microservices and asynchronous processing pipelines for enterprise CRM and document management using Java, Spring Boot, Apache Kafka, and MongoDB.</li>
+          <li><strong>Document Workflows:</strong> Implemented event-driven document processing workflows, containerized services with Docker, and built Angular frontend components.</li>
+          <li><strong>Agile Delivery:</strong> Collaborated in an agile scrum team to deliver reliable customer relationship features on time.</li>
         </ul>
       </div>
 
@@ -948,7 +825,7 @@
           <div class="exp-meta">
             <span class="meta-tag">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Rakovnik, Czech Republic
+              Rakovník, Czech Republic
             </span>
             <span>·</span>
             <span class="meta-tag">
@@ -961,53 +838,8 @@
           Supply Chain Loss Elimination internal tool.
         </div>
         <ul class="bullet-list">
-          <li>Built an internal web application to track and reduce operational waste across P&G manufacturing plants, replacing paper-based tracking with a centralized system (PHP, Yii Framework, PostgreSQL, Bootstrap).</li>
+          <li><strong>Loss Tracking Tool:</strong> Built an internal web application to track and reduce operational waste across P&G manufacturing plants, replacing paper-based tracking with a centralized system (PHP, Yii Framework, PostgreSQL, Bootstrap).</li>
         </ul>
-      </div>
-    </div>
-
-    <!-- Independent Projects & Applications -->
-    <div class="section">
-      <div class="section-title">
-        <svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-        Independent Projects & Applications
-      </div>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-title">WinMice</span>
-            <span class="project-badge">Native macOS · Swift</span>
-          </div>
-          <p class="project-desc">
-            An open-source macOS menu bar app that brings Windows-style stepped mouse scrolling and side-button navigation to Mac.
-          </p>
-          <div class="project-links">
-            <a href="https://github.com/anibalribeiro/WinMice" target="_blank">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-              GitHub
-            </a>
-            <a href="https://anibalribeiro.cz/Winmice/" target="_blank">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-              Product Page
-            </a>
-          </div>
-        </div>
-
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-title">Translate Pro for Brave</span>
-            <span class="project-badge">Browser Extension · TypeScript</span>
-          </div>
-          <p class="project-desc">
-            A browser extension published on the Chrome Web Store that brings faster, one-click in-page translation to the Brave browser.
-          </p>
-          <div class="project-links">
-            <a href="https://chromewebstore.google.com/detail/ibgigmlamcafnomafjpeogpipkdhjjgb" target="_blank">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
-              Chrome Web Store
-            </a>
-          </div>
-        </div>
       </div>
     </div>
 

@@ -2,8 +2,9 @@
 import { Image } from 'astro:assets';
 import photo from '../assets/photo.jpg';
 import { site } from '../data/site';
+import Contact from './Contact.astro';
 ---
-<section class="hero" aria-labelledby="name">
+<section class="profile panel" aria-labelledby="name">
   <Image
     src={photo}
     alt={site.photoAlt}
@@ -13,9 +14,25 @@ import { site } from '../data/site';
     format="webp"
     priority
   />
-  <div>
+  <div class="profile-id">
     <h1 id="name">{site.name}</h1>
     <p class="badge">{site.jobTitle}</p>
-    <p class="bio">{site.bio}</p>
+    <p class="location">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" /></svg>
+      {site.location}
+    </p>
   </div>
+  <p class="bio">{site.shortBio}</p>
+  {
+    site.cvAvailable && (
+      <div class="profile-actions">
+        <a class="btn btn-primary" href={site.cvPdf}>
+          Download CV
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12" /><path d="m6 11 6 6 6-6" /><path d="M5 21h14" /></svg>
+        </a>
+        <a class="btn" href="/cv/">View full CV</a>
+      </div>
+    )
+  }
+  <Contact />
 </section>

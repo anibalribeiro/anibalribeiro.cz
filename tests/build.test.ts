@@ -179,18 +179,15 @@ describe('work', () => {
     expect(store?.getAttribute('target')).toBe('_blank');
     expect(store?.getAttribute('rel')).toContain('noopener');
 
-    const github = document.querySelector(
-      'a[href="https://github.com/anibalribeiro/WinMice"]',
-    );
-    expect(github?.textContent).toBe('GitHub');
-
-    const product = document.querySelector(
-      'a[href="/Winmice/"]',
-    );
-    expect(product?.textContent).toBe('Product site');
+    // Apps with their own page on this site link there instead of to a store.
+    const product = document.querySelector('#work a[href="/Winmice/"]');
+    expect(product?.textContent).toBe('View app');
+    expect(product?.getAttribute('target')).toBeNull();
+    expect(document.querySelector('#work a[href="/FenixRunner/"]')).toBeTruthy();
+    expect(document.querySelector('#work a[href="/FenixRunner/buy/"]')).toBeNull();
   });
 
-  it('shows a 48px official icon on each project card', () => {
+  it('shows a 64px official icon on each project card', () => {
     const { document } = parseIndex();
     const articles = [...document.querySelectorAll('#work article')];
     expect(articles).toHaveLength(9);
@@ -210,22 +207,35 @@ describe('work', () => {
 
     for (const article of articles) {
       const img = article.querySelector('img');
-      expect(img?.getAttribute('width')).toBe('48');
-      expect(img?.getAttribute('height')).toBe('48');
+      expect(img?.getAttribute('width')).toBe('64');
+      expect(img?.getAttribute('height')).toBe('64');
       expect(img?.getAttribute('src')).toMatch(/\.(png|webp|jpg|svg)/i);
     }
   });
 });
 
 describe('cv', () => {
-  it('exposes the CV link when available', () => {
-    const { document, html } = parseIndex();
+  it('lists the roles under Experience and links the full CV and the PDF', () => {
+    const { document } = parseIndex();
     const cv = document.querySelector('#cv');
-    expect(cv?.querySelector('h2')?.textContent).toBe('CV');
-    expect(cv?.querySelector('a[href="/cv/"]')).not.toBeNull();
-    expect(html).toContain('href="/cv/"');
-    const viewLink = cv?.querySelector('a[href="/cv/"]');
-    expect(viewLink?.textContent).toContain('View CV');
+    expect(cv?.querySelector('h2')?.textContent).toBe('Experience');
+    const roles = [...cv!.querySelectorAll('h3')].map((el) => el.textContent);
+    expect(roles[0]).toBe('Software Engineering Manager');
+    expect(roles).toHaveLength(4);
+    expect(document.querySelector('.profile a[href="/cv/"]')?.textContent).toContain('View full CV');
+    expect(
+      document.querySelector('.profile a[href="/cv/anibal-ribeiro-cv.pdf"]')?.textContent,
+    ).toContain('Download CV');
+    expect(existsSync(path.join(root, 'dist/cv/anibal-ribeiro-cv.pdf'))).toBe(true);
+  });
+});
+
+describe('app carousel', () => {
+  it('scrolls without JavaScript and only uses an inline script for the arrows', () => {
+    const { document } = parseIndex();
+    expect(document.querySelector('#work .carousel-track')).toBeTruthy();
+    expect(document.querySelector('#work .carousel-nav')?.hasAttribute('hidden')).toBe(true);
+    expect(document.querySelectorAll('#work .carousel-nav button[aria-label]')).toHaveLength(2);
   });
 });
 
@@ -687,10 +697,15 @@ describe('Store-wide legal pages', () => {
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(canonical);
   });
 
-  it('links both pages from the site footer', () => {
-    const { document } = parseIndex();
-    expect(document.querySelector('footer a[href="/terms/"]')).toBeTruthy();
-    expect(document.querySelector('footer a[href="/privacy/"]')).toBeTruthy();
+  it('links both pages from the footer of app pages but not from the homepage', () => {
+    for (const page of ['ridge/index.html', 'Winmice/index.html', 'pokebattle/index.html', 'FenixRunner/index.html']) {
+      const { document } = parsePage(page);
+      expect(document.querySelector('footer a[href="/terms/"]')).toBeTruthy();
+      expect(document.querySelector('footer a[href="/privacy/"]')).toBeTruthy();
+    }
+    const home = parseIndex().document;
+    expect(home.querySelector('a[href="/terms/"]')).toBeNull();
+    expect(home.querySelector('a[href="/privacy/"]')).toBeNull();
   });
 });
 

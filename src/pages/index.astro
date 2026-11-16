@@ -4,14 +4,17 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Work from '../components/Work.astro';
 import Cv from '../components/Cv.astro';
-import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/home.css';
 ---
-<Layout>
+<Layout wide>
   <Header slot="header" />
-  <Hero />
-  <Work />
-  <Cv />
-  <Contact />
+  <div class="home">
+    <Hero />
+    <div class="home-main">
+      <Cv />
+      <Work />
+    </div>
+  </div>
   <Footer slot="footer" />
 </Layout>
