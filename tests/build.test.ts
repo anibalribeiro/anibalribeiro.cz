@@ -114,10 +114,11 @@ describe('crawl files', () => {
         'https://anibalribeiro.cz/daylight/',
         'https://anibalribeiro.cz/aurora/',
         'https://anibalribeiro.cz/football-live/',
+        'https://anibalribeiro.cz/minigolf-pro/',
       ]),
     );
     // The noindex buy page is deliberately left out.
-    expect(locs).toHaveLength(15);
+    expect(locs).toHaveLength(16);
   });
 });
 
@@ -161,13 +162,13 @@ describe('hero', () => {
 });
 
 describe('work', () => {
-  it('renders all nine projects as h3s under #work', () => {
+  it('renders all ten projects as h3s under #work', () => {
     const { document } = parseIndex();
     const work = document.querySelector('#work');
     expect(work).toBeTruthy();
     expect(work?.querySelector('h2')?.textContent).toBe('Apps I made');
     const titles = [...work!.querySelectorAll('h3')].map((el) => el.textContent);
-    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Football Live', 'Poke Battle', 'Fenix Runner', 'Ridge', 'Pulse', 'Daylight', 'Aurora']);
+    expect(titles).toEqual(['Translate Pro for Brave', 'WinMice', 'Football Live', 'Poke Battle', 'MiniGolf Pro', 'Fenix Runner', 'Ridge', 'Pulse', 'Daylight', 'Aurora']);
   });
 
   it('uses named external links with noopener', () => {
@@ -190,7 +191,7 @@ describe('work', () => {
   it('shows a 64px official icon on each project card', () => {
     const { document } = parseIndex();
     const articles = [...document.querySelectorAll('#work article')];
-    expect(articles).toHaveLength(9);
+    expect(articles).toHaveLength(10);
 
     const alts = articles.map((article) => article.querySelector('img')?.getAttribute('alt'));
     expect(alts).toEqual([
@@ -198,6 +199,7 @@ describe('work', () => {
       'WinMice icon',
       'Football Live icon',
       'Poke Battle icon',
+      'MiniGolf Pro icon',
       'Fenix Runner icon',
       'Ridge icon',
       'Pulse icon',
@@ -716,7 +718,7 @@ describe('Garmin app pages', () => {
     ['pulse', 'Pulse', 'c8f95bf2-583f-4228-aac2-0c9b3b85c40b', '2.99', 6],
     ['daylight', 'Daylight', 'c788e9e3-b158-4cb3-9d17-b444c687e861', '2.99', 8],
     ['aurora', 'Aurora', '2a9eb91a-6c1e-49bf-87d9-16df3e68afeb', '2.99', 7],
-    ['football-live', 'Football Live', '275bac70-c30f-429e-a6ea-cadd9d53d5ee', '4.49', 8],
+    ['football-live', 'Football Live', '275bac70-c30f-429e-a6ea-cadd9d53d5ee', '2.99', 8],
   ] as const;
 
   it.each(apps)('publishes /%s/ with its store link, price and screenshots', (slug, name, storeId, price, shots) => {
@@ -743,6 +745,40 @@ describe('Garmin app pages', () => {
     const football = parsePage('football-live/index.html').document.body.textContent ?? '';
     expect(football).toContain('Do not use it for betting');
     expect(football).toContain('favourite team codes');
+  });
+});
+
+describe('Creem-sold Zepp OS licences', () => {
+  // Creem requires every product it sells to be listed with its price and what the purchase includes.
+  it('lists the $4.00 Football Live Zepp OS licence next to the Garmin version', () => {
+    const { document } = parsePage('football-live/index.html');
+    const offer = document.querySelector('#zepp-offer-heading')?.closest('.offer');
+    expect(offer?.textContent).toContain('$4.00 USD');
+    expect(offer?.textContent).toContain("What's included");
+    expect(offer?.textContent).toContain('48 hours');
+    expect(document.querySelector('.cta-row')?.textContent).toContain('Zepp OS licence · $4.00');
+    expect(offer?.querySelector('a[href="https://football-live-licensing.anibalcatheringer.workers.dev/buy"]')?.textContent).toContain('$4.00');
+    const ld = JSON.parse(document.querySelector('script[type="application/ld+json"]')!.textContent!);
+    expect(ld.offers.map((o: { price: string }) => o.price)).toEqual(['2.99', '4.00']);
+  });
+
+  it('keeps the Zepp offer off the watch-face pages', () => {
+    expect(parsePage('ridge/index.html').document.querySelector('.offer')).toBeNull();
+  });
+
+  it('publishes the MiniGolf Pro page with its $2.99 licence and checkout', () => {
+    const { document } = parsePage('minigolf-pro/index.html');
+    expect(document.querySelector('h1')?.textContent).toBe('MiniGolf Pro');
+    const offer = document.querySelector('.offer');
+    expect(offer?.textContent).toContain('$2.99 USD');
+    expect(offer?.textContent).toContain("What's included");
+    expect(offer?.querySelector('a[href="https://minigolf-pro-zepp.anibalcatheringer.workers.dev/buy"]')).toBeTruthy();
+    expect(document.querySelectorAll('.feature-grid details.shot')).toHaveLength(4);
+    expect(document.querySelectorAll('h1')).toHaveLength(1);
+    expect(document.querySelector('.cta-row a[href="https://apps.garmin.com/apps/fe9be422-47a8-4e22-b877-29f502741bc5"]')?.textContent).toContain('$2.99');
+    const ld = JSON.parse(document.querySelector('script[type="application/ld+json"]')!.textContent!);
+    expect(ld.offers.map((o: { name: string }) => o.name)).toEqual(['MiniGolf Pro for Garmin', 'MiniGolf Pro full game for Zepp OS']);
+    expect(parseIndex().document.querySelector('#work a[href="/minigolf-pro/"]')).toBeTruthy();
   });
 });
 

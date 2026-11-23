@@ -21,7 +21,8 @@ export type Project = {
     | 'pulse'
     | 'daylight'
     | 'aurora'
-    | 'football-live';
+    | 'football-live'
+    | 'minigolf-pro';
   tags: readonly string[];
   description: string;
   primary: ProjectLink;
@@ -115,7 +116,7 @@ export const site = {
     {
       title: 'Football Live',
       icon: 'football-live',
-      tags: ['Garmin', 'Watch app'],
+      tags: ['Garmin', 'Zepp OS', 'Watch app'],
       description: 'Live football scores and goal alerts on your wrist.',
       primary: { label: 'Product site', href: '/football-live/' },
       secondary: { label: 'Connect IQ Store', href: 'https://apps.garmin.com/apps/275bac70-c30f-429e-a6ea-cadd9d53d5ee' },
@@ -127,6 +128,14 @@ export const site = {
       description: 'Quick Pokémon battles on your wrist. All 151 originals, Game Boy sprites and offline play.',
       primary: { label: 'Product site', href: '/pokebattle/' },
       secondary: { label: 'Support', href: '/pokebattle/support/' },
+    },
+    {
+      title: 'MiniGolf Pro',
+      icon: 'minigolf-pro',
+      tags: ['Garmin', 'Zepp OS', 'Game'],
+      description: '72 holes of mini golf on your Garmin or Amazfit watch.',
+      primary: { label: 'Product site', href: '/minigolf-pro/' },
+      secondary: { label: 'Connect IQ Store', href: 'https://apps.garmin.com/apps/fe9be422-47a8-4e22-b877-29f502741bc5' },
     },
     {
       title: 'Fenix Runner',

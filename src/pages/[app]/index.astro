@@ -24,23 +24,28 @@ const icon = asset('icon.png');
 const hero = asset('hero.png');
 const storeUrl = garminStoreUrl(app.storeId);
 const path = `/${app.slug}`;
+const zepp = app.zepp;
+const zeppSentence = zepp ? ` Also on Zepp OS: free 48-hour trial, then a $${zepp.price} one-time licence.` : '';
 const jsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   name: app.name,
   description: app.description,
   url: canonicalUrl(path),
-  operatingSystem: 'Garmin Connect IQ',
+  operatingSystem: zepp ? 'Garmin Connect IQ, Zepp OS' : 'Garmin Connect IQ',
   applicationCategory: app.category,
   image: `${origin}${asset('icon.png').src}`,
   author: { '@type': 'Person', name: site.name, url: canonicalUrl() },
-  offers: { '@type': 'Offer', price: app.price, priceCurrency: 'USD', url: storeUrl },
+  offers: [
+    { '@type': 'Offer', name: `${app.name} for Garmin`, price: app.price, priceCurrency: 'USD', url: storeUrl },
+    ...(zepp ? [{ '@type': 'Offer', name: zepp.title, price: zepp.price, priceCurrency: 'USD', url: canonicalUrl(path) }] : []),
+  ],
 });
 ---
 <Layout
   wide
   title={`${app.name} — ${app.tagline.replace(/\.$/, '')}`}
-  description={`${app.description} ${app.kind} for Garmin watches, $${app.price} on the Connect IQ Store.`}
+  description={`${app.description} ${app.kind} for Garmin watches, $${app.price} on the Connect IQ Store.${zeppSentence}`}
   canonical={canonicalUrl(path)}
   jsonLd={jsonLd}
   ogImage={`${origin}${hero.src}`}
@@ -53,7 +58,7 @@ const jsonLd = JSON.stringify({
     <header class="product-hero">
       <div class="product-brand">
         <Image src={icon} alt={`${app.name} icon`} width={96} height={96} class="product-icon" />
-        <p class="badge">{app.kind}</p>
+        <p class="platform-tags"><span class="badge">{app.kind}</span>{zepp && <span class="badge">Zepp OS</span>}</p>
       </div>
       <h1>{app.name}</h1>
       <p class="lede">{app.tagline}</p>
@@ -62,6 +67,7 @@ const jsonLd = JSON.stringify({
         <a class="download" href={storeUrl} target="_blank" rel="noopener noreferrer">
           Get it on the Connect IQ Store · ${app.price}
         </a>
+        {zepp && <a class="download" href="#zepp-offer-heading">Zepp OS licence · ${zepp.price}</a>}
         <a class="download" href="#screens">See screenshots</a>
       </p>
     </header>
@@ -117,6 +123,23 @@ const jsonLd = JSON.stringify({
           Get it on the Connect IQ Store
         </a>
       </p>
+      {zepp && (
+        <div class="offer" aria-labelledby="zepp-offer-heading">
+          <p class="offer-kicker">Zepp OS · one-time purchase through Creem</p>
+          <h3 id="zepp-offer-heading">{zepp.title}</h3>
+          <p class="offer-price"><strong>${zepp.price} USD</strong> once. No subscription, no renewals. Applicable taxes are shown at checkout.</p>
+          <p>{zepp.trial}</p>
+          <h4>What's included</h4>
+          <ul>{zepp.included.map((item) => <li>{item}</li>)}</ul>
+          <h4>How it works</h4>
+          {zepp.howItWorks.map((text) => <p>{text}</p>)}
+          <p class="offer-note">
+            The licence covers the Zepp OS version only. The Garmin version is sold separately on the
+            Connect IQ Store. Refunds and your consumer rights are described in the <a href="/terms/">terms</a>.
+          </p>
+          {zepp.checkoutUrl && <a class="download" href={zepp.checkoutUrl}>Buy the Zepp OS licence · ${zepp.price} USD</a>}
+        </div>
+      )}
     </section>
 
     <section aria-labelledby="privacy-heading">
@@ -126,7 +149,7 @@ const jsonLd = JSON.stringify({
 
     {app.kind === 'Garmin watch app' && (
       <p class="form-note">
-        Not affiliated with, endorsed by or sponsored by any league, club, data provider or Garmin.
+        Not affiliated with, endorsed by or sponsored by any league, club, data provider, Garmin or Zepp Health.
         Team and competition names are used only to identify matches.
       </p>
     )}

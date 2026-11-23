@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import icon from '../../assets/minigolf/icon-240.png';
+import garden from '../../assets/minigolf/04-round-garden.png';
+import power from '../../assets/minigolf/05-round-power-gauge.png';
+import obstacles from '../../assets/minigolf/06-round-moving-obstacles.png';
+import pond from '../../assets/minigolf/02-around-the-pond.png';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import StoreIcon from '../../components/StoreIcon.astro';
+import { miniGolf } from '../../data/miniGolf';
+import { origin, site } from '../../data/site';
+import Layout from '../../layouts/Layout.astro';
+import { canonicalUrl } from '../../lib/seo';
+import '../../styles/product.css';
+const shots = [
+  { title: 'Garden', src: garden, alt: 'MiniGolf Pro on a round Amazfit watch: the first Garden hole with the ball, cup and walls' },
+  { title: 'Set your power', src: power, alt: 'MiniGolf Pro power gauge while aiming a putt' },
+  { title: 'Moving obstacles', src: obstacles, alt: 'MiniGolf Pro hole with moving obstacles between the ball and the cup' },
+  { title: 'Around the pond', src: pond, alt: 'MiniGolf Pro on a square Amazfit watch: a hole that bends around a pond' },
+];
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'SoftwareApplication',
+  name: miniGolf.name, description: miniGolf.description,
+  url: canonicalUrl('/minigolf-pro'), operatingSystem: 'Garmin Connect IQ, Zepp OS',
+  applicationCategory: 'GameApplication', image: `${origin}${icon.src}`,
+  offers: [
+    { '@type': 'Offer', name: 'MiniGolf Pro for Garmin', price: miniGolf.garminPrice, priceCurrency: 'USD', url: miniGolf.garminStoreUrl },
+    { '@type': 'Offer', name: 'MiniGolf Pro full game for Zepp OS', price: miniGolf.price, priceCurrency: 'USD', url: canonicalUrl('/minigolf-pro') },
+  ],
+});
+---
+<Layout wide title="MiniGolf Pro — mini golf on your Garmin and Amazfit watch" description={`${miniGolf.description} $${miniGolf.garminPrice} on the Connect IQ Store; free on Zepp OS with a $${miniGolf.price} unlock.`}
+  canonical={canonicalUrl('/minigolf-pro')} jsonLd={jsonLd}
+  ogImage={`${origin}${icon.src}`} ogImageWidth="240" ogImageHeight="240" preloadHero={false}>
+  <Header slot="header" />
+  <article class="product">
+    <header class="product-hero">
+      <div class="product-brand">
+        <Image src={icon} alt="MiniGolf Pro icon" width={96} height={96} class="product-icon" />
+        <p class="platform-tags"><span class="badge">Garmin</span><span class="badge">Zepp OS</span><span class="badge">Watch game</span></p>
+      </div>
+      <h1>MiniGolf Pro</h1>
+      <p class="lede">72 holes of mini golf on your wrist.</p>
+      <p>{miniGolf.description}</p>
+      <div class="cta-row store-buttons">
+        <a class="download" href={miniGolf.garminStoreUrl} target="_blank" rel="noopener noreferrer"><StoreIcon name="garmin" />Connect IQ Store · ${miniGolf.garminPrice}</a>
+        <a class="download" href="#zepp-offer"><StoreIcon name="zepp" />Zepp OS · Free + ${miniGolf.price} unlock</a>
+      </div>
+      <p class="cta-secondary"><a href="#play">See how it plays</a></p>
+    </header>
+    <section id="play" aria-labelledby="play-heading">
+      <h2 id="play-heading">Eight courses, one screen per hole</h2>
+      <p class="section-lede">Garden, Desert, Ice, Pirate, Volcano, Space, Forest and Candy. Screens are from the Zepp OS version on Amazfit watches; appearance varies with the watch and display.</p>
+      <div class="feature-grid">
+        {shots.map((shot) => <article>
+          <h3>{shot.title}</h3>
+          <details class="shot"><summary>
+            <Image src={shot.src} alt="" width={280} loading="lazy" />
+            <span class="hint-expand">{shot.title} — click to enlarge</span>
+            <span class="hint-collapse">{shot.title} — click to collapse</span>
+          </summary><Image src={shot.src} alt={shot.alt} width={454} loading="lazy" /></details>
+        </article>)}
+      </div>
+    </section>
+    <section aria-labelledby="features-heading">
+      <h2 id="features-heading">What it does</h2>
+      <ul>
+        <li>72 hand-designed holes across eight nine-hole courses, each hole on one screen.</li>
+        <li>Drag back and release to putt, or set direction and power with the watch buttons.</li>
+        <li>Bank shots around walls, avoid water and time your putt past moving obstacles.</li>
+        <li>Scores and stars for every hole, practice for single holes and replays of your best shots.</li>
+        <li>Golf balls to collect as you play, and a saved round you can pick up later.</li>
+        <li>Garmin: round colour-screen watches with Connect IQ API 5.0 or later. Check the Connect IQ Store's Compatible Devices list for your model.</li>
+        <li>Zepp OS: Amazfit watches with Zepp OS 3.0 or later, round or square, including Bip 6, Bip 5 Unity, Bip Max, Active 2, Cheetah and Falcon.</li>
+      </ul>
+    </section>
+    <section aria-labelledby="purchase-heading">
+      <h2 id="purchase-heading">Get MiniGolf Pro</h2>
+      <h3>Garmin</h3>
+      <p>MiniGolf Pro costs ${miniGolf.garminPrice} USD, paid once on the Garmin Connect IQ Store, where the list of compatible watches is shown. The full game is included, with no ads, subscriptions, in-app purchases or trial, and Garmin handles the purchase. Purchases can be refunded within 48 hours under the Connect IQ Store's return policy. Progress stays on the watch.</p>
+      <p><a class="download" href={miniGolf.garminStoreUrl} target="_blank" rel="noopener noreferrer"><StoreIcon name="garmin" />Get it on the Connect IQ Store</a></p>
+      <h3>Zepp OS</h3>
+      <p>MiniGolf Pro is a free download for Zepp OS watches, and the Garden course is free to play.</p>
+      <div class="offer" id="zepp-offer" aria-labelledby="offer-heading">
+        <p class="offer-kicker">Zepp OS · one-time purchase through Creem</p>
+        <h3 id="offer-heading">MiniGolf Pro full game for Zepp OS — lifetime licence</h3>
+        <p class="offer-price"><strong>${miniGolf.price} USD</strong> once. No subscription, no renewals. Applicable taxes are shown at checkout.</p>
+        <h4>What's included</h4>
+        <ul>
+          <li>The seven paid courses: Desert, Ice, Pirate, Volcano, Space, Forest and Candy. Each one opens when you finish the course before it.</li>
+          <li>A one-time purchase, with no subscription, ads or other in-app purchases.</li>
+          <li>One watch at a time. You can move the licence to another watch later with the key and your purchase email. Saved progress stays on the watch where you played.</li>
+          <li>A licence key delivered on the Creem confirmation page and in your receipt email.</li>
+          <li>Offline play for up to 30 days between licence checks once activated.</li>
+        </ul>
+        <h4>How it works</h4>
+        <p>Buy the full game <a href={miniGolf.checkoutUrl}>through Creem</a>, which handles payment, tax and refunds as merchant of record. You can also open the checkout from the QR code on the watch or from MiniGolf Pro's settings in the Zepp phone app.</p>
+        <p>Enter the licence key in MiniGolf Pro's settings in the Zepp phone app, under Purchase and license, to unlock your watch. Activation and restore need the watch connected to the Zepp app and the internet.</p>
+        <p class="offer-note">The licence covers the Zepp OS version only. The Garmin version is sold separately on the Connect IQ Store. Refunds and your consumer rights are described in the <a href="/terms/">terms</a>. For help, see the <a href={miniGolf.supportUrl}>support page</a>.</p>
+        <a class="download" href={miniGolf.checkoutUrl}>Buy the full game · ${miniGolf.price} USD</a>
+      </div>
+    </section>
+    <section aria-labelledby="privacy-heading">
+      <h2 id="privacy-heading">Privacy</h2>
+      <p>Progress and settings stay on the watch. The licence service keeps only what it needs to manage your licence, such as the order reference and hashed forms of your key and email. See the <a href={miniGolf.privacyUrl}>MiniGolf Pro privacy policy</a> and this website's <a href="/privacy/">Privacy Policy</a>.</p>
+    </section>
+    <p class="form-note">MiniGolf Pro is an independent game, not affiliated with or endorsed by Garmin, Zepp Health or Amazfit.</p>
+  </article>
+  <nav class="product-links" aria-label="MiniGolf Pro links">
+    <a href={miniGolf.privacyUrl}>Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href={`mailto:${site.email}`}>Contact</a>
+  </nav>
+  <Footer slot="footer" />
+</Layout>
+<style>
+  .product-links { flex-wrap: wrap; }
+</style>

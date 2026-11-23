@@ -10,6 +10,17 @@ export type GarminAppSection = {
   items?: readonly string[];
 };
 
+/** A Zepp OS version sold as a one-time licence through Creem. */
+export type ZeppOffer = {
+  title: string;
+  price: string;
+  trial: string;
+  included: readonly string[];
+  howItWorks: readonly string[];
+  /** Checkout link for the site; `null` when checkout only opens from the watch or the Zepp app. */
+  checkoutUrl: string | null;
+};
+
 export type GarminApp = {
   slug: string;
   name: string;
@@ -27,6 +38,7 @@ export type GarminApp = {
   sections: readonly GarminAppSection[];
   refundNote?: string;
   privacyNote: string;
+  zepp?: ZeppOffer;
 };
 
 export const garminStoreUrl = (storeId: string) => `https://apps.garmin.com/apps/${storeId}`;
@@ -180,7 +192,7 @@ export const garminApps: readonly GarminApp[] = [
     description:
       'Football Live shows today’s football scores on your watch and buzzes your wrist when your favourite teams score.',
     storeId: '275bac70-c30f-429e-a6ea-cadd9d53d5ee',
-    price: '4.49',
+    price: '2.99',
     features: [
       'Live Scores: today’s matches grouped by competition, with score, minute or kick-off time, and the latest scorer for live matches',
       'Match detail: five pages per match: score and scorers, timeline (goals, cards, substitutions), stats, lineups and the league table',
@@ -235,5 +247,22 @@ export const garminApps: readonly GarminApp[] = [
     ],
     privacyNote:
       'The watch sends only your favourite team codes, your time-zone offset and the match you open. No account, name, location or health data is collected.',
+    zepp: {
+      title: 'Football Live for Zepp OS — full-version licence',
+      price: '4.00',
+      trial:
+        'Football Live for Amazfit watches with Zepp OS 3.0 or later is free to download. You can use the full app for 48 hours from its first successful connection. After that, scores, refreshes and alerts stay locked until you buy the licence. Your favourite teams are kept.',
+      included: [
+        'Unlimited use of the full Zepp OS app after the trial: live scores, match timelines, stats, lineups, league tables and favourite-team goal alerts.',
+        'A one-time purchase, with no subscription or renewals.',
+        'One active watch per licence key. You can move it to another watch later with the key and your purchase email.',
+        'A licence key delivered on the Creem confirmation page and in your receipt email.',
+      ],
+      howItWorks: [
+        'Buy the licence with the button below, from the QR code the watch shows when the trial ends, or from Football Live’s settings in the Zepp phone app, under Trial & purchase. Creem handles payment, tax and refunds as merchant of record, and shows the final price including any tax before you pay.',
+        'Enter the licence key in Football Live’s settings in the Zepp phone app to unlock your watch. Activation needs the watch paired with the Zepp app and an internet connection.',
+      ],
+      checkoutUrl: 'https://football-live-licensing.anibalcatheringer.workers.dev/buy',
+    },
   },
 ];
